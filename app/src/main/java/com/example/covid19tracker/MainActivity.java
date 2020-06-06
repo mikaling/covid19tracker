@@ -47,6 +47,17 @@ public class MainActivity extends AppCompatActivity {
 
         nvDrawer = findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
+
+        // Set WorldFragment as content
+        Fragment fragment = null;
+        Class fragmentClass = WorldFragment.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
     }
 
     // `onPostCreate` called when activity start-up is complete after `onStart()`
