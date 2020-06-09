@@ -1,4 +1,4 @@
-package com.example.covid19tracker;
+package com.example.covid19tracker.local;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IValueFormatter;

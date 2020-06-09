@@ -1,10 +1,13 @@
-package com.example.covid19tracker;
+package com.example.covid19tracker.local;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
 
+import com.example.covid19tracker.R;
+import com.example.covid19tracker.local.MyAxisValueFormatter;
+import com.example.covid19tracker.local.MyValueFormatter;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -20,7 +23,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class VisualizationActivity extends AppCompatActivity
