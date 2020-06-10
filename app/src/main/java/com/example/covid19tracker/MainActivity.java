@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,6 +14,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 
+import com.example.covid19tracker.global.WorldFragment;
+import com.example.covid19tracker.local.LocalFragment;
+import com.example.covid19tracker.local.VisualizationActivity;
+import com.example.covid19tracker.regional.RegionFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(this,VisualizationActivity.class);
+        Intent intent = new Intent(this, VisualizationActivity.class);
         startActivity(intent);
 
         // Toolbar to replace ActionBar

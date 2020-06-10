@@ -7,7 +7,7 @@
     android:padding="8dp"
     tools:viewBindingIgnore="true"
     tools:context=".WorldFragment">
-
+    tools:context=".global.WorldFragment">
 
     <LinearLayout
         android:id="@+id/container"
