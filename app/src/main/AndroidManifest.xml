@@ -13,13 +13,13 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.TestActivity" >
             <!-- Uncomment this and comment intent-filter in .MainActivity to make this activity
-                 launch on start
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                 launch on start-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
         </activity>
         <activity android:name=".VisualizationActivity" />
         <activity android:name=".MainActivity">
