@@ -19,4 +19,5 @@
     <string name="compare_covid_19_cases_in_east_african_countries">Compare COVID-19 Cases in East African Countries</string>
     <string name="bar_chart_xaxis_label">Country</string>
     <string name="bar_chart_yaxis_label">Total Number</string>
+    <string name="label_continental">Continental</string>
 </resources>

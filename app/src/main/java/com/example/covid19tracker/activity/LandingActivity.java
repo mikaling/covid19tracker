@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.covid19tracker.R;
+import com.example.covid19tracker.continents.ContinentsFragment;
 import com.example.covid19tracker.databinding.ActivityLandingBinding;
 import com.example.covid19tracker.global.WorldFragment;
 import com.example.covid19tracker.local.LocalFragment;
@@ -47,6 +48,7 @@ public class LandingActivity extends AppCompatActivity {
         final Fragment globalFragment = new WorldFragment();
         final Fragment regionalFragment = new RegionFragment();
         final Fragment localFragment = new LocalFragment();
+        final Fragment continentalFragment = new ContinentsFragment();
 
         landingBinding.bottomNavigation.setOnNavigationItemSelectedListener(item -> {
             Fragment fragment;
@@ -60,6 +62,10 @@ public class LandingActivity extends AppCompatActivity {
                     fragment = regionalFragment;
                     break;
 
+                case R.id.continental_page:
+                    fragment = continentalFragment;
+                    break;
+
                 case R.id.local_page:
                     fragment = localFragment;
                     break;
@@ -68,6 +74,13 @@ public class LandingActivity extends AppCompatActivity {
                     , fragment).commit();
             return true;
         });
+
+//        landingBinding.bottomNavigation.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+//            @Override
+//            public void onNavigationItemReselected(@NonNull MenuItem item) {
+//
+//            }
+//        });
 
         landingBinding.bottomNavigation.setSelectedItemId(R.id.global_page);
     }
