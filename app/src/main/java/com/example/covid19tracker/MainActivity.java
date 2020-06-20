@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 
+import com.example.covid19tracker.continents.ContinentsFragment;
 import com.example.covid19tracker.global.WorldFragment;
 import com.example.covid19tracker.local.LocalFragment;
 import com.example.covid19tracker.local.VisualizationActivity;
@@ -116,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_local_fragment:
                 fragmentClass = LocalFragment.class;
+                break;
+            case R.id.nav_continents_fragment:
+                fragmentClass = ContinentsFragment.class;
                 break;
             default:
                 fragmentClass = WorldFragment.class;

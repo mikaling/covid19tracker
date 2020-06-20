@@ -147,7 +147,6 @@ public class WorldFragment extends Fragment {
     }
 
     public void loadWebView() {
-//        final WebView webView = view.findViewById(R.id.map_webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
