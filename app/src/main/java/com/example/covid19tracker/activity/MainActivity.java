@@ -13,11 +13,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 
-<<<<<<< HEAD:app/src/main/java/com/example/covid19tracker/MainActivity.java
+
 import com.example.covid19tracker.continents.ContinentsFragment;
-=======
+
 import com.example.covid19tracker.R;
->>>>>>> 956f0551c48decd4a2ef457cf116141a2e0e43b2:app/src/main/java/com/example/covid19tracker/activity/MainActivity.java
+
 import com.example.covid19tracker.global.WorldFragment;
 import com.example.covid19tracker.local.LocalFragment;
 import com.example.covid19tracker.regional.RegionFragment;
