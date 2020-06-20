@@ -50,4 +50,6 @@ public interface TestApi {
     @GET("barData")
     Call<List<BarDataModel>> getBarData();
 
+
+
 }
