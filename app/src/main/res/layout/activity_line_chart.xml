@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".local.VisualizationActivity"
+    tools:context=".local.BarChartActivity"
     android:orientation="vertical">
 
     <com.github.mikephil.charting.charts.LineChart
@@ -12,10 +12,4 @@
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="0dp" />
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/bar_chart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
 </LinearLayout>

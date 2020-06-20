@@ -13,7 +13,7 @@ import retrofit2.http.Path;
 
 /* This interface is where the endpoints of the API are defined */
 
-public interface TestApi {
+public interface TestApi{
 
     /* Method structure
      * ---------------------------------------------------------------------------------------------
