@@ -3,8 +3,8 @@ package com.example.covid19tracker.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BarDataModel {
-
+public class BarDataModel
+{
     /* SerializedName is an annotation that gives the name of the variable in the response from the
      * API. Expose atm I have no idea what it does, but the jsonschema2pojo website includes it,
      * so ¯\_(ツ)_/¯ */

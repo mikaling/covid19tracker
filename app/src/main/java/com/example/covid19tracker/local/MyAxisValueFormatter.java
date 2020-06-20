@@ -9,6 +9,6 @@ public class MyAxisValueFormatter implements IAxisValueFormatter
     public String getFormattedValue(float value, AxisBase axis)
     {
         axis.setLabelCount(3,true);
-        return "Day "+value;
+        return ""+value;
     }
 }

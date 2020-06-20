@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.covid19tracker.R;
 import com.example.covid19tracker.adapter.HistoricalStatisticsAdapter;
 import com.example.covid19tracker.databinding.ActivityTestBinding;
+import com.example.covid19tracker.model.BarDataModel;
 import com.example.covid19tracker.model.HistoricalStatisticsModel;
 import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.network.TestApi;
@@ -30,7 +31,8 @@ public class TestActivity extends AppCompatActivity {
     private HistoricalStatisticsAdapter historicalAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         /* Android 3.6.* provides view binding which removes the need to use the findViewById()
@@ -40,12 +42,10 @@ public class TestActivity extends AppCompatActivity {
         setContentView(view);
 
         /**/
-        TestApi service = RetrofitClientInstance
-                .getRetrofitInstance().create(TestApi.class);
+        TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
 
         /**/
-        Call<List<HistoricalStatisticsModel>> historicalCall = service
-                .getCountryHistoricalData("kenya");
+        Call<List<BarDataModel>> historicalCall = service.getBarData();
 
         /* enqueue() is asynchronous. It sends the request and notifies the app with a callback
          * when the a response is made. As the request is asynchronous, Retrofit handles it on
@@ -53,28 +53,27 @@ public class TestActivity extends AppCompatActivity {
          * The parameter passed in enqueue() is a Callback instance. Within the instance,
          * the methods onResponse() and onFailure() must be overridden as these are the methods
          * enqueue() uses to notify the app of the request's result */
-        historicalCall.enqueue(new Callback<List<HistoricalStatisticsModel>>() {
+        historicalCall.enqueue(new Callback<List<BarDataModel>>() {
             @Override
-            public void onResponse(Call<List<HistoricalStatisticsModel>> call,
-                                   Response<List<HistoricalStatisticsModel>> response) {
+            public void onResponse(Call<List<BarDataModel>> call, Response<List<BarDataModel>> response) {
                 /* A response has been received */
                 populateRecycler(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<HistoricalStatisticsModel>> call, Throwable t) {
+            public void onFailure(Call<List<BarDataModel>> call, Throwable t) {
                 /* There has been no response made
                  * Possible reasons could be connection timeout, the response has a different
                  * structure to what has been defined as the expected response */
-                showToast(TestActivity.this,
-                        getString(R.string.retrofit_on_failure_message));
+                showToast(TestActivity.this, getString(R.string.retrofit_on_failure_message));
                 Log.e(TAG, t.getMessage(), t);
             }
         });
     }
 
-    private void populateRecycler(List<HistoricalStatisticsModel> dataList) {
-        if(dataList != null) {
+    private void populateRecycler(List<BarDataModel> dataList) {
+        if(dataList != null)
+        {
             historicalAdapter = new HistoricalStatisticsAdapter(this, dataList);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
             testBinding.recyclerHistoricalData.setLayoutManager(layoutManager);
