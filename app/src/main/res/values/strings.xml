@@ -12,4 +12,11 @@
     <string name="label_confirmed_recoveries">Confirmed Recoveries</string>
     <string name="label_active_cases">Active Cases</string>
     <string name="label_report_date">Date of Report</string>
+    <string name="label_global">Global</string>
+    <string name="label_regional">Regional</string>
+    <string name="label_local">Local</string>
+    <string name="trends_in_covid_19_in_kenya">Trends in COVID-19 in Kenya</string>
+    <string name="compare_covid_19_cases_in_east_african_countries">Compare COVID-19 Cases in East African Countries</string>
+    <string name="bar_chart_xaxis_label">Country</string>
+    <string name="bar_chart_yaxis_label">Total Number</string>
 </resources>

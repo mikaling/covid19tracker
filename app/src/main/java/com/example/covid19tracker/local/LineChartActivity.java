@@ -6,19 +6,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.covid19tracker.R;
-import com.example.covid19tracker.local.MyAxisValueFormatter;
-import com.example.covid19tracker.local.MyValueFormatter;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -26,19 +18,17 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 
-public class VisualizationActivity extends AppCompatActivity
+public class LineChartActivity extends AppCompatActivity
 {
     LineChart lineChart;
-    BarChart barChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_visualization);
+        setContentView(R.layout.activity_line_chart);
 
         lineChart();
-        barChart();
     }
 
     private void lineChart()
@@ -145,44 +135,7 @@ public class VisualizationActivity extends AppCompatActivity
         lineChart.invalidate();
     }
 
-    private void barChart()
-    {
-//      Initializing bar chart from the view
-        barChart = findViewById(R.id.bar_chart);
-
-        BarDataSet barDataSet = new BarDataSet(confirmedBarChart(),"Confirmed Cases");
-        barDataSet.setColor(Color.parseColor("#FF0000"));
-
-        XAxis xAxis = barChart.getXAxis();
-        YAxis yAxisLeft = barChart.getAxisLeft();
-        YAxis yAxisRight = barChart.getAxisRight();
-
-        xAxis.setValueFormatter(new MyAxisValueFormatter());
-        xAxis.setAxisMinimum(0);
-        yAxisLeft.setValueFormatter(new MyAxisValueFormatter());
-        yAxisLeft.setDrawLabels(true);
-        yAxisLeft.setAxisMinimum(0);
-        xAxis.setDrawGridLines(false);
-        yAxisLeft.setDrawGridLines(false);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        yAxisRight.setEnabled(false);
-
-        Description description = new Description();
-        description.setText("");
-        barChart.setDescription(description);
-
-        barChart.setDrawGridBackground(true);
-        barChart.setGridBackgroundColor(Color.parseColor("#4cada2"));
-        barChart.setBackgroundColor(Color.parseColor("#90b50b"));
-
-        BarData barData = new BarData();
-        barData.addDataSet(barDataSet);
-
-        barChart.setData(barData);
-        barChart.invalidate();
-    }
-
-//    Method for setting the x and y values to be used for a line in the line chart
+//  Method for setting the x and y values to be used for a line in the line chart
     private ArrayList<Entry> confirmed()
     {
         ArrayList<Entry> values = new ArrayList<Entry>();
@@ -213,17 +166,6 @@ public class VisualizationActivity extends AppCompatActivity
         values.add(new Entry(4,30));
         values.add(new Entry(6,40));
         values.add(new Entry(8,50));
-        return values;
-    }
-
-    //  Method for setting the x and y values to be used bar chart
-    private ArrayList<BarEntry> confirmedBarChart()
-    {
-        ArrayList<BarEntry> values = new ArrayList<>();
-        values.add(new BarEntry(0,3));
-        values.add(new BarEntry(1,12));
-        values.add(new BarEntry(2,21));
-        values.add(new BarEntry(3,28));
         return values;
     }
 }

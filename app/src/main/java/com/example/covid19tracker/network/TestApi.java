@@ -13,7 +13,7 @@ import retrofit2.http.Path;
 
 /* This interface is where the endpoints of the API are defined */
 
-public interface TestApi {
+public interface TestApi{
 
     /* Method structure
      * ---------------------------------------------------------------------------------------------
@@ -50,6 +50,10 @@ public interface TestApi {
     @GET("barData")
     Call<List<BarDataModel>> getBarData();
 
-
+    /* This endpoint returns an array of statistics from countries in a
+     * continent that is specified by providing the continent name as a slug
+     */
+    @GET("continents/{continent}")
+    Call<List<CountryDataModel>> getContinentData(@Path("continent") String continent);
 
 }
