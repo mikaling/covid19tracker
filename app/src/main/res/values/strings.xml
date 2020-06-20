@@ -12,4 +12,7 @@
     <string name="label_confirmed_recoveries">Confirmed Recoveries</string>
     <string name="label_active_cases">Active Cases</string>
     <string name="label_report_date">Date of Report</string>
+    <string name="label_global">Global</string>
+    <string name="label_regional">Regional</string>
+    <string name="label_local">Local</string>
 </resources>

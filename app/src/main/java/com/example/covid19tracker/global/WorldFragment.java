@@ -116,7 +116,7 @@ public class WorldFragment extends Fragment {
                 System.out.println(countries);
                 System.out.println(countriesObject);
                 System.out.println("Countries List: " + Arrays.deepToString(countriesList.toArray()));
-                showToast(getContext(), "Response received");
+                showToast(getActivity(), "Response received");
                 Log.i(TAG, "Response received");
 
                 loadWebView();
@@ -124,7 +124,7 @@ public class WorldFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<CountryDataModel>> call, Throwable t) {
-                showToast(getContext(),
+                showToast(getActivity(),
                         getString(R.string.retrofit_on_failure_message));
                 Log.e(TAG, t.getMessage(), t);
             }

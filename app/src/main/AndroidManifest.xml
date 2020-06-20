@@ -11,28 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.TestActivity" >
-            <!-- Uncomment this and comment intent-filter in .MainActivity to make this activity
-                 launch on start-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-
-        </activity>
-        <activity android:name=".VisualizationActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.LandingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".local.VisualizationActivity">
-
+        <activity android:name=".activity.TestActivity">
         </activity>
-
+        <activity android:name=".activity.MainActivity">
+        </activity>
+        <activity android:name=".local.VisualizationActivity"></activity>
     </application>
 
 </manifest>
