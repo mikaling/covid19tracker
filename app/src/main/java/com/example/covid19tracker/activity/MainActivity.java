@@ -1,4 +1,4 @@
-package com.example.covid19tracker;
+package com.example.covid19tracker.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 
+import com.example.covid19tracker.R;
 import com.example.covid19tracker.global.WorldFragment;
 import com.example.covid19tracker.local.LocalFragment;
 import com.example.covid19tracker.regional.RegionFragment;

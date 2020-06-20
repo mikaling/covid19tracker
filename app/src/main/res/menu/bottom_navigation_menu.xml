@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/global_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_public_black_24dp"
+        android:title="@string/label_global" />
+
+    <item
+        android:id="@+id/regional_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_map_black_24dp"
+        android:title="@string/label_regional" />
+
+    <item
+        android:id="@+id/local_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_my_location_black_24dp"
+        android:title="@string/label_local" />
+
+</menu>
