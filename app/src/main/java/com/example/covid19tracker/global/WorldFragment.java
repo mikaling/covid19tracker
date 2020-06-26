@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.example.covid19tracker.network.RetrofitClientInstance;
 
 import com.example.covid19tracker.R;
 import com.example.covid19tracker.network.TestApi;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -51,9 +53,13 @@ public class WorldFragment extends Fragment {
     private List<List<String>> countriesList = new ArrayList<List<String>>();
     private List<String> countryInfo = new ArrayList<>();
     private String countries;
-    TextView textTotalConfirmed, textTotalRecovered,textTotalDeaths;
+    TextView textTotalConfirmed, textTotalRecovered,textTotalDeaths,textNewConfirmed,textNewRecoveries,textNewDeaths;
     TestApi service;
+    View rootView;
     LinearLayout globalData;
+    ProgressBar progressBar;
+
+
     public WorldFragment() {
         // Required empty public constructor
     }
@@ -90,26 +96,48 @@ public class WorldFragment extends Fragment {
         textTotalConfirmed=view.findViewById(R.id.text_confirmed_cases);
         textTotalRecovered=view.findViewById(R.id.text_recovered_cases);
         textTotalDeaths=view.findViewById(R.id.text_total_deaths);
+        textNewConfirmed=view.findViewById(R.id.text_new_confirmed_cases);
+        textNewDeaths=view.findViewById(R.id.text_new_deaths);
+        textNewRecoveries=view.findViewById(R.id.text_new_recovered);
         globalData=(LinearLayout) view.findViewById(R.id.global_data);
+        rootView=view.findViewById(R.id.content);
+        progressBar=view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+        globalData.setVisibility(View.INVISIBLE);
 
         /**/
         service = RetrofitClientInstance
                 .getRetrofitInstance().create(TestApi.class);
 
         /**/
+
+        webView = view.findViewById(R.id.map_webview);
+        getWorldData();
+        getGlobalData();
+
+    }
+
+    public void loadWebView() {
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
+        webView.addJavascriptInterface(new WebAppInterface(getContext()), "Android");
+
+        // Auto zoom out webView
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+
+        webView.loadUrl("file:///android_asset/index.html");
+    }
+    public void getWorldData(){
         Call<List<CountryDataModel>> countryDataCall = service
                 .getCountryData();
 
-        /* enqueue() is asynchronous. It sends the request and notifies the app with a callback
-         * when the a response is made. As the request is asynchronous, Retrofit handles it on
-         * a background thread so that the main UI thread isn't blocked.
-         * The parameter passed in enqueue() is a Callback instance. Within the instance,
-         * the methods onResponse() and onFailure() must be overridden as these are the methods
-         * enqueue() uses to notify the app of the request's result */
         countryDataCall.enqueue(new Callback<List<CountryDataModel>>() {
             @Override
             public void onResponse(Call<List<CountryDataModel>> call,
                                    Response<List<CountryDataModel>> response) {
+
 
                 countriesResponse = response.body();
 
@@ -130,51 +158,43 @@ public class WorldFragment extends Fragment {
                 Log.i(TAG, "Response received");
 
                 loadWebView();
-                getGlobalStatistics();
+
             }
 
             @Override
             public void onFailure(Call<List<CountryDataModel>> call, Throwable t) {
-                showToast(getActivity(),
-                        getString(R.string.retrofit_on_failure_message));
+              showErrorSnackBar();
                 Log.e(TAG, t.getMessage(), t);
             }
         });
 
-        webView = view.findViewById(R.id.map_webview);
-
 
     }
 
-    public void loadWebView() {
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setBuiltInZoomControls(true);
-        webView.getSettings().setDisplayZoomControls(false);
-        webView.addJavascriptInterface(new WebAppInterface(getContext()), "Android");
-
-        // Auto zoom out webView
-        webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setUseWideViewPort(true);
-
-        webView.loadUrl("file:///android_asset/index.html");
-    }
-
-    void getGlobalStatistics() {
+    public void getGlobalData() {
 
         Call<GlobalStatisticsModel> call=service.getGlobalStatistics();
         call.enqueue(new Callback<GlobalStatisticsModel>() {
             @Override
             public void onResponse(Call<GlobalStatisticsModel> call, Response<GlobalStatisticsModel> response) {
                 if(response.code()==200){
+                    progressBar.setVisibility(View.INVISIBLE);
+                    globalData.setVisibility(View.VISIBLE);
                     GlobalStatisticsModel globalStatisticsModel=response.body();
                     assert globalStatisticsModel!=null;
 
                     int confirmed_cases=globalStatisticsModel.getTotalConfirmedCases();
                     int total_recoveries=globalStatisticsModel.getTotalRecoveries();
                     int total_deaths=globalStatisticsModel.getTotalDeaths();
+                    int new_confirmed=globalStatisticsModel.getNewConfirmedCases();
+                    int new_recoveries=globalStatisticsModel.getNewRecoveries();
+                    int new_deaths=globalStatisticsModel.getNewDeaths();
                     textTotalConfirmed.setText(Integer.toString(confirmed_cases));
                     textTotalDeaths.setText(Integer.toString(total_deaths));
                     textTotalRecovered.setText(Integer.toString(total_recoveries));
+                    textNewConfirmed.setText(new_confirmed+" added");
+                    textNewRecoveries.setText(new_recoveries+ " added");
+                    textNewDeaths.setText(new_deaths+" added");
 
                 }
             }
@@ -182,8 +202,27 @@ public class WorldFragment extends Fragment {
             @Override
             public void onFailure(Call<GlobalStatisticsModel> call, Throwable t) {
                 Log.i("GLOBAL ERROR",t.getMessage());
+                progressBar.setVisibility(View.INVISIBLE);
+                showErrorSnackBar();
             }
         });
+    }
+
+    private void showErrorSnackBar() {
+
+//        View rootView = findViewById(android.R.id.content);
+        final Snackbar snackbar = Snackbar
+                .make(rootView, "Error Loading Data", Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("Retry", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                getGlobalData();
+                getWorldData();
+                snackbar.dismiss();
+            }
+        });
+        snackbar.show();
     }
 
 }
