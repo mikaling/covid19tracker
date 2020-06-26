@@ -34,6 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+        app:itemIconTint="@drawable/selector"
+        app:itemTextColor="@drawable/selector"
         app:menu="@menu/bottom_navigation_menu" />
 
 </RelativeLayout>

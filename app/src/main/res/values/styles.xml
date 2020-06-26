@@ -8,4 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>s
     </style>
 
+    <style name="ConfirmedCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/confirmed_background</item>
+    </style>
+
+    <style name="RecoveredCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/recovered_background</item>
+    </style>
+
+    <style name="DeathsCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/deaths_background</item>
+    </style>
+
+
 </resources>
