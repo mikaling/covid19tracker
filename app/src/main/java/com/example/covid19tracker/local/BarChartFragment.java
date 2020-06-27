@@ -1,13 +1,17 @@
 package com.example.covid19tracker.local;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -34,18 +38,29 @@ import retrofit2.Response;
 
 import static com.example.covid19tracker.utils.Utils.showToast;
 
-public class BarChartActivity extends AppCompatActivity
+public class BarChartFragment extends Fragment
 {
     BarChart barChart;
     List<BarDataModel> barDataModels = new ArrayList<>();
     TextView xAxisLabel;
 
+    public BarChartFragment()
+    {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bar_chart);
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_bar_chart, container, false);
+        barChart = view.findViewById(R.id.bar_chart_fragment);
         TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
         Call<List<BarDataModel>> barChartData = service.getBarData();
         barChartData.enqueue(new Callback<List<BarDataModel>>()
@@ -61,18 +76,18 @@ public class BarChartActivity extends AppCompatActivity
             @Override
             public void onFailure(Call<List<BarDataModel>> call, Throwable t)
             {
-                showToast(BarChartActivity.this, getString(R.string.retrofit_on_failure_message));
+                showToast(getActivity(), getString(R.string.retrofit_on_failure_message));
                 Log.e("Bar Data Error", t.getMessage(), t);
             }
         });
+
+        return view;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void barChart()
     {
 //      Initializing bar chart from the view
-        barChart = findViewById(R.id.bar_chart);
-
         BarDataSet barDataSet = new BarDataSet(confirmedBarChart(),"Confirmed Cases");
         barDataSet.setColor(Color.parseColor("#FF0000"));
 
@@ -93,22 +108,22 @@ public class BarChartActivity extends AppCompatActivity
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         yAxisRight.setEnabled(false);
 
-        xAxisLabel = new TextView(this);
+        xAxisLabel = new TextView(getActivity());
         xAxisLabel.setText(R.string.bar_chart_xaxis_label);
         xAxisLabel.setTextColor(Color.BLACK);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
         params.setMargins(0, 0, 0, 20);
 
-        VerticalTextView yAxisLabel = new VerticalTextView(this,null);
+        VerticalTextView yAxisLabel = new VerticalTextView(getActivity(),null);
         yAxisLabel.setText(R.string.bar_chart_yaxis_label);
         yAxisLabel.setTextColor(Color.BLACK);
         yAxisLabel.setRotation(180);
         FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         params2.gravity = Gravity.START | Gravity.CENTER_VERTICAL;
         params2.setMargins(0,0,40,40);
-        addContentView(xAxisLabel,params);
-        addContentView(yAxisLabel,params2);
+        getActivity().addContentView(xAxisLabel,params);
+        getActivity().addContentView(yAxisLabel,params2);
 
         Description description = new Description();
         description.setText("");

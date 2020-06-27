@@ -1,11 +1,19 @@
 package com.example.covid19tracker.local;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.covid19tracker.R;
+import com.example.covid19tracker.model.BarDataModel;
+import com.example.covid19tracker.model.HistoricalStatisticsModel;
+import com.example.covid19tracker.network.RetrofitClientInstance;
+import com.example.covid19tracker.network.TestApi;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -17,10 +25,18 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.example.covid19tracker.utils.Utils.showToast;
 
 public class LineChartActivity extends AppCompatActivity
 {
     LineChart lineChart;
+    List<HistoricalStatisticsModel> historicalStatisticsModels = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,7 +44,26 @@ public class LineChartActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_chart);
 
-        lineChart();
+        TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
+        Call<List<HistoricalStatisticsModel>> barChartData = service.getCountryHistoricalData("Kenya");
+        barChartData.enqueue(new Callback<List<HistoricalStatisticsModel>>()
+        {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @Override
+            public void onResponse(Call<List<HistoricalStatisticsModel>> call, Response<List<HistoricalStatisticsModel>> response)
+            {
+                historicalStatisticsModels = response.body();
+                lineChart();
+            }
+
+            @Override
+            public void onFailure(Call<List<HistoricalStatisticsModel>> call, Throwable t)
+            {
+                showToast(LineChartActivity.this, getString(R.string.retrofit_on_failure_message));
+                Log.e("Bar Data Error", t.getMessage(), t);
+            }
+        });
+
     }
 
     private void lineChart()
@@ -37,8 +72,8 @@ public class LineChartActivity extends AppCompatActivity
         lineChart = findViewById(R.id.line_chart);
 
 //      Creating the dataset fo each line in the graph together with its Label/Legend Value
-        LineDataSet lineDataSetDeaths = new LineDataSet(deaths(),"Deaths");
         LineDataSet lineDataSetConfirmed = new LineDataSet(confirmed(),"Confirmed");
+        LineDataSet lineDataSetDeaths = new LineDataSet(deaths(),"Deaths");
         LineDataSet lineDataSetRecoveries = new LineDataSet(recoveries(),"Recoveries");
 
 //      Combines the datasets created above into one that will be used to feed the line chart with data
@@ -50,22 +85,22 @@ public class LineChartActivity extends AppCompatActivity
 //      Setting properties of the deaths line in the line chart
         lineDataSetDeaths.setLineWidth(4);
         lineDataSetDeaths.setColor(Color.parseColor("#180638"));
-        lineDataSetDeaths.setDrawCircles(true);
-        lineDataSetDeaths.setDrawCircleHole(true);
-        lineDataSetDeaths.setCircleColor(Color.BLACK);
-        lineDataSetDeaths.setCircleColorHole(Color.WHITE);
-//      This value should be smaller than the value of circle radius
-//        lineDataSet.setCircleHoleRadius(9);
+        lineDataSetDeaths.setDrawCircles(false);
+        lineDataSetDeaths.setDrawCircleHole(false);
+//        lineDataSetDeaths.setCircleColor(Color.BLACK);
+//        lineDataSetDeaths.setCircleColorHole(Color.WHITE);
+////      This value should be smaller than the value of circle radius
+////        lineDataSet.setCircleHoleRadius(9);
         lineDataSetDeaths.setValueTextSize(10);
         lineDataSetDeaths.setValueTextColor(Color.BLACK);
 
 //        Setting properties of the confirmed line in the line chart
         lineDataSetConfirmed.setLineWidth(4);
         lineDataSetConfirmed.setColor(Color.parseColor("#FF0000"));
-        lineDataSetConfirmed.setDrawCircles(true);
-        lineDataSetConfirmed.setDrawCircleHole(true);
-        lineDataSetConfirmed.setCircleColor(Color.BLACK);
-        lineDataSetConfirmed.setCircleColorHole(Color.WHITE);
+        lineDataSetConfirmed.setDrawCircles(false);
+        lineDataSetConfirmed.setDrawCircleHole(false);
+//        lineDataSetConfirmed.setCircleColor(Color.BLACK);
+//        lineDataSetConfirmed.setCircleColorHole(Color.WHITE);
 //      This value should be smaller than the value of circle radius
 //        lineDataSet.setCircleHoleRadius(9);
         lineDataSetConfirmed.setValueTextSize(10);
@@ -74,12 +109,12 @@ public class LineChartActivity extends AppCompatActivity
 //        Setting properties of the recoveries line in the line chart
         lineDataSetRecoveries.setLineWidth(4);
         lineDataSetRecoveries.setColor(Color.parseColor("#f1f50a"));
-        lineDataSetRecoveries.setDrawCircles(true);
-        lineDataSetRecoveries.setDrawCircleHole(true);
-        lineDataSetRecoveries.setCircleColor(Color.BLACK);
-        lineDataSetRecoveries.setCircleColorHole(Color.WHITE);
-//      This value should be smaller than the value of circle radius
-//        lineDataSet.setCircleHoleRadius(9);
+        lineDataSetRecoveries.setDrawCircles(false);
+        lineDataSetRecoveries.setDrawCircleHole(false);
+//        lineDataSetRecoveries.setCircleColor(Color.BLACK);
+//        lineDataSetRecoveries.setCircleColorHole(Color.WHITE);
+////      This value should be smaller than the value of circle radius
+////        lineDataSet.setCircleHoleRadius(9);
         lineDataSetDeaths.setValueTextSize(10);
         lineDataSetDeaths.setValueTextColor(Color.BLACK);
 
@@ -100,13 +135,11 @@ public class LineChartActivity extends AppCompatActivity
         YAxis yAxisLeft = lineChart.getAxisLeft();
         YAxis yAxisRight = lineChart.getAxisRight();
 
-        xAxis.setValueFormatter(new MyAxisValueFormatter());
-        yAxisLeft.setValueFormatter(new MyAxisValueFormatter());
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         yAxisLeft.setDrawLabels(true);
         yAxisLeft.setAxisMinimum(0);
         xAxis.setDrawGridLines(false);
         yAxisLeft.setDrawGridLines(false);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         yAxisRight.setEnabled(false);
 
 //      Manually setting the description found at the bottom of the chart
@@ -139,33 +172,33 @@ public class LineChartActivity extends AppCompatActivity
     private ArrayList<Entry> confirmed()
     {
         ArrayList<Entry> values = new ArrayList<Entry>();
-        values.add(new Entry(0,20));
-        values.add(new Entry(1,24));
-        values.add(new Entry(2,2));
-        values.add(new Entry(3,10));
-        values.add(new Entry(4,28));
+        for (int i=0; i < historicalStatisticsModels.size(); i++)
+        {
+            HistoricalStatisticsModel historicalStatisticsModel = historicalStatisticsModels.get(i);
+            values.add(new Entry(i+1, historicalStatisticsModel.getConfirmedCases()));
+        }
         return values;
     }
 
     private ArrayList<Entry> deaths()
     {
         ArrayList<Entry> values = new ArrayList<>();
-        values.add(new Entry(0,12));
-        values.add(new Entry(2,16));
-        values.add(new Entry(4,24));
-        values.add(new Entry(6,28));
-        values.add(new Entry(8,32));
+        for (int i=0; i < historicalStatisticsModels.size(); i++)
+        {
+            HistoricalStatisticsModel historicalStatisticsModel = historicalStatisticsModels.get(i);
+            values.add(new Entry(i+1, historicalStatisticsModel.getConfirmedDeaths()));
+        }
         return values;
     }
 
     private ArrayList<Entry> recoveries()
     {
         ArrayList<Entry> values = new ArrayList<>();
-        values.add(new Entry(0,10));
-        values.add(new Entry(2,20));
-        values.add(new Entry(4,30));
-        values.add(new Entry(6,40));
-        values.add(new Entry(8,50));
+        for (int i=0; i < historicalStatisticsModels.size(); i++)
+        {
+            HistoricalStatisticsModel historicalStatisticsModel = historicalStatisticsModels.get(i);
+            values.add(new Entry(i+1, historicalStatisticsModel.getConfirmedRecoveries()));
+        }
         return values;
     }
 }
