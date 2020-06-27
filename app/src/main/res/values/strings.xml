@@ -17,7 +17,7 @@
     <string name="label_local">Local</string>
     <string name="trends_in_covid_19_in_kenya">Trends in COVID-19 in Kenya</string>
     <string name="compare_covid_19_cases_in_east_african_countries">Compare COVID-19 Cases in East African Countries</string>
-    <string name="bar_chart_xaxis_label">Country</string>
-    <string name="bar_chart_yaxis_label">Total Number</string>
+    <string name="bar_chart_x_axis_label">Country</string>
+    <string name="bar_chart_y_axis_label">Total Number</string>
     <string name="label_continental">Continental</string>
 </resources>

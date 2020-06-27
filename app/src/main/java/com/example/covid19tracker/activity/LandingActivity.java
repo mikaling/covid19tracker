@@ -1,29 +1,29 @@
 package com.example.covid19tracker.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import com.example.covid19tracker.R;
-import com.example.covid19tracker.continents.ContinentsFragment;
 import com.example.covid19tracker.databinding.ActivityLandingBinding;
-import com.example.covid19tracker.global.WorldFragment;
-import com.example.covid19tracker.local.LocalFragment;
-import com.example.covid19tracker.regional.RegionFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LandingActivity extends AppCompatActivity {
 
     ActivityLandingBinding landingBinding;
+    int[] arrayOfMenuItems = {R.id.global_fragment, R.id.continental_fragment,
+            R.id.regional_fragment, R.id.local_fragment};
+    AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+            arrayOfMenuItems).build();
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,45 +43,21 @@ public class LandingActivity extends AppCompatActivity {
         landingBinding = ActivityLandingBinding.inflate(getLayoutInflater());
         View view = landingBinding.getRoot();
         setContentView(view);
+        setSupportActionBar(landingBinding.materialToolbar);
 
-        final FragmentManager fragmentManager = getSupportFragmentManager();
-        final Fragment globalFragment = new WorldFragment();
-        final Fragment regionalFragment = new RegionFragment();
-        final Fragment localFragment = new LocalFragment();
-        final Fragment continentalFragment = new ContinentsFragment();
+        /*
+        * Using the Navigation component to handle navigation between fragments
+        * We have this as our base activity and then set up our navigation controller with
+        * the bottom navigation view for our top level destinations and
+        * the action bar to show the title of a given fragment and provide an Up clickable
+        * that allows one to move back to the top level */
+        navController = Navigation.findNavController(this, R.id.navigation_host_fragment);
+        NavigationUI.setupWithNavController(landingBinding.bottomNavigation, navController);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+    }
 
-        landingBinding.bottomNavigation.setOnNavigationItemSelectedListener(item -> {
-            Fragment fragment;
-            switch (item.getItemId()) {
-                case R.id.global_page:
-                default:
-                    fragment = globalFragment;
-                    break;
-
-                case R.id.regional_page:
-                    fragment = regionalFragment;
-                    break;
-
-                case R.id.continental_page:
-                    fragment = continentalFragment;
-                    break;
-
-                case R.id.local_page:
-                    fragment = localFragment;
-                    break;
-            }
-            fragmentManager.beginTransaction().replace(R.id.frame_content
-                    , fragment).commit();
-            return true;
-        });
-
-//        landingBinding.bottomNavigation.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
-//            @Override
-//            public void onNavigationItemReselected(@NonNull MenuItem item) {
-//
-//            }
-//        });
-
-        landingBinding.bottomNavigation.setSelectedItemId(R.id.global_page);
+    @Override
+    public boolean onSupportNavigateUp() {
+        return navController.navigateUp() || super.onSupportNavigateUp();
     }
 }

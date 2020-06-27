@@ -94,14 +94,14 @@ public class BarChartActivity extends AppCompatActivity
         yAxisRight.setEnabled(false);
 
         xAxisLabel = new TextView(this);
-        xAxisLabel.setText(R.string.bar_chart_xaxis_label);
+        xAxisLabel.setText(R.string.bar_chart_x_axis_label);
         xAxisLabel.setTextColor(Color.BLACK);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
         params.setMargins(0, 0, 0, 20);
 
         VerticalTextView yAxisLabel = new VerticalTextView(this,null);
-        yAxisLabel.setText(R.string.bar_chart_yaxis_label);
+        yAxisLabel.setText(R.string.bar_chart_y_axis_label);
         yAxisLabel.setTextColor(Color.BLACK);
         yAxisLabel.setRotation(180);
         FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);

@@ -53,7 +53,6 @@ public class BarChartFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -108,22 +107,24 @@ public class BarChartFragment extends Fragment
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         yAxisRight.setEnabled(false);
 
-        xAxisLabel = new TextView(getActivity());
-        xAxisLabel.setText(R.string.bar_chart_xaxis_label);
-        xAxisLabel.setTextColor(Color.BLACK);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
-        params.setMargins(0, 0, 0, 20);
-
-        VerticalTextView yAxisLabel = new VerticalTextView(getActivity(),null);
-        yAxisLabel.setText(R.string.bar_chart_yaxis_label);
-        yAxisLabel.setTextColor(Color.BLACK);
-        yAxisLabel.setRotation(180);
-        FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        params2.gravity = Gravity.START | Gravity.CENTER_VERTICAL;
-        params2.setMargins(0,0,40,40);
-        getActivity().addContentView(xAxisLabel,params);
-        getActivity().addContentView(yAxisLabel,params2);
+//        //Changed parameter from getActivity() to getContext()
+//        xAxisLabel = new TextView(this.getContext());
+//        xAxisLabel.setText(R.string.bar_chart_xaxis_label);
+//        xAxisLabel.setTextColor(Color.BLACK);
+//        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+//        params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+//        params.setMargins(0, 0, 0, 20);
+//
+//        //Changed parameter from getActivity() to getContext()
+//        VerticalTextView yAxisLabel = new VerticalTextView(this.getContext(),null);
+//        yAxisLabel.setText(R.string.bar_chart_y_axis_label);
+//        yAxisLabel.setTextColor(Color.BLACK);
+//        yAxisLabel.setRotation(180);
+//        FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+//        params2.gravity = Gravity.START | Gravity.CENTER_VERTICAL;
+//        params2.setMargins(0,0,40,40);
+//        getActivity().addContentView(xAxisLabel,params);
+//        getActivity().addContentView(yAxisLabel,params2);
 
         Description description = new Description();
         description.setText("");
@@ -144,10 +145,10 @@ public class BarChartFragment extends Fragment
     private ArrayList<BarEntry> confirmedBarChart()
     {
         ArrayList<BarEntry> values = new ArrayList<>();
-        for (int i=0; i < barDataModels.size(); i++)
+        for (int i = 0; i < barDataModels.size(); i++)
         {
             BarDataModel barDataModel = barDataModels.get(i);
-            values.add(new BarEntry(i,barDataModel.getBarDataTotalConfirmedCases()));
+            values.add(new BarEntry(i, barDataModel.getBarDataTotalConfirmedCases()));
         }
         return values;
     }

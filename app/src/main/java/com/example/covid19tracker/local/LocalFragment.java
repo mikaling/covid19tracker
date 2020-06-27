@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,10 +55,12 @@ public class LocalFragment extends Fragment implements View.OnClickListener
         {
 //            Intent barChartIntent = new Intent(v.getContext(),BarChartActivity.class);
 //            startActivity(barChartIntent);
-            BarChartFragment barChartFragment = new BarChartFragment();
-            FragmentManager fragmentManager = getFragmentManager();
-            assert fragmentManager != null;
-            fragmentManager.beginTransaction().replace(R.id.local_relative_layout,barChartFragment).commit();
+//            BarChartFragment barChartFragment = new BarChartFragment();
+//            FragmentManager fragmentManager = getFragmentManager();
+//            assert fragmentManager != null;
+//            fragmentManager.beginTransaction().replace(R.id.local_relative_layout,barChartFragment).commit();
+            NavDirections action = LocalFragmentDirections.actionLocalFragmentToBarChartFragment();
+            Navigation.findNavController(this.getView()).navigate(action);
         }
     }
 }
