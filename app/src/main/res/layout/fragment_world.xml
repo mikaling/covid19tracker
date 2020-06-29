@@ -1,186 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
     tools:context=".global.WorldFragment"
     tools:viewBindingIgnore="true">
 
-
-    <WebView
-        android:id="@+id/map_webview"
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_global_container"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="match_parent" >
 
-        />
+        <include layout="@layout/placeholder_global" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <LinearLayout
+    <include layout="@layout/view_global" />
 
-        android:id="@+id/global_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/map_webview">
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/confirmed"
-            style="@style/ConfirmedCardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_weight="1"
-            android:outlineAmbientShadowColor="@color/colorAccent"
-            app:cardElevation="@dimen/cardview_compat_inset_shadow">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-
-                android:textAlignment="center">
-
-                <TextView
-                    android:id="@+id/text_new_confirmed_cases"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:text="172341 added"
-                    android:textSize="8sp" />
-
-                <TextView
-                    android:id="@+id/text_confirmed_cases"
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:textColor="#870000"
-                    tools:text="9212353" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:text="Confirmed"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/recovered"
-            style="@style/RecoveredCardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_weight="1"
-            android:outlineAmbientShadowColor="@color/colorAccent"
-            app:cardElevation="@dimen/cardview_compat_inset_shadow">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:textAlignment="center">
-
-                <TextView
-                    android:id="@+id/text_new_recovered"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:text="172341 added"
-                    android:textSize="8sp" />
-
-                <TextView
-                    android:id="@+id/text_recovered_cases"
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:textColor="#003d00"
-                    tools:text="9212353" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:text="Recovered"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/deaths"
-            style="@style/DeathsCardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_weight="1"
-            android:outlineAmbientShadowColor="@color/colorAccent"
-            app:cardElevation="@dimen/cardview_compat_inset_shadow">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:textAlignment="center">
-
-                <TextView
-                    android:id="@+id/text_new_deaths"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:text="172341 added"
-                    android:textSize="8sp" />
-
-                <TextView
-                    android:id="@+id/text_total_deaths"
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    tools:text="9212353" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:text="Deaths"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

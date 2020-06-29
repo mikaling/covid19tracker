@@ -30,15 +30,15 @@ public class CountryDataModel {
 
     @SerializedName("totalConfirmed")
     @Expose
-    private String countryDataTotalConfirmedCases;
+    private int countryDataTotalConfirmedCases;
 
     @SerializedName("totalDeaths")
     @Expose
-    private String countryDataTotalDeaths;
+    private int countryDataTotalDeaths;
 
     @SerializedName("totalRecovered")
     @Expose
-    private String countryDataTotalRecoveries;
+    private int countryDataTotalRecoveries;
 
     @SerializedName("date")
     @Expose
@@ -49,8 +49,8 @@ public class CountryDataModel {
     private int countryDataVersion;
 
     public CountryDataModel(String countryDataId, String countryDataName,
-                            String countryDataTotalConfirmedCases, String countryDataTotalDeaths,
-                            String countryDataTotalRecoveries, String countryDataReportDate,
+                            int countryDataTotalConfirmedCases, int countryDataTotalDeaths,
+                            int countryDataTotalRecoveries, String countryDataReportDate,
                             int countryDataVersion) {
         this.countryDataId = countryDataId;
         this.countryDataName = countryDataName;
@@ -65,15 +65,15 @@ public class CountryDataModel {
         return countryDataName;
     }
 
-    public String getCountryDataTotalConfirmedCases() {
+    public int getCountryDataTotalConfirmedCases() {
         return countryDataTotalConfirmedCases;
     }
 
-    public String getCountryDataTotalDeaths() {
+    public int getCountryDataTotalDeaths() {
         return countryDataTotalDeaths;
     }
 
-    public String getCountryDataTotalRecoveries() {
+    public int getCountryDataTotalRecoveries() {
         return countryDataTotalRecoveries;
     }
 

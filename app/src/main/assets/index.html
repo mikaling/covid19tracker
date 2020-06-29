@@ -11,50 +11,32 @@
       google.charts.setOnLoadCallback(drawRegionsMap);
 
       function drawRegionsMap() {
-        /*var data = google.visualization.arrayToDataTable([
-          ['Country', 'Popularity'],
-          ['Bahamas', 200],
-          ['United States', 300],
-          ['Brazil', 400],
-          ['Canada', 500],
-          ['France', 6000],
-          ['RU', 700]
-        ]);*/
-
-        var newRows = [];
-        var jsonString = Android.getArrayGeoChartData();
-        console.log("JSON STRING: " + jsonString);
-        newRows.push(jsonString);
-        console.log(newRows);
-        var object = JSON.parse(newRows);
-        console.log(object[0][1]);
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Country');
-        data.addColumn('number', 'Confirmed Cases');
-        for( var i = 0; i < object.length; i++) {
-          data.addRow([object[i][0], parseInt(object[i][1].replace(/,/g, ''))]);
-          /*data.addRow([object[4][0], parseInt(object[4][1].replace(/,/g, ''))]);
-          data.addRow([object[5][0], parseInt(object[5][1].replace(/,/g, ''))]);
-          data.addRow([object[11][0], parseInt(object[14][1].replace(/,/g, ''))]);*/
+        var toto = Android.getArrayGeoChartData();
+        var mesa = JSON.parse(toto);
+        var africa = new google.visualization.DataTable();
+        africa.addColumn('string', 'Country');
+        africa.addColumn('number', 'Confirmed Cases');
+        for(var i = 0; i < mesa.length; i++) {
+          africa.addRow([mesa[i].name, mesa[i].number]);
         }
-        var csv = google.visualization.dataTableToCsv(data);
-        console.log(csv);
-        var options = {};
-
+        var options = {
+          colorAxis: {
+            minValue: 1000,
+            maxValue: 100000,
+            colors: ['#fff600', '#ffc302', '#ff8f00', '#ff5b00', '#ff0505']
+          }
+        };
         var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-
-        chart.draw(data, options);
+        chart.draw(africa, options);
       }
-      console.log("test");
       function showAndroidToast(toast) {
         Android.showToast(toast);
-    }
+      }
 
     </script>
 </head>
 <body>
-<div id="regions_div" style="width: 900px; height: 500px;"></div>
+<div id="regions_div" style="width: 1280px; height: 720px;"></div>
 
 
 </body>

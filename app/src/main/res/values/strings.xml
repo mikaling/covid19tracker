@@ -20,4 +20,10 @@
     <string name="bar_chart_x_axis_label">Country</string>
     <string name="bar_chart_y_axis_label">Total Number</string>
     <string name="label_continental">Continental</string>
+    <string name="label_total_confirmed_cases">Total Confirmed</string>
+    <string name="label_new_confirmed_cases">New Confirmed</string>
+    <string name="label_total_recoveries">Total Recoveries</string>
+    <string name="label_new_recoveries">New Recoveries</string>
+    <string name="label_total_deaths">Total Deaths</string>
+    <string name="label_new_deaths">New Deaths</string>
 </resources>
