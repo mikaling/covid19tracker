@@ -79,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:textColor="#870000"
+                    android:textSize="18sp"
                     tools:text="9212353" />
 
                 <TextView
@@ -124,6 +125,7 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:textColor="#003d00"
+                    android:textSize="18sp"
                     tools:text="9212353" />
 
                 <TextView
@@ -168,6 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
+                    android:textSize="18sp"
                     tools:text="9212353" />
 
                 <TextView
