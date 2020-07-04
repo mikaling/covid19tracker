@@ -96,7 +96,7 @@ public class LineChartFragment extends Fragment
         dataSets.add(lineDataSetRecoveries);
 
 //      Setting properties of the deaths line in the line chart
-        lineDataSetDeaths.setLineWidth(4);
+        lineDataSetDeaths.setLineWidth(1.5f);
         lineDataSetDeaths.setColor(Color.parseColor("#180638"));
         lineDataSetDeaths.setDrawCircles(false);
         lineDataSetDeaths.setDrawCircleHole(false);
@@ -108,7 +108,7 @@ public class LineChartFragment extends Fragment
         lineDataSetDeaths.setValueTextColor(Color.BLACK);
 
 //        Setting properties of the confirmed line in the line chart
-        lineDataSetConfirmed.setLineWidth(4);
+        lineDataSetConfirmed.setLineWidth(1.5f);
         lineDataSetConfirmed.setColor(Color.parseColor("#FF0000"));
         lineDataSetConfirmed.setDrawCircles(false);
         lineDataSetConfirmed.setDrawCircleHole(false);
@@ -120,7 +120,7 @@ public class LineChartFragment extends Fragment
         lineDataSetConfirmed.setValueTextColor(Color.BLACK);
 
 //        Setting properties of the recoveries line in the line chart
-        lineDataSetRecoveries.setLineWidth(4);
+        lineDataSetRecoveries.setLineWidth(1.5f);
         lineDataSetRecoveries.setColor(Color.parseColor("#f1f50a"));
         lineDataSetRecoveries.setDrawCircles(false);
         lineDataSetRecoveries.setDrawCircleHole(false);
@@ -137,10 +137,10 @@ public class LineChartFragment extends Fragment
 //      Set properties of the legend
         legend.setEnabled(true);
         legend.setTextColor(Color.BLACK);
-        legend.setTextSize(15);
+        legend.setTextSize(10);
         legend.setForm(Legend.LegendForm.LINE);
         legend.setFormSize(20);
-        legend.setXEntrySpace(15);
+        legend.setXEntrySpace(10);
         legend.setFormToTextSpace(10);
 
 //      Getting the axes objects from the line charts
