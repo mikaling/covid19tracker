@@ -46,6 +46,7 @@ public class BarChartFragment extends Fragment
     BarChart barChart;
     List<BarDataModel> barDataModels = new ArrayList<>();
     TextView xAxisLabel;
+    int count;
 
     public BarChartFragment()
     {
@@ -68,8 +69,9 @@ public class BarChartFragment extends Fragment
         barDataResponseCall.enqueue(new Callback<BarDataResponse>() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
-            public void onResponse(Call<BarDataResponse> call, Response<BarDataResponse> response) {
-                if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS_ALT)) {
+            public void onResponse(Call<BarDataResponse> call, Response<BarDataResponse> response)
+            {
+                if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
                     barDataModels = response.body().getData().getBarDataModelList();
                     Log.i("BarChartFragment", barDataModels.toString());
                     barChart();
@@ -108,7 +110,7 @@ public class BarChartFragment extends Fragment
         xAxis.setCenterAxisLabels(true);
         xAxis.setGranularity(1);
         xAxis.setGranularityEnabled(true);
-        xAxis.setAxisMinimum(0);
+//        xAxis.setAxisMinimum(0);
         xAxis.setDrawGridLines(false);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
@@ -118,39 +120,23 @@ public class BarChartFragment extends Fragment
         yAxisLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         yAxisRight.setEnabled(false);
 
-//        //Changed parameter from getActivity() to getContext()
-//        xAxisLabel = new TextView(this.getContext());
-//        xAxisLabel.setText(R.string.bar_chart_xaxis_label);
-//        xAxisLabel.setTextColor(Color.BLACK);
-//        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-//        params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
-//        params.setMargins(0, 0, 0, 20);
-//
-//        //Changed parameter from getActivity() to getContext()
-//        VerticalTextView yAxisLabel = new VerticalTextView(this.getContext(),null);
-//        yAxisLabel.setText(R.string.bar_chart_y_axis_label);
-//        yAxisLabel.setTextColor(Color.BLACK);
-//        yAxisLabel.setRotation(180);
-//        FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-//        params2.gravity = Gravity.START | Gravity.CENTER_VERTICAL;
-//        params2.setMargins(0,0,40,40);
-//        getActivity().addContentView(xAxisLabel,params);
-//        getActivity().addContentView(yAxisLabel,params2);
-
         Description description = new Description();
         description.setText("");
         barChart.setDescription(description);
 
-        barChart.setDrawGridBackground(true);
-        barChart.setGridBackgroundColor(Color.parseColor("#4cada2"));
-        barChart.setBackgroundColor(Color.parseColor("#90b50b"));
+//        barChart.setDrawGridBackground(true);
+//        barChart.setGridBackgroundColor(Color.parseColor("#4cada2"));
+        barChart.setBackgroundColor(Color.parseColor("#FAFAFA"));
 
-        BarData barData = new BarData(barDataSetConfirmed,barDataSetDeaths,barDataSetRecoveries);
+        BarData barData = new BarData(barDataSetConfirmed,barDataSetRecoveries,barDataSetDeaths);
         barData.setBarWidth(0.3f);
+        xAxis.setAxisMinimum(-barData.getBarWidth()/2);
+        xAxis.setAxisMaximum(count-barData.getBarWidth()/2);
 
+        barChart.setFitBars(true);
         barChart.setData(barData);
         barChart.setDragEnabled(true);
-        barChart.setVisibleXRangeMaximum(5);
+        barChart.setVisibleXRangeMaximum(3);
         barChart.groupBars(0,groupSpace,barSpace);
 
         barChart.invalidate();
@@ -176,6 +162,7 @@ public class BarChartFragment extends Fragment
             BarDataModel barDataModel = barDataModels.get(i);
             values.add(new BarEntry(i, barDataModel.getBarDataTotalDeaths()));
         }
+        count = values.size();
         return values;
     }
 
