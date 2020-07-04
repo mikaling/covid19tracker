@@ -106,7 +106,6 @@ public class WorldFragment extends Fragment {
         service = RetrofitClientInstance
                 .getRetrofitInstance().create(TestApi.class);
 
-        /**/
 
         webView = view.findViewById(R.id.map_webview);
         getWorldData();
@@ -148,39 +147,6 @@ public class WorldFragment extends Fragment {
                 Log.e(TAG, t.getMessage(), t);
             }
         });
-
-//        Call<List<CountryDataModel>> countryDataCall = service
-//                .getCountryData();
-//
-//        countryDataCall.enqueue(new Callback<List<CountryDataModel>>() {
-//            @Override
-//            public void onResponse(Call<List<CountryDataModel>> call,
-//                                   Response<List<CountryDataModel>> response) {
-//
-//                Log.i(TAG, "Response received from API call");
-//
-//                countriesResponse = response.body();
-//
-//                for (int i = 0; i < countriesResponse.size(); i++) {
-//                    CountryInfoModel countryInfoModel = new CountryInfoModel(
-//                            countriesResponse.get(i).getCountryDataName(),
-//                            countriesResponse.get(i).getCountryDataTotalConfirmedCases()
-//                    );
-//                    countriesList.add(countryInfoModel);
-//                }
-//
-//                Gson countriesObject = new Gson();
-//                countries = countriesObject.toJson(countriesList);
-//
-//                loadWebView();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<CountryDataModel>> call, Throwable t) {
-//                showErrorSnackBar();
-//                Log.e(TAG, t.getMessage(), t);
-//            }
-//        });
 
     }
 

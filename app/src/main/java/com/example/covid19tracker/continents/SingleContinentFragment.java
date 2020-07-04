@@ -15,9 +15,21 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
 import com.example.covid19tracker.R;
-import com.example.covid19tracker.global.WorldFragment;
+import com.example.covid19tracker.model.CountryDataModel;
+import com.example.covid19tracker.model.CountryInfoModel;
+import com.example.covid19tracker.model.CountryModel;
+import com.example.covid19tracker.network.RetrofitClientInstance;
+import com.example.covid19tracker.network.TestApi;
+import com.example.covid19tracker.response.ContinentDataResponse;
+import com.example.covid19tracker.utils.Utils;
+import com.google.gson.Gson;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,14 +37,20 @@ import java.util.Arrays;
  * create an instance of this fragment.
  */
 public class SingleContinentFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM1 = "continentCode";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "SingleContinentFragment";
 
+    private List<CountryDataModel> countriesResponse;
+    private List<CountryModel> countriesList = new ArrayList<>();
+    private TestApi service;
+    private String countries;
+    private String continentName;
+
+
+
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String mCountryCode;
     private String mParam2;
 
     private WebView webView;
@@ -44,16 +62,14 @@ public class SingleContinentFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param continentCode Parameter 1.
      * @return A new instance of fragment SingleContinentFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SingleContinentFragment newInstance(String param1, String param2) {
+    public static SingleContinentFragment newInstance(String continentCode) {
         SingleContinentFragment fragment = new SingleContinentFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM1, continentCode);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,8 +78,8 @@ public class SingleContinentFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mCountryCode = getArguments().getString(ARG_PARAM1);
+
         }
     }
 
@@ -84,8 +100,13 @@ public class SingleContinentFragment extends Fragment {
         }
 
         @JavascriptInterface
-        public void getArrayGeoChartData() {
+        public String getContinentCode() {
+            return mCountryCode;
+        }
 
+        @JavascriptInterface
+        public String getContinentArrayGeoChartData() {
+            return countries;
         }
 
     }
@@ -95,6 +116,27 @@ public class SingleContinentFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         loadWebView();
+        Log.i(TAG, "Code: " + mCountryCode);
+
+        service = RetrofitClientInstance
+                .getRetrofitInstance().create(TestApi.class);
+
+        if (mCountryCode.equals("002")) {
+            continentName = "Africa";
+        } else if (mCountryCode.equals("150")) {
+            continentName = "Europe";
+        } else if (mCountryCode.equals("142")) {
+            continentName = "Asia";
+        } else if (mCountryCode.equals("021")) {
+            continentName = "NorthAmerica";
+        } else if (mCountryCode.equals("005")) {
+            continentName = "SouthAmerica";
+        } else if (mCountryCode.equals("009")) {
+            continentName = "Oceania";
+        }
+
+        getWorldData();
+
     }
 
     public void loadWebView() {
@@ -106,4 +148,44 @@ public class SingleContinentFragment extends Fragment {
 
         webView.loadUrl("file:///android_asset/continents.html");
     }
+
+    private void getWorldData(){
+
+        Call<ContinentDataResponse> continentDataResponseCall = service
+                .getContinentData(continentName);
+//        Call<List<CountryDataModel>> continentDataCall = service
+//                .getContinentData(continentName);
+        continentDataResponseCall.enqueue(new Callback<ContinentDataResponse>() {
+            @Override
+            public void onResponse(Call<ContinentDataResponse> call, Response<ContinentDataResponse> response) {
+                if (response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
+                    Log.i(TAG, "Response received from API call");
+
+                    countriesResponse = response.body().getCountryDataWrap().getCountryDataModelList();
+
+                    for (int i = 0; i < countriesResponse.size(); i++) {
+                        CountryModel countryModel = new CountryModel(
+                                countriesResponse.get(i).getCountryDataTotalConfirmedCases(),
+                                countriesResponse.get(i).getCountryDataName()
+
+                        );
+                        countriesList.add(countryModel);
+                    }
+
+                    Gson countriesObject = new Gson();
+                    countries = countriesObject.toJson(countriesList);
+
+                    loadWebView();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ContinentDataResponse> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
 }
