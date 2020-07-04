@@ -86,9 +86,16 @@ public class BarChartFragment extends Fragment
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void barChart()
     {
+        float barSpace = 0f;
+        float groupSpace = 0.1f;
+
 //      Initializing bar chart from the view
-        BarDataSet barDataSet = new BarDataSet(confirmedBarChart(),"Confirmed Cases");
-        barDataSet.setColor(Color.parseColor("#FF0000"));
+        BarDataSet barDataSetConfirmed = new BarDataSet(confirmedBarChart(),"Confirmed Cases");
+        barDataSetConfirmed.setColor(Color.parseColor("#FF0000"));
+        BarDataSet barDataSetDeaths = new BarDataSet(deathsBarChart(),"Deaths");
+        barDataSetDeaths.setColor(Color.parseColor("#330b5c"));
+        BarDataSet barDataSetRecoveries = new BarDataSet(recoveriesBarChart(),"Recoveries");
+        barDataSetRecoveries.setColor(Color.parseColor("#f1f50a"));
 
         XAxis xAxis = barChart.getXAxis();
         YAxis yAxisLeft = barChart.getAxisLeft();
@@ -96,15 +103,17 @@ public class BarChartFragment extends Fragment
 
         String[] barChartLabels = new String[]{"Burundi","Kenya","Rwanda","Tanzania","Uganda"};
         xAxis.setValueFormatter(new IndexAxisValueFormatter(barChartLabels));
-//        xAxis.setCenterAxisLabels(true);
-        xAxis.setGranularity(1f);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setGranularity(1);
         xAxis.setGranularityEnabled(true);
         xAxis.setAxisMinimum(0);
+        xAxis.setDrawGridLines(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
         yAxisLeft.setDrawLabels(true);
         yAxisLeft.setAxisMinimum(0);
-        xAxis.setDrawGridLines(false);
         yAxisLeft.setDrawGridLines(false);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        yAxisLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         yAxisRight.setEnabled(false);
 
 //        //Changed parameter from getActivity() to getContext()
@@ -134,10 +143,14 @@ public class BarChartFragment extends Fragment
         barChart.setGridBackgroundColor(Color.parseColor("#4cada2"));
         barChart.setBackgroundColor(Color.parseColor("#90b50b"));
 
-        BarData barData = new BarData();
-        barData.addDataSet(barDataSet);
+        BarData barData = new BarData(barDataSetConfirmed,barDataSetDeaths,barDataSetRecoveries);
+        barData.setBarWidth(0.3f);
 
         barChart.setData(barData);
+        barChart.setDragEnabled(true);
+        barChart.setVisibleXRangeMaximum(5);
+        barChart.groupBars(0,groupSpace,barSpace);
+
         barChart.invalidate();
     }
 
@@ -149,6 +162,28 @@ public class BarChartFragment extends Fragment
         {
             BarDataModel barDataModel = barDataModels.get(i);
             values.add(new BarEntry(i, barDataModel.getBarDataTotalConfirmedCases()));
+        }
+        return values;
+    }
+
+    private ArrayList<BarEntry> deathsBarChart()
+    {
+        ArrayList<BarEntry> values = new ArrayList<>();
+        for (int i = 0; i < barDataModels.size(); i++)
+        {
+            BarDataModel barDataModel = barDataModels.get(i);
+            values.add(new BarEntry(i, barDataModel.getBarDataTotalDeaths()));
+        }
+        return values;
+    }
+
+    private ArrayList<BarEntry> recoveriesBarChart()
+    {
+        ArrayList<BarEntry> values = new ArrayList<>();
+        for (int i = 0; i < barDataModels.size(); i++)
+        {
+            BarDataModel barDataModel = barDataModels.get(i);
+            values.add(new BarEntry(i, barDataModel.getBarDataTotalRecoveries()));
         }
         return values;
     }

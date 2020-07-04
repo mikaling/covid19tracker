@@ -141,7 +141,7 @@ public class WorldFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<CountryDataModel>> call, Throwable t) {
-                showErrorSnackBar();
+//                showErrorSnackBar();
                 Log.e(TAG, t.getMessage(), t);
             }
         });
@@ -198,7 +198,7 @@ public class WorldFragment extends Fragment {
             public void onFailure(Call<GlobalStatisticsModel> call, Throwable t) {
                 Log.i("GLOBAL ERROR",t.getMessage());
                 shimmerFrameLayout.stopShimmer();
-                showErrorSnackBar();
+//                showErrorSnackBar();
             }
         });
     }

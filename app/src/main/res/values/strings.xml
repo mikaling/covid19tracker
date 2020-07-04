@@ -26,4 +26,5 @@
     <string name="label_new_recoveries">New Recoveries</string>
     <string name="label_total_deaths">Total Deaths</string>
     <string name="label_new_deaths">New Deaths</string>
+    <string name="days_arbitrary_number">Days (Arbitrary Number)</string>
 </resources>

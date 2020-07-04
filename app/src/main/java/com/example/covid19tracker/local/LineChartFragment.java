@@ -1,16 +1,18 @@
 package com.example.covid19tracker.local;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.covid19tracker.R;
-import com.example.covid19tracker.model.BarDataModel;
 import com.example.covid19tracker.model.HistoricalStatisticsModel;
 import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.network.TestApi;
@@ -19,6 +21,7 @@ import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.ChartData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -33,20 +36,30 @@ import retrofit2.Response;
 
 import static com.example.covid19tracker.utils.Utils.showToast;
 
-public class LineChartActivity extends AppCompatActivity
+public class LineChartFragment extends Fragment
 {
     LineChart lineChart;
     List<HistoricalStatisticsModel> historicalStatisticsModels = new ArrayList<>();
 
+    public LineChartFragment()
+    {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_line_chart);
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_line_chart, container, false);
+        lineChart = view.findViewById(R.id.line_chart_fragment);
         TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
-        Call<List<HistoricalStatisticsModel>> barChartData = service.getCountryHistoricalData("Kenya");
-        barChartData.enqueue(new Callback<List<HistoricalStatisticsModel>>()
+        Call<List<HistoricalStatisticsModel>> lineChartData = service.getCountryHistoricalData("Kenya");
+        lineChartData.enqueue(new Callback<List<HistoricalStatisticsModel>>()
         {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
@@ -59,18 +72,16 @@ public class LineChartActivity extends AppCompatActivity
             @Override
             public void onFailure(Call<List<HistoricalStatisticsModel>> call, Throwable t)
             {
-                showToast(LineChartActivity.this, getString(R.string.retrofit_on_failure_message));
+                showToast(getActivity(), getString(R.string.retrofit_on_failure_message));
                 Log.e("Bar Data Error", t.getMessage(), t);
             }
         });
 
+        return view;
     }
 
     private void lineChart()
     {
-//       Initializing line chart from the view
-        lineChart = findViewById(R.id.line_chart);
-
 //      Creating the dataset fo each line in the graph together with its Label/Legend Value
         LineDataSet lineDataSetConfirmed = new LineDataSet(confirmed(),"Confirmed");
         LineDataSet lineDataSetDeaths = new LineDataSet(deaths(),"Deaths");
@@ -168,7 +179,7 @@ public class LineChartActivity extends AppCompatActivity
         lineChart.invalidate();
     }
 
-//  Method for setting the x and y values to be used for a line in the line chart
+    //  Method for setting the x and y values to be used for a line in the line chart
     private ArrayList<Entry> confirmed()
     {
         ArrayList<Entry> values = new ArrayList<Entry>();

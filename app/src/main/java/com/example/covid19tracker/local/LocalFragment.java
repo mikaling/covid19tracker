@@ -48,8 +48,10 @@ public class LocalFragment extends Fragment implements View.OnClickListener
     {
         if (v.getId() == R.id.trendsLineChart)
         {
-            Intent lineChartIntent = new Intent(v.getContext(),LineChartActivity.class);
-            startActivity(lineChartIntent);
+//            Intent lineChartIntent = new Intent(v.getContext(),LineChartActivity.class);
+//            startActivity(lineChartIntent);
+            NavDirections action = LocalFragmentDirections.actionLocalFragmentToLineChartFragment2();
+            Navigation.findNavController(this.getView()).navigate(action);
         }
         if (v.getId() == R.id.comparisonBarChart)
         {
