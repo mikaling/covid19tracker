@@ -2,19 +2,15 @@ package com.example.covid19tracker.model;
 
 public class CountryInfoModel {
 
-    private String name;
-    private int number;
+    private String country;
+    private int confirmed;
+    private int deaths;
+    private int recoveries;
 
-    public CountryInfoModel(String name, int number) {
-        this.name = name;
-        this.number = number;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getNumber() {
-        return number;
+    public CountryInfoModel(String country, int confirmed, int deaths, int recoveries) {
+        this.country = country;
+        this.confirmed = confirmed;
+        this.deaths = deaths;
+        this.recoveries = recoveries;
     }
 }

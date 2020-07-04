@@ -1,15 +1,17 @@
 package com.example.covid19tracker.network;
 
-import com.example.covid19tracker.model.BarDataModel;
-import com.example.covid19tracker.model.CountryDataModel;
-import com.example.covid19tracker.model.GlobalStatisticsModel;
-import com.example.covid19tracker.model.HistoricalStatisticsModel;
+import com.example.covid19tracker.response.BarDataResponse;
+import com.example.covid19tracker.response.ContinentDataResponse;
+import com.example.covid19tracker.response.CountryDataResponse;
+import com.example.covid19tracker.response.GlobalStatisticsResponse;
+import com.example.covid19tracker.response.HistoricalStatisticsResponse;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /* This interface is where the endpoints of the API are defined */
 
@@ -36,24 +38,24 @@ public interface TestApi{
      * of a country's statistical data from the date of its first case
      * to the current date (the day the call has been made) */
     @GET("historical/{country}")
-    Call<List<HistoricalStatisticsModel>> getCountryHistoricalData(@Path("country") String country);
+    Call<HistoricalStatisticsResponse> getCountryHistoricalData(@Path("country") String country);
 
     /* This endpoint returns a response detailing the global statistics of COVID-19 cases */
     @GET("globalStatistics")
-    Call<GlobalStatisticsModel> getGlobalStatistics();
+    Call<GlobalStatisticsResponse> getGlobalStatistics();
 
     /* This endpoint returns an array of each country's most current statistics */
     @GET("countryData")
-    Call<List<CountryDataModel>> getCountryData();
+    Call<CountryDataResponse> getCountryData(@Query("limit") int limit);
 
     /* This endpoint returns an array of countries in East Africa and their total statistics */
     @GET("barData")
-    Call<List<BarDataModel>> getBarData();
+    Call<BarDataResponse> getBarData();
 
     /* This endpoint returns an array of statistics from countries in a
      * continent that is specified by providing the continent name as a slug
      */
     @GET("continents/{continent}")
-    Call<List<CountryDataModel>> getContinentData(@Path("continent") String continent);
+    Call<ContinentDataResponse> getContinentData(@Path("continent") String continent);
 
 }

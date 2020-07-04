@@ -10,10 +10,13 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.covid19tracker.R;
+import com.example.covid19tracker.continents.PagerAdapter;
 import com.example.covid19tracker.model.BarDataModel;
 import com.example.covid19tracker.model.HistoricalStatisticsModel;
 import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.network.TestApi;
+import com.example.covid19tracker.response.HistoricalStatisticsResponse;
+import com.example.covid19tracker.utils.Utils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -45,25 +48,24 @@ public class LineChartActivity extends AppCompatActivity
         setContentView(R.layout.activity_line_chart);
 
         TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
-        Call<List<HistoricalStatisticsModel>> barChartData = service.getCountryHistoricalData("Kenya");
-        barChartData.enqueue(new Callback<List<HistoricalStatisticsModel>>()
-        {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+        Call<HistoricalStatisticsResponse> historicalStatisticsResponseCall = service
+                .getCountryHistoricalData("Kenya");
+        historicalStatisticsResponseCall.enqueue(new Callback<HistoricalStatisticsResponse>() {
             @Override
-            public void onResponse(Call<List<HistoricalStatisticsModel>> call, Response<List<HistoricalStatisticsModel>> response)
-            {
-                historicalStatisticsModels = response.body();
-                lineChart();
+            public void onResponse(Call<HistoricalStatisticsResponse> call, Response<HistoricalStatisticsResponse> response) {
+                if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
+                    historicalStatisticsModels = response.body().getHistoricalStatisticsWrap()
+                        .getHistoricalStatisticsModelList();
+                    lineChart();
+                }
             }
 
             @Override
-            public void onFailure(Call<List<HistoricalStatisticsModel>> call, Throwable t)
-            {
+            public void onFailure(Call<HistoricalStatisticsResponse> call, Throwable t) {
                 showToast(LineChartActivity.this, getString(R.string.retrofit_on_failure_message));
                 Log.e("Bar Data Error", t.getMessage(), t);
             }
         });
-
     }
 
     private void lineChart()

@@ -15,6 +15,8 @@ import com.example.covid19tracker.R;
 import com.example.covid19tracker.model.BarDataModel;
 import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.network.TestApi;
+import com.example.covid19tracker.response.BarDataResponse;
+import com.example.covid19tracker.utils.Utils;
 import com.example.covid19tracker.utils.VerticalTextView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
@@ -47,20 +49,19 @@ public class BarChartActivity extends AppCompatActivity
         setContentView(R.layout.activity_bar_chart);
 
         TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
-        Call<List<BarDataModel>> barChartData = service.getBarData();
-        barChartData.enqueue(new Callback<List<BarDataModel>>()
-        {
+        Call<BarDataResponse> barDataResponseCall = service.getBarData();
+        barDataResponseCall.enqueue(new Callback<BarDataResponse>() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
-            public void onResponse(Call<List<BarDataModel>> call, Response<List<BarDataModel>> response)
-            {
-                barDataModels = response.body();
-                barChart();
+            public void onResponse(Call<BarDataResponse> call, Response<BarDataResponse> response) {
+                if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
+                    barDataModels = response.body().getData().getBarDataModelList();
+                    barChart();
+                }
             }
 
             @Override
-            public void onFailure(Call<List<BarDataModel>> call, Throwable t)
-            {
+            public void onFailure(Call<BarDataResponse> call, Throwable t) {
                 showToast(BarChartActivity.this, getString(R.string.retrofit_on_failure_message));
                 Log.e("Bar Data Error", t.getMessage(), t);
             }

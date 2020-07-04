@@ -21,6 +21,9 @@ import com.example.covid19tracker.model.CountryInfoModel;
 import com.example.covid19tracker.model.GlobalStatisticsModel;
 import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.network.TestApi;
+import com.example.covid19tracker.response.CountryDataResponse;
+import com.example.covid19tracker.response.GlobalStatisticsResponse;
+import com.example.covid19tracker.utils.Utils;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -113,38 +116,71 @@ public class WorldFragment extends Fragment {
 
     private void getWorldData(){
 
-        Call<List<CountryDataModel>> countryDataCall = service
-                .getCountryData();
+        Call<CountryDataResponse> countryDataCall = service.getCountryData(200);
 
-        countryDataCall.enqueue(new Callback<List<CountryDataModel>>() {
+        countryDataCall.enqueue(new Callback<CountryDataResponse>() {
             @Override
-            public void onResponse(Call<List<CountryDataModel>> call,
-                                   Response<List<CountryDataModel>> response) {
-
+            public void onResponse(Call<CountryDataResponse> call,
+                                   Response<CountryDataResponse> response) {
                 Log.i(TAG, "Response received from API call");
+                if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
+                    countriesResponse = response.body().getCountryDataWrap().getCountryDataModelList();
+                    for (int i = 0; i < countriesResponse.size(); i++) {
+                        CountryInfoModel countryInfoModel = new CountryInfoModel(
+                                countriesResponse.get(i).getCountryDataName(),
+                                countriesResponse.get(i).getCountryDataTotalConfirmedCases(),
+                                countriesResponse.get(i).getCountryDataTotalDeaths(),
+                                countriesResponse.get(i).getCountryDataTotalRecoveries()
+                        );
+                        countriesList.add(countryInfoModel);
+                    }
 
-                countriesResponse = response.body();
-
-                for (int i = 0; i < countriesResponse.size(); i++) {
-                    CountryInfoModel countryInfoModel = new CountryInfoModel(
-                            countriesResponse.get(i).getCountryDataName(),
-                            countriesResponse.get(i).getCountryDataTotalConfirmedCases()
-                    );
-                    countriesList.add(countryInfoModel);
+                    Gson countriesObject = new Gson();
+                    countries = countriesObject.toJson(countriesList);
+                    Log.i(TAG, "CountryData: " + countries);
+                    loadWebView();
                 }
-
-                Gson countriesObject = new Gson();
-                countries = countriesObject.toJson(countriesList);
-
-                loadWebView();
             }
 
             @Override
-            public void onFailure(Call<List<CountryDataModel>> call, Throwable t) {
-//                showErrorSnackBar();
+            public void onFailure(Call<CountryDataResponse> call, Throwable t) {
+                showErrorSnackBar();
                 Log.e(TAG, t.getMessage(), t);
             }
         });
+
+//        Call<List<CountryDataModel>> countryDataCall = service
+//                .getCountryData();
+//
+//        countryDataCall.enqueue(new Callback<List<CountryDataModel>>() {
+//            @Override
+//            public void onResponse(Call<List<CountryDataModel>> call,
+//                                   Response<List<CountryDataModel>> response) {
+//
+//                Log.i(TAG, "Response received from API call");
+//
+//                countriesResponse = response.body();
+//
+//                for (int i = 0; i < countriesResponse.size(); i++) {
+//                    CountryInfoModel countryInfoModel = new CountryInfoModel(
+//                            countriesResponse.get(i).getCountryDataName(),
+//                            countriesResponse.get(i).getCountryDataTotalConfirmedCases()
+//                    );
+//                    countriesList.add(countryInfoModel);
+//                }
+//
+//                Gson countriesObject = new Gson();
+//                countries = countriesObject.toJson(countriesList);
+//
+//                loadWebView();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<CountryDataModel>> call, Throwable t) {
+//                showErrorSnackBar();
+//                Log.e(TAG, t.getMessage(), t);
+//            }
+//        });
 
     }
 
@@ -167,12 +203,13 @@ public class WorldFragment extends Fragment {
 
     private void getGlobalData() {
 
-        Call<GlobalStatisticsModel> call=service.getGlobalStatistics();
-        call.enqueue(new Callback<GlobalStatisticsModel>() {
+        Call<GlobalStatisticsResponse> globalStatisticsResponseCall = service.getGlobalStatistics();
+        globalStatisticsResponseCall.enqueue(new Callback<GlobalStatisticsResponse>() {
             @Override
-            public void onResponse(Call<GlobalStatisticsModel> call, Response<GlobalStatisticsModel> response) {
-                if(response.code()==200){
-                    GlobalStatisticsModel globalStatisticsModel=response.body();
+            public void onResponse(Call<GlobalStatisticsResponse> call, Response<GlobalStatisticsResponse> response) {
+                if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)){
+                    GlobalStatisticsModel globalStatisticsModel = response
+                            .body().getGlobalStatisticsWrap().getGlobalStatisticsModel();
                     assert globalStatisticsModel!=null;
 
                     int confirmed_cases = globalStatisticsModel.getTotalConfirmedCases();
@@ -195,10 +232,10 @@ public class WorldFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<GlobalStatisticsModel> call, Throwable t) {
+            public void onFailure(Call<GlobalStatisticsResponse> call, Throwable t) {
                 Log.i("GLOBAL ERROR",t.getMessage());
                 shimmerFrameLayout.stopShimmer();
-//                showErrorSnackBar();
+                showErrorSnackBar();
             }
         });
     }

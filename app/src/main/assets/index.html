@@ -1,5 +1,6 @@
 <html>
 <head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
       google.charts.load('current', {
@@ -8,27 +9,81 @@
         // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
         'mapsApiKey': 'AIzaSyDJo7j9wGAlXuz-ZQ9J_qC_2tQL54Tf_KU'
       });
-      google.charts.setOnLoadCallback(drawRegionsMap);
+      google.charts.setOnLoadCallback(drawConfirmed);
+      google.charts.setOnLoadCallback(drawDeaths);
+      google.charts.setOnLoadCallback(drawRecoveries);
 
-      function drawRegionsMap() {
+      function drawConfirmed() {
         var toto = Android.getArrayGeoChartData();
         var mesa = JSON.parse(toto);
         var africa = new google.visualization.DataTable();
         africa.addColumn('string', 'Country');
         africa.addColumn('number', 'Confirmed Cases');
         for(var i = 0; i < mesa.length; i++) {
-          africa.addRow([mesa[i].name, mesa[i].number]);
+          africa.addRow([mesa[i].country, mesa[i].confirmed]);
         }
         var options = {
           colorAxis: {
+            title: 'COVID-19: Total Confirmed Cases',
             minValue: 1000,
             maxValue: 100000,
             colors: ['#fff600', '#ffc302', '#ff8f00', '#ff5b00', '#ff0505']
           }
         };
-        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+        var chart = new google.visualization.GeoChart(document.getElementById('confirmed_div'));
         chart.draw(africa, options);
       }
+
+      function drawDeaths() {
+        var toto = Android.getArrayGeoChartData();
+        var mesa = JSON.parse(toto);
+        var africa = new google.visualization.DataTable();
+        africa.addColumn('string', 'Country');
+        africa.addColumn('number', 'Confirmed Deaths');
+        for(var i = 0; i < mesa.length; i++) {
+          africa.addRow([mesa[i].country, mesa[i].deaths]);
+        }
+        var options = {
+          title: 'COVID-19: Total Confirmed Deaths',
+          width: 900,
+          keepAspectRation: true
+        }
+        /*var options = {
+          colorAxis: {
+            minValue: 1000,
+            maxValue: 100000,
+            colors: ['#fff600', '#ffc302', '#ff8f00', '#ff5b00', '#ff0505']
+          }
+        };*/
+        var chart = new google.visualization.GeoChart(document.getElementById('deaths_div'));
+        chart.draw(africa, options);
+      }
+
+      function drawRecoveries() {
+        var toto = Android.getArrayGeoChartData();
+        var mesa = JSON.parse(toto);
+        var africa = new google.visualization.DataTable();
+        africa.addColumn('string', 'Country');
+        africa.addColumn('number', 'Confirmed Recoveries');
+        for(var i = 0; i < mesa.length; i++) {
+          africa.addRow([mesa[i].country, mesa[i].recoveries]);
+        }
+        var options = {
+          title: 'COVID-19: Total Confirmed Recoveries',
+          width: 900,
+          keepAspectRatio: true
+        }
+        /*var options = {
+          colorAxis: {
+            minValue: 1000,
+            maxValue: 100000,
+            colors: ['#fff600', '#ffc302', '#ff8f00', '#ff5b00', '#ff0505']
+          }
+        };*/
+        var chart = new google.visualization.GeoChart(document.getElementById('recoveries_div'));
+        chart.draw(africa, options);
+      }
+
       function showAndroidToast(toast) {
         Android.showToast(toast);
       }
@@ -36,8 +91,39 @@
     </script>
 </head>
 <body>
-<div id="regions_div" style="width: 1280px; height: 720px;"></div>
+<div id="geochartCarousel" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#geochartCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#geochartCarousel" data-slide-to="1"></li>
+    <li data-target="#geochartCarousel" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div><h1>COVID-19: Total Confirmed Cases</h1></div>
+      <div id="confirmed_div" class="d-block w-100"></div>
+    </div>
+    <div class="carousel-item">
+      <div><h1>COVID-19: Total Confirmed Deaths</h1></div>
+      <div id="deaths_div" class="d-block w-100"></div>
+    </div>
+    <div class="carousel-item">
+      <div><h1>COVID-19: Total Confirmed Recoveries</h1></div>
+      <div id="recoveries_div" class="d-block w-100"></div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#geochartCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#geochartCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
 
 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

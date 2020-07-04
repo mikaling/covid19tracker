@@ -48,19 +48,6 @@ public class CountryDataModel {
     @Expose
     private int countryDataVersion;
 
-    public CountryDataModel(String countryDataId, String countryDataName,
-                            int countryDataTotalConfirmedCases, int countryDataTotalDeaths,
-                            int countryDataTotalRecoveries, String countryDataReportDate,
-                            int countryDataVersion) {
-        this.countryDataId = countryDataId;
-        this.countryDataName = countryDataName;
-        this.countryDataTotalConfirmedCases = countryDataTotalConfirmedCases;
-        this.countryDataTotalDeaths = countryDataTotalDeaths;
-        this.countryDataTotalRecoveries = countryDataTotalRecoveries;
-        this.countryDataReportDate = countryDataReportDate;
-        this.countryDataVersion = countryDataVersion;
-    }
-
     public String getCountryDataName() {
         return countryDataName;
     }

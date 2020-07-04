@@ -16,6 +16,8 @@ import com.example.covid19tracker.R;
 import com.example.covid19tracker.model.HistoricalStatisticsModel;
 import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.network.TestApi;
+import com.example.covid19tracker.response.HistoricalStatisticsResponse;
+import com.example.covid19tracker.utils.Utils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -58,20 +60,20 @@ public class LineChartFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_line_chart, container, false);
         lineChart = view.findViewById(R.id.line_chart_fragment);
         TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
-        Call<List<HistoricalStatisticsModel>> lineChartData = service.getCountryHistoricalData("Kenya");
-        lineChartData.enqueue(new Callback<List<HistoricalStatisticsModel>>()
-        {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+        Call<HistoricalStatisticsResponse> historicalStatisticsResponseCall = service
+                .getCountryHistoricalData("Kenya");
+        historicalStatisticsResponseCall.enqueue(new Callback<HistoricalStatisticsResponse>() {
             @Override
-            public void onResponse(Call<List<HistoricalStatisticsModel>> call, Response<List<HistoricalStatisticsModel>> response)
-            {
-                historicalStatisticsModels = response.body();
-                lineChart();
+            public void onResponse(Call<HistoricalStatisticsResponse> call, Response<HistoricalStatisticsResponse> response) {
+                if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
+                    historicalStatisticsModels = response.body().getHistoricalStatisticsWrap()
+                        .getHistoricalStatisticsModelList();
+                    lineChart();
+                }
             }
 
             @Override
-            public void onFailure(Call<List<HistoricalStatisticsModel>> call, Throwable t)
-            {
+            public void onFailure(Call<HistoricalStatisticsResponse> call, Throwable t) {
                 showToast(getActivity(), getString(R.string.retrofit_on_failure_message));
                 Log.e("Bar Data Error", t.getMessage(), t);
             }

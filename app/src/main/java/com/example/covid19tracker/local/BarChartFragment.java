@@ -19,6 +19,7 @@ import com.example.covid19tracker.R;
 import com.example.covid19tracker.model.BarDataModel;
 import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.network.TestApi;
+import com.example.covid19tracker.response.BarDataResponse;
 import com.example.covid19tracker.utils.VerticalTextView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
@@ -35,6 +36,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import com.example.covid19tracker.utils.Utils;
 
 import static com.example.covid19tracker.utils.Utils.showToast;
 
@@ -61,25 +64,24 @@ public class BarChartFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_bar_chart, container, false);
         barChart = view.findViewById(R.id.bar_chart_fragment);
         TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
-        Call<List<BarDataModel>> barChartData = service.getBarData();
-        barChartData.enqueue(new Callback<List<BarDataModel>>()
-        {
+        Call<BarDataResponse> barDataResponseCall = service.getBarData();
+        barDataResponseCall.enqueue(new Callback<BarDataResponse>() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
-            public void onResponse(Call<List<BarDataModel>> call, Response<List<BarDataModel>> response)
-            {
-                barDataModels = response.body();
-                barChart();
+            public void onResponse(Call<BarDataResponse> call, Response<BarDataResponse> response) {
+                if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS_ALT)) {
+                    barDataModels = response.body().getData().getBarDataModelList();
+                    Log.i("BarChartFragment", barDataModels.toString());
+                    barChart();
+                }
             }
 
             @Override
-            public void onFailure(Call<List<BarDataModel>> call, Throwable t)
-            {
+            public void onFailure(Call<BarDataResponse> call, Throwable t) {
                 showToast(getActivity(), getString(R.string.retrofit_on_failure_message));
                 Log.e("Bar Data Error", t.getMessage(), t);
             }
         });
-
         return view;
     }
 
