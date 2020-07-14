@@ -11,4 +11,7 @@ public class Utils {
     public static void showToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
+
+    public static final String RESPONSE_SUCCESS = "success";
+    public static final String RESPONSE_SUCCESS_ALT= "Success";
 }

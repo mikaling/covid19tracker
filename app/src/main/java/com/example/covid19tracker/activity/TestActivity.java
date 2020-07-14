@@ -17,6 +17,8 @@ import com.example.covid19tracker.model.CountryDataModel;
 import com.example.covid19tracker.model.HistoricalStatisticsModel;
 import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.network.TestApi;
+import com.example.covid19tracker.response.ContinentDataResponse;
+import com.example.covid19tracker.utils.Utils;
 
 import java.util.List;
 
@@ -75,15 +77,18 @@ public class TestActivity extends AppCompatActivity {
 
         TestApi service = RetrofitClientInstance.
                 getRetrofitInstance().create(TestApi.class);
-        Call<List<CountryDataModel>> call = service.getContinentData("Africa");
-        call.enqueue(new Callback<List<CountryDataModel>>() {
+        Call<ContinentDataResponse> call = service.getContinentData("Africa");
+        call.enqueue(new Callback<ContinentDataResponse>() {
             @Override
-            public void onResponse(Call<List<CountryDataModel>> call, Response<List<CountryDataModel>> response) {
-                populateRecycler(response.body());
+            public void onResponse(Call<ContinentDataResponse> call, Response<ContinentDataResponse> response) {
+                if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
+                    populateRecycler(response.body().getCountryDataWrap().getCountryDataModelList());
+
+                }
             }
 
             @Override
-            public void onFailure(Call<List<CountryDataModel>> call, Throwable t) {
+            public void onFailure(Call<ContinentDataResponse> call, Throwable t) {
                 showToast(TestActivity.this, getString(R.string.retrofit_on_failure_message));
                 Log.e(TAG, t.getMessage(), t);
             }

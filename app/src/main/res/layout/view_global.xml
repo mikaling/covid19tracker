@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="invisible"
+    android:id="@+id/view_global" >
+
+    <WebView
+        android:id="@+id/map_webview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/middle_space"
+        android:layout_alignParentTop="true"/>
+
+    <Space
+        android:id="@+id/middle_space"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_above="@id/horizontal_cards"/>
+
+    <TableLayout
+        android:id="@+id/horizontal_cards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_space"
+        android:stretchColumns="0,1">
+
+        <TableRow>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/total_confirmed"
+                style="@style/ConfirmedCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:textAlignment="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_total_confirmed_cases"
+                        android:textStyle="bold"
+                        style="@style/TextAppearance.MaterialComponents.Body1"/>
+
+                    <TextView
+                        android:id="@+id/text_confirmed_cases"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#870000"
+                        tools:text="9212353" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/new_confirmed"
+                style="@style/ConfirmedCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:textAlignment="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_new_confirmed_cases"
+                        android:textStyle="bold"
+                        style="@style/TextAppearance.MaterialComponents.Body1"/>
+
+                    <TextView
+                        android:id="@+id/text_new_confirmed_cases"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="172341"
+                        android:textColor="#870000"
+                        style="@style/TextAppearance.MaterialComponents.Headline5" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="3dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/total_recovered"
+                style="@style/RecoveredCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_total_recoveries"
+                        android:textStyle="bold"
+                        style="@style/TextAppearance.MaterialComponents.Body1"/>
+
+                    <TextView
+                        android:id="@+id/text_recovered_cases"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#003d00"
+                        tools:text="9212353" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/new_recovered"
+                style="@style/RecoveredCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_new_recoveries"
+                        android:textStyle="bold"
+                        style="@style/TextAppearance.MaterialComponents.Body1"/>
+
+                    <TextView
+                        android:id="@+id/text_new_recovered"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="172341"
+                        style="@style/TextAppearance.MaterialComponents.Headline5" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </TableRow>
+
+        <TableRow>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/total_deaths"
+                style="@style/DeathsCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:textAlignment="center"
+                    android:padding="5dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_total_deaths"
+                        style="@style/TextAppearance.MaterialComponents.Body1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_total_deaths"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="9212353" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/new_deaths"
+                style="@style/DeathsCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:textAlignment="center"
+                    android:padding="5dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_new_deaths"
+                        style="@style/TextAppearance.MaterialComponents.Body1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_new_deaths"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="172341"
+                        style="@style/TextAppearance.MaterialComponents.Headline5" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </TableRow>
+
+    </TableLayout>
+
+    <Space
+        android:id="@+id/bottom_space"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

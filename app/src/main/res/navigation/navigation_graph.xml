@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_local_fragment_to_barChartFragment"
             app:destination="@id/bar_chart_fragment" />
+        <action
+            android:id="@+id/action_local_fragment_to_lineChartFragment2"
+            app:destination="@id/lineChartFragment" />
     </fragment>
 
     <fragment
@@ -37,5 +40,10 @@
         android:name="com.example.covid19tracker.local.BarChartFragment"
         android:label="Bar Chart: WIP"
         tools:layout="@layout/fragment_bar_chart" />
+    <fragment
+        android:id="@+id/lineChartFragment"
+        android:name="com.example.covid19tracker.local.LineChartFragment"
+        android:label="Trends of COVID-19 in Kenya"
+        tools:layout="@layout/fragment_line_chart" />
 
 </navigation>

@@ -2,47 +2,40 @@ package com.example.covid19tracker.global;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.view.Display;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import com.example.covid19tracker.R;
 import com.example.covid19tracker.model.CountryDataModel;
+import com.example.covid19tracker.model.CountryInfoModel;
 import com.example.covid19tracker.model.GlobalStatisticsModel;
 import com.example.covid19tracker.network.RetrofitClientInstance;
-
-
-import com.example.covid19tracker.R;
 import com.example.covid19tracker.network.TestApi;
+import com.example.covid19tracker.response.CountryDataResponse;
+import com.example.covid19tracker.response.GlobalStatisticsResponse;
+import com.example.covid19tracker.utils.Utils;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.example.covid19tracker.utils.Utils.showToast;
 
 public class WorldFragment extends Fragment {
 
@@ -50,21 +43,19 @@ public class WorldFragment extends Fragment {
     private static final String TAG = "WorldFragment";
     private WebView webView;
     private List<CountryDataModel> countriesResponse;
-    private List<List<String>> countriesList = new ArrayList<List<String>>();
-    private List<String> countryInfo = new ArrayList<>();
+    private List<CountryInfoModel> countriesList = new ArrayList<>();
+    private List<String> listOfCountries = new ArrayList();
     private String countries;
-    TextView textTotalConfirmed, textTotalRecovered,textTotalDeaths,textNewConfirmed,textNewRecoveries,textNewDeaths;
-    TestApi service;
-    View rootView;
-    LinearLayout globalData;
-    ProgressBar progressBar;
-
+    private TextView textTotalConfirmed, textTotalRecovered,textTotalDeaths,textNewConfirmed,
+            textNewRecoveries,textNewDeaths;
+    private TestApi service;
+    private View rootView;
+    private ShimmerFrameLayout shimmerFrameLayout;
+    private RelativeLayout viewGlobal;
 
     public WorldFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,7 +67,7 @@ public class WorldFragment extends Fragment {
     public class WebAppInterface {
         Context mContext;
 
-        public WebAppInterface (Context context) {
+        WebAppInterface (Context context) {
             mContext = context;
         }
 
@@ -87,6 +78,13 @@ public class WorldFragment extends Fragment {
         }
 
     }
+
+    private void showView() {
+        shimmerFrameLayout.stopShimmer();
+        shimmerFrameLayout.setVisibility(View.INVISIBLE);
+        viewGlobal.setVisibility(View.VISIBLE);
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -99,17 +97,15 @@ public class WorldFragment extends Fragment {
         textNewConfirmed=view.findViewById(R.id.text_new_confirmed_cases);
         textNewDeaths=view.findViewById(R.id.text_new_deaths);
         textNewRecoveries=view.findViewById(R.id.text_new_recovered);
-        globalData=(LinearLayout) view.findViewById(R.id.global_data);
         rootView=view.findViewById(R.id.content);
-        progressBar=view.findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
-        globalData.setVisibility(View.INVISIBLE);
+        viewGlobal = view.findViewById(R.id.view_global);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_global_container);
+        shimmerFrameLayout.startShimmer();
 
         /**/
         service = RetrofitClientInstance
                 .getRetrofitInstance().create(TestApi.class);
 
-        /**/
 
         webView = view.findViewById(R.id.map_webview);
         getWorldData();
@@ -117,7 +113,44 @@ public class WorldFragment extends Fragment {
 
     }
 
-    public void loadWebView() {
+    private void getWorldData(){
+
+        Call<CountryDataResponse> countryDataCall = service.getCountryData(200);
+
+        countryDataCall.enqueue(new Callback<CountryDataResponse>() {
+            @Override
+            public void onResponse(Call<CountryDataResponse> call,
+                                   Response<CountryDataResponse> response) {
+                Log.i(TAG, "Response received from API call");
+                if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
+                    countriesResponse = response.body().getCountryDataWrap().getCountryDataModelList();
+                    for (int i = 0; i < countriesResponse.size(); i++) {
+                        CountryInfoModel countryInfoModel = new CountryInfoModel(
+                                countriesResponse.get(i).getCountryDataName(),
+                                countriesResponse.get(i).getCountryDataTotalConfirmedCases(),
+                                countriesResponse.get(i).getCountryDataTotalDeaths(),
+                                countriesResponse.get(i).getCountryDataTotalRecoveries()
+                        );
+                        countriesList.add(countryInfoModel);
+                    }
+
+                    Gson countriesObject = new Gson();
+                    countries = countriesObject.toJson(countriesList);
+                    Log.i(TAG, "CountryData: " + countries);
+                    loadWebView();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CountryDataResponse> call, Throwable t) {
+                showErrorSnackBar();
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+
+    }
+
+    private void loadWebView() {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
@@ -128,81 +161,46 @@ public class WorldFragment extends Fragment {
         webView.getSettings().setUseWideViewPort(true);
 
         webView.loadUrl("file:///android_asset/index.html");
-    }
-    public void getWorldData(){
-        Call<List<CountryDataModel>> countryDataCall = service
-                .getCountryData();
 
-        countryDataCall.enqueue(new Callback<List<CountryDataModel>>() {
-            @Override
-            public void onResponse(Call<List<CountryDataModel>> call,
-                                   Response<List<CountryDataModel>> response) {
-
-
-                countriesResponse = response.body();
-
-                for (int i = 0; i < countriesResponse.size(); i++) {
-                    countryInfo = new ArrayList<>();
-                    countryInfo.add("'" + countriesResponse.get(i).getCountryDataName() + "'");
-                    countryInfo.add(countriesResponse.get(i).getCountryDataTotalConfirmedCases());
-                    countriesList.add(countryInfo);
-                }
-
-                Gson countriesObject = new Gson();
-
-                countries = countriesObject.toJson(countriesList);
-                System.out.println(countries);
-                System.out.println(countriesObject);
-                System.out.println("Countries List: " + Arrays.deepToString(countriesList.toArray()));
-                showToast(getActivity(), "Response received");
-                Log.i(TAG, "Response received");
-
-                loadWebView();
-
-            }
-
-            @Override
-            public void onFailure(Call<List<CountryDataModel>> call, Throwable t) {
-              showErrorSnackBar();
-                Log.e(TAG, t.getMessage(), t);
-            }
-        });
-
-
+        showView();
     }
 
-    public void getGlobalData() {
 
-        Call<GlobalStatisticsModel> call=service.getGlobalStatistics();
-        call.enqueue(new Callback<GlobalStatisticsModel>() {
+
+    private void getGlobalData() {
+
+        Call<GlobalStatisticsResponse> globalStatisticsResponseCall = service.getGlobalStatistics();
+        globalStatisticsResponseCall.enqueue(new Callback<GlobalStatisticsResponse>() {
             @Override
-            public void onResponse(Call<GlobalStatisticsModel> call, Response<GlobalStatisticsModel> response) {
-                if(response.code()==200){
-                    progressBar.setVisibility(View.INVISIBLE);
-                    globalData.setVisibility(View.VISIBLE);
-                    GlobalStatisticsModel globalStatisticsModel=response.body();
+            public void onResponse(Call<GlobalStatisticsResponse> call, Response<GlobalStatisticsResponse> response) {
+                if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)){
+                    GlobalStatisticsModel globalStatisticsModel = response
+                            .body().getGlobalStatisticsWrap().getGlobalStatisticsModel();
                     assert globalStatisticsModel!=null;
 
-                    int confirmed_cases=globalStatisticsModel.getTotalConfirmedCases();
-                    int total_recoveries=globalStatisticsModel.getTotalRecoveries();
-                    int total_deaths=globalStatisticsModel.getTotalDeaths();
-                    int new_confirmed=globalStatisticsModel.getNewConfirmedCases();
-                    int new_recoveries=globalStatisticsModel.getNewRecoveries();
-                    int new_deaths=globalStatisticsModel.getNewDeaths();
-                    textTotalConfirmed.setText(Integer.toString(confirmed_cases));
-                    textTotalDeaths.setText(Integer.toString(total_deaths));
-                    textTotalRecovered.setText(Integer.toString(total_recoveries));
-                    textNewConfirmed.setText(new_confirmed+" added");
-                    textNewRecoveries.setText(new_recoveries+ " added");
-                    textNewDeaths.setText(new_deaths+" added");
+                    int confirmed_cases = globalStatisticsModel.getTotalConfirmedCases();
+                    int total_recoveries = globalStatisticsModel.getTotalRecoveries();
+                    int total_deaths = globalStatisticsModel.getTotalDeaths();
+                    int new_confirmed = globalStatisticsModel.getNewConfirmedCases();
+                    int new_recoveries = globalStatisticsModel.getNewRecoveries();
+                    int new_deaths = globalStatisticsModel.getNewDeaths();
+
+                    DecimalFormat decimalFormat = new DecimalFormat("#,###");
+
+                    textTotalConfirmed.setText(decimalFormat.format(confirmed_cases));
+                    textTotalDeaths.setText(decimalFormat.format(total_deaths));
+                    textTotalRecovered.setText(decimalFormat.format(total_recoveries));
+                    textNewConfirmed.setText(decimalFormat.format(new_confirmed));
+                    textNewRecoveries.setText(decimalFormat.format(new_recoveries));
+                    textNewDeaths.setText(decimalFormat.format(new_deaths));
 
                 }
             }
 
             @Override
-            public void onFailure(Call<GlobalStatisticsModel> call, Throwable t) {
+            public void onFailure(Call<GlobalStatisticsResponse> call, Throwable t) {
                 Log.i("GLOBAL ERROR",t.getMessage());
-                progressBar.setVisibility(View.INVISIBLE);
+                shimmerFrameLayout.stopShimmer();
                 showErrorSnackBar();
             }
         });
@@ -210,13 +208,12 @@ public class WorldFragment extends Fragment {
 
     private void showErrorSnackBar() {
 
-//        View rootView = findViewById(android.R.id.content);
         final Snackbar snackbar = Snackbar
                 .make(rootView, "Error Loading Data", Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction("Retry", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
+                shimmerFrameLayout.startShimmer();
                 getGlobalData();
                 getWorldData();
                 snackbar.dismiss();
@@ -225,4 +222,6 @@ public class WorldFragment extends Fragment {
         snackbar.show();
     }
 
+    //TODO:Improve on the shimmer effect, add onPause and onResume implementations
+    //TODO:Work on the web view layout
 }
