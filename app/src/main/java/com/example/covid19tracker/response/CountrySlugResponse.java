@@ -3,15 +3,11 @@ package com.example.covid19tracker.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CountryDataResponse {
+public class CountrySlugResponse {
 
     @SerializedName("status")
     @Expose
     private String status;
-
-    @SerializedName("page")
-    @Expose
-    private int pageNumber;
 
     @SerializedName("results")
     @Expose
@@ -19,17 +15,17 @@ public class CountryDataResponse {
 
     @SerializedName("data")
     @Expose
-    private CountryDataWrap countryDataWrap;
+    private CountrySlugWrap wrap;
 
     public String getStatus() {
         return status;
     }
 
-    public int getPageNumber() {
-        return pageNumber;
+    public int getResults() {
+        return results;
     }
 
-    public CountryDataWrap getCountryDataWrap() {
-        return countryDataWrap;
+    public CountrySlugWrap getWrap() {
+        return wrap;
     }
 }

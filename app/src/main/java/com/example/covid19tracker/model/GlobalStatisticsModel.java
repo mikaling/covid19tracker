@@ -21,11 +21,11 @@ public class GlobalStatisticsModel {
 
     @SerializedName("NewConfirmed")
     @Expose
-    private int newConfirmedCases;
+    private int newConfirmed;
 
     @SerializedName("TotalConfirmed")
     @Expose
-    private int totalConfirmedCases;
+    private int totalConfirmed;
 
     @SerializedName("NewDeaths")
     @Expose
@@ -37,28 +37,28 @@ public class GlobalStatisticsModel {
 
     @SerializedName("NewRecovered")
     @Expose
-    private int newRecoveries;
+    private int newRecovered;
 
     @SerializedName("TotalRecovered")
     @Expose
-    private int totalRecoveries;
+    private int totalRecovered;
 
-    public GlobalStatisticsModel(int newConfirmedCases, int totalConfirmedCases, int newDeaths,
-                                 int totalDeaths, int newRecoveries, int totalRecoveries) {
-        this.newConfirmedCases = newConfirmedCases;
-        this.totalConfirmedCases = totalConfirmedCases;
+    public GlobalStatisticsModel(int newConfirmed, int totalConfirmed, int newDeaths,
+                                 int totalDeaths, int newRecovered, int totalRecovered) {
+        this.newConfirmed = newConfirmed;
+        this.totalConfirmed = totalConfirmed;
         this.newDeaths = newDeaths;
         this.totalDeaths = totalDeaths;
-        this.newRecoveries = newRecoveries;
-        this.totalRecoveries = totalRecoveries;
+        this.newRecovered = newRecovered;
+        this.totalRecovered = totalRecovered;
     }
 
-    public int getNewConfirmedCases() {
-        return newConfirmedCases;
+    public int getNewConfirmed() {
+        return newConfirmed;
     }
 
-    public int getTotalConfirmedCases() {
-        return totalConfirmedCases;
+    public int getTotalConfirmed() {
+        return totalConfirmed;
     }
 
     public int getNewDeaths() {
@@ -69,11 +69,11 @@ public class GlobalStatisticsModel {
         return totalDeaths;
     }
 
-    public int getNewRecoveries() {
-        return newRecoveries;
+    public int getNewRecovered() {
+        return newRecovered;
     }
 
-    public int getTotalRecoveries() {
-        return totalRecoveries;
+    public int getTotalRecovered() {
+        return totalRecovered;
     }
 }

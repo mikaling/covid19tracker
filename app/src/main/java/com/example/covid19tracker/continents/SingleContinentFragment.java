@@ -16,7 +16,6 @@ import android.webkit.WebView;
 
 import com.example.covid19tracker.R;
 import com.example.covid19tracker.model.CountryDataModel;
-import com.example.covid19tracker.model.CountryInfoModel;
 import com.example.covid19tracker.model.CountryModel;
 import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.network.TestApi;
@@ -165,8 +164,8 @@ public class SingleContinentFragment extends Fragment {
 
                     for (int i = 0; i < countriesResponse.size(); i++) {
                         CountryModel countryModel = new CountryModel(
-                                countriesResponse.get(i).getCountryDataTotalConfirmedCases(),
-                                countriesResponse.get(i).getCountryDataName()
+                                countriesResponse.get(i).getTotalConfirmed(),
+                                countriesResponse.get(i).getCountry()
 
                         );
                         countriesList.add(countryModel);

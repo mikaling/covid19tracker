@@ -1,17 +1,12 @@
 package com.example.covid19tracker.local;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.covid19tracker.R;
-import com.example.covid19tracker.continents.PagerAdapter;
-import com.example.covid19tracker.model.BarDataModel;
 import com.example.covid19tracker.model.HistoricalStatisticsModel;
 import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.network.TestApi;
@@ -177,7 +172,7 @@ public class LineChartActivity extends AppCompatActivity
         for (int i=0; i < historicalStatisticsModels.size(); i++)
         {
             HistoricalStatisticsModel historicalStatisticsModel = historicalStatisticsModels.get(i);
-            values.add(new Entry(i+1, historicalStatisticsModel.getConfirmedCases()));
+            values.add(new Entry(i+1, historicalStatisticsModel.getConfirmed()));
         }
         return values;
     }
@@ -188,7 +183,7 @@ public class LineChartActivity extends AppCompatActivity
         for (int i=0; i < historicalStatisticsModels.size(); i++)
         {
             HistoricalStatisticsModel historicalStatisticsModel = historicalStatisticsModels.get(i);
-            values.add(new Entry(i+1, historicalStatisticsModel.getConfirmedDeaths()));
+            values.add(new Entry(i+1, historicalStatisticsModel.getDeaths()));
         }
         return values;
     }
@@ -199,7 +194,7 @@ public class LineChartActivity extends AppCompatActivity
         for (int i=0; i < historicalStatisticsModels.size(); i++)
         {
             HistoricalStatisticsModel historicalStatisticsModel = historicalStatisticsModels.get(i);
-            values.add(new Entry(i+1, historicalStatisticsModel.getConfirmedRecoveries()));
+            values.add(new Entry(i+1, historicalStatisticsModel.getRecovered()));
         }
         return values;
     }

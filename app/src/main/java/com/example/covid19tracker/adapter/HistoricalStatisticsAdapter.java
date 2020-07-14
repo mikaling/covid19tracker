@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.covid19tracker.databinding.HistoricalDataItemBinding;
 import com.example.covid19tracker.model.BarDataModel;
-import com.example.covid19tracker.model.HistoricalStatisticsModel;
 
 import java.util.List;
 
@@ -40,12 +39,12 @@ public class HistoricalStatisticsAdapter extends RecyclerView.Adapter<Historical
     onBindViewHolder(@NonNull HistoricalStatisticsAdapter.HistoricalStatisticsViewHolder holder, int position) {
         BarDataModel statisticsModel = listOfHistoricalStatistics.get(position);
 
-        holder.historicalItemBinding.countryName.setText(statisticsModel.getBarDataCountry());
-        holder.historicalItemBinding.confirmedCases.setText(String.valueOf(statisticsModel.getBarDataTotalConfirmedCases()));
-        holder.historicalItemBinding.deaths.setText(String.valueOf(statisticsModel.getBarDataTotalDeaths()));
-        holder.historicalItemBinding.recoveries.setText(String.valueOf(statisticsModel.getBarDataTotalRecoveries()));
+        holder.historicalItemBinding.countryName.setText(statisticsModel.getCountry());
+        holder.historicalItemBinding.confirmedCases.setText(String.valueOf(statisticsModel.getTotalConfirmed()));
+        holder.historicalItemBinding.deaths.setText(String.valueOf(statisticsModel.getTotalDeaths()));
+        holder.historicalItemBinding.recoveries.setText(String.valueOf(statisticsModel.getTotalRecovered()));
 //        holder.historicalItemBinding.activeCases.setText(String.valueOf(statisticsModel.getConfirmedActiveCases()));
-        holder.historicalItemBinding.reportDate.setText(statisticsModel.getBarDataReportDate());
+        holder.historicalItemBinding.reportDate.setText(statisticsModel.getDate());
     }
 
     @Override

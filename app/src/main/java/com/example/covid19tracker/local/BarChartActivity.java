@@ -133,7 +133,7 @@ public class BarChartActivity extends AppCompatActivity
         for (int i=0; i < barDataModels.size(); i++)
         {
             BarDataModel barDataModel = barDataModels.get(i);
-            values.add(new BarEntry(i,barDataModel.getBarDataTotalConfirmedCases()));
+            values.add(new BarEntry(i,barDataModel.getTotalConfirmed()));
         }
         return values;
     }

@@ -23,8 +23,9 @@
           africa.addRow([mesa[i].country, mesa[i].confirmed]);
         }
         var options = {
+          width: 900,
+          keepAspectRatio: true,
           colorAxis: {
-            title: 'COVID-19: Total Confirmed Cases',
             minValue: 1000,
             maxValue: 100000,
             colors: ['#fff600', '#ffc302', '#ff8f00', '#ff5b00', '#ff0505']
@@ -46,7 +47,12 @@
         var options = {
           title: 'COVID-19: Total Confirmed Deaths',
           width: 900,
-          keepAspectRation: true
+          keepAspectRatio: true,
+          colorAxis: {
+            minValue: 1000,
+            maxValue: 50000,
+            colors: ['#AD9DBD', '#9985AD', '#846C9D', '#70548C', '#5B3B7C', '#47236C', '#330B5C']
+          }
         }
         /*var options = {
           colorAxis: {
@@ -71,7 +77,12 @@
         var options = {
           title: 'COVID-19: Total Confirmed Recoveries',
           width: 900,
-          keepAspectRatio: true
+          keepAspectRatio: true,
+          colorAxis: {
+            minValue: 1000,
+            maxValue: 100000,
+            colors: ['#F1F50A', '#D8DC09', '#C0C408', '#A8AB07', '#909306', '#787A05', '#606204' ]
+          }
         }
         /*var options = {
           colorAxis: {
@@ -89,6 +100,17 @@
       }
 
     </script>
+
+  <script>
+    $('.carousel').carousel({
+      interval: 5000,
+      pause: "hover"
+    });
+
+    function changeChart(chart_number) {
+      $('.carousel').carousel(chart_number);
+    }
+  </script>
 </head>
 <body>
 <div id="geochartCarousel" class="carousel slide" data-ride="carousel">
@@ -103,22 +125,31 @@
       <div id="confirmed_div" class="d-block w-100"></div>
     </div>
     <div class="carousel-item">
-      <div><h1>COVID-19: Total Confirmed Deaths</h1></div>
+      <div><h1>COVID-19: Total Deaths</h1></div>
       <div id="deaths_div" class="d-block w-100"></div>
     </div>
     <div class="carousel-item">
-      <div><h1>COVID-19: Total Confirmed Recoveries</h1></div>
+      <div><h1>COVID-19: Total Recoveries</h1></div>
       <div id="recoveries_div" class="d-block w-100"></div>
     </div>
   </div>
-  <a class="carousel-control-prev" href="#geochartCarousel" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#geochartCarousel" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
+<!--  <a class="carousel-control-prev" href="#geochartCarousel" role="button" data-slide="prev">-->
+<!--    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--    <span class="sr-only">Previous</span>-->
+<!--  </a>-->
+<!--  <a class="carousel-control-next" href="#geochartCarousel" role="button" data-slide="next">-->
+<!--    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--    <span class="sr-only">Next</span>-->
+<!--  </a>-->
+</div>
+
+<div class="d-flex justify-content-around">
+  <button id="buttonOne" onclick="changeChart(0)" type="button" class="btn btn-outline-dark">Chart
+    #1</button>
+  <button id="buttonTwo" onclick="changeChart(1)" type="button"
+          class="btn btn-outline-dark">Chart #2</button>
+  <button id="buttonThree" onclick="changeChart(2)" type="button"
+          class="btn btn-outline-dark">Chart #3</button>
 </div>
 
 

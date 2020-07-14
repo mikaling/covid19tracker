@@ -21,58 +21,58 @@ public class HistoricalStatisticsModel {
 
     @SerializedName("Country")
     @Expose
-    private String countryName;
+    private String country;
 
     @SerializedName("Confirmed")
     @Expose
-    private int confirmedCases;
+    private int confirmed;
 
     @SerializedName("Deaths")
     @Expose
-    private int confirmedDeaths;
+    private int deaths;
 
     @SerializedName("Recovered")
     @Expose
-    private int confirmedRecoveries;
+    private int recovered;
 
     @SerializedName("Active")
     @Expose
-    private int confirmedActiveCases;
+    private int active;
 
     @SerializedName("Date")
     @Expose
-    private String dateOfStatisticReport;
+    private String date;
 
-    public HistoricalStatisticsModel(String countryName, int confirmedCases, int confirmedDeaths, int confirmedRecoveries, int confirmedActiveCases, String dateOfStatisticReport) {
-        this.countryName = countryName;
-        this.confirmedCases = confirmedCases;
-        this.confirmedDeaths = confirmedDeaths;
-        this.confirmedRecoveries = confirmedRecoveries;
-        this.confirmedActiveCases = confirmedActiveCases;
-        this.dateOfStatisticReport = dateOfStatisticReport;
+    public HistoricalStatisticsModel(String country, int confirmed, int deaths, int recovered, int active, String date) {
+        this.country = country;
+        this.confirmed = confirmed;
+        this.deaths = deaths;
+        this.recovered = recovered;
+        this.active = active;
+        this.date = date;
     }
 
-    public String getCountryName() {
-        return countryName;
+    public String getCountry() {
+        return country;
     }
 
-    public int getConfirmedCases() {
-        return confirmedCases;
+    public int getConfirmed() {
+        return confirmed;
     }
 
-    public int getConfirmedDeaths() {
-        return confirmedDeaths;
+    public int getDeaths() {
+        return deaths;
     }
 
-    public int getConfirmedRecoveries() {
-        return confirmedRecoveries;
+    public int getRecovered() {
+        return recovered;
     }
 
-    public int getConfirmedActiveCases() {
-        return confirmedActiveCases;
+    public int getActive() {
+        return active;
     }
 
-    public String getDateOfStatisticReport() {
-        return dateOfStatisticReport;
+    public String getDate() {
+        return date;
     }
 }
