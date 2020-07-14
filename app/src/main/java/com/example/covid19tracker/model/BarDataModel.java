@@ -22,60 +22,60 @@ public class BarDataModel
 
     @SerializedName("_id")
     @Expose
-    private String barDataId;
+    private String id;
 
     @SerializedName("country")
     @Expose
-    private String barDataCountry;
+    private String country;
 
     @SerializedName("totalConfirmed")
     @Expose
-    private int barDataTotalConfirmedCases;
+    private int totalConfirmed;
 
     @SerializedName("totalDeaths")
     @Expose
-    private int barDataTotalDeaths;
+    private int totalDeaths;
 
     @SerializedName("totalRecovered")
     @Expose
-    private int barDataTotalRecoveries;
+    private int totalRecovered;
 
     @SerializedName("date")
     @Expose
-    private String barDataReportDate;
+    private String date;
 
     @SerializedName("_v")
     @Expose
-    private int barDataVersion;
+    private int version;
 
-    public BarDataModel(String barDataId, String barDataCountry, int barDataTotalConfirmedCases,
-                        int barDataTotalDeaths, int barDataTotalRecoveries, String barDataReportDate, int barDataVersion) {
-        this.barDataId = barDataId;
-        this.barDataCountry = barDataCountry;
-        this.barDataTotalConfirmedCases = barDataTotalConfirmedCases;
-        this.barDataTotalDeaths = barDataTotalDeaths;
-        this.barDataTotalRecoveries = barDataTotalRecoveries;
-        this.barDataReportDate = barDataReportDate;
-        this.barDataVersion = barDataVersion;
+    public BarDataModel(String id, String country, int totalConfirmed,
+                        int totalDeaths, int totalRecovered, String date, int version) {
+        this.id = id;
+        this.country = country;
+        this.totalConfirmed = totalConfirmed;
+        this.totalDeaths = totalDeaths;
+        this.totalRecovered = totalRecovered;
+        this.date = date;
+        this.version = version;
     }
 
-    public String getBarDataCountry() {
-        return barDataCountry;
+    public String getCountry() {
+        return country;
     }
 
-    public int getBarDataTotalConfirmedCases() {
-        return barDataTotalConfirmedCases;
+    public int getTotalConfirmed() {
+        return totalConfirmed;
     }
 
-    public int getBarDataTotalDeaths() {
-        return barDataTotalDeaths;
+    public int getTotalDeaths() {
+        return totalDeaths;
     }
 
-    public int getBarDataTotalRecoveries() {
-        return barDataTotalRecoveries;
+    public int getTotalRecovered() {
+        return totalRecovered;
     }
 
-    public String getBarDataReportDate() {
-        return barDataReportDate;
+    public String getDate() {
+        return date;
     }
 }

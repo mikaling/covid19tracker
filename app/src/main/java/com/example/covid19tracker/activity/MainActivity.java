@@ -20,7 +20,7 @@ import com.example.covid19tracker.R;
 
 import com.example.covid19tracker.global.WorldFragment;
 import com.example.covid19tracker.local.LocalFragment;
-import com.example.covid19tracker.regional.RegionFragment;
+import com.example.covid19tracker.about.AboutFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = WorldFragment.class;
                 break;
             case R.id.nav_region_fragment:
-                fragmentClass = RegionFragment.class;
+                fragmentClass = AboutFragment.class;
                 break;
             case R.id.nav_local_fragment:
                 fragmentClass = LocalFragment.class;

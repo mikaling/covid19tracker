@@ -20,7 +20,7 @@ public class LandingActivity extends AppCompatActivity {
 
     ActivityLandingBinding landingBinding;
     int[] arrayOfMenuItems = {R.id.global_fragment, R.id.continental_fragment,
-            R.id.regional_fragment, R.id.local_fragment};
+            R.id.local_fragment, R.id.metrics_fragment, R.id.about_fragment};
     AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
             arrayOfMenuItems).build();
     NavController navController;

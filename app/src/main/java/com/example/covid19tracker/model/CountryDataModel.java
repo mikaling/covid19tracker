@@ -17,54 +17,72 @@ public class CountryDataModel {
      * "totalDeaths":309,
      * "totalRecovered":1762,
      * "date":"2020-06-06T12:08:43Z",
+     * "recoveryRate":61.48,
+     * "deathRate":2.82
      * "__v":0
      * } */
 
     @SerializedName("_id")
     @Expose
-    private String countryDataId;
+    private String id;
 
     @SerializedName("country")
     @Expose
-    private String countryDataName;
+    private String country;
 
     @SerializedName("totalConfirmed")
     @Expose
-    private int countryDataTotalConfirmedCases;
+    private int totalConfirmed;
 
     @SerializedName("totalDeaths")
     @Expose
-    private int countryDataTotalDeaths;
+    private int totalDeaths;
 
     @SerializedName("totalRecovered")
     @Expose
-    private int countryDataTotalRecoveries;
+    private int totalRecovered;
+
+    @SerializedName("recoveryRate")
+    @Expose
+    private float recoveryRate;
+
+    @SerializedName("deathRate")
+    @Expose
+    private float deathRate;
 
     @SerializedName("date")
     @Expose
-    private String countryDataReportDate;
+    private String date;
 
     @SerializedName("_v")
     @Expose
-    private int countryDataVersion;
+    private int version;
 
-    public String getCountryDataName() {
-        return countryDataName;
+    public String getCountry() {
+        return country;
     }
 
-    public int getCountryDataTotalConfirmedCases() {
-        return countryDataTotalConfirmedCases;
+    public int getTotalConfirmed() {
+        return totalConfirmed;
     }
 
-    public int getCountryDataTotalDeaths() {
-        return countryDataTotalDeaths;
+    public int getTotalDeaths() {
+        return totalDeaths;
     }
 
-    public int getCountryDataTotalRecoveries() {
-        return countryDataTotalRecoveries;
+    public int getTotalRecovered() {
+        return totalRecovered;
     }
 
-    public String getCountryDataReportDate() {
-        return countryDataReportDate;
+    public float getRecoveryRate() {
+        return recoveryRate;
+    }
+
+    public float getDeathRate() {
+        return deathRate;
+    }
+
+    public String getDate() {
+        return date;
     }
 }

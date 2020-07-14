@@ -3,6 +3,7 @@ package com.example.covid19tracker.network;
 import com.example.covid19tracker.response.BarDataResponse;
 import com.example.covid19tracker.response.ContinentDataResponse;
 import com.example.covid19tracker.response.CountryDataResponse;
+import com.example.covid19tracker.response.CountrySlugResponse;
 import com.example.covid19tracker.response.GlobalStatisticsResponse;
 import com.example.covid19tracker.response.HistoricalStatisticsResponse;
 
@@ -46,7 +47,7 @@ public interface TestApi{
 
     /* This endpoint returns an array of each country's most current statistics */
     @GET("countryData")
-    Call<CountryDataResponse> getCountryData(@Query("limit") int limit);
+    Call<CountryDataResponse> getCountryData(@Query("limit") int limit, @Query("page") int page);
 
     /* This endpoint returns an array of countries in East Africa and their total statistics */
     @GET("barData")
@@ -57,5 +58,9 @@ public interface TestApi{
      */
     @GET("continents/{continent}")
     Call<ContinentDataResponse> getContinentData(@Path("continent") String continent);
+
+    /* This endpoint returns the list of countries that we have data on */
+    @GET("countries")
+    Call<CountrySlugResponse> getCountrySlugs();
 
 }

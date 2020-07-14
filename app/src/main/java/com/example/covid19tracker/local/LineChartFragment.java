@@ -1,16 +1,15 @@
 package com.example.covid19tracker.local;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.covid19tracker.R;
 import com.example.covid19tracker.model.HistoricalStatisticsModel;
@@ -23,7 +22,6 @@ import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.ChartData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -38,36 +36,47 @@ import retrofit2.Response;
 
 import static com.example.covid19tracker.utils.Utils.showToast;
 
-public class LineChartFragment extends Fragment
-{
-    LineChart lineChart;
-    List<HistoricalStatisticsModel> historicalStatisticsModels = new ArrayList<>();
+public class LineChartFragment extends Fragment {
+    private LineChart lineChart;
+    private TextView title;
+    private List<HistoricalStatisticsModel> historicalStatisticsModels = new ArrayList<>();
+    private String slug;
 
-    public LineChartFragment()
-    {
+    public LineChartFragment() {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
+    public static LineChartFragment newInstance(String slug) {
+        LineChartFragment fragment = new LineChartFragment();
+        Bundle args = new Bundle();
+        args.putString("slug", slug);
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        assert getArguments() != null;
+        slug = getArguments().getString("slug");
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_line_chart, container, false);
         lineChart = view.findViewById(R.id.line_chart_fragment);
+        title = view.findViewById(R.id.label_line_chart_title);
         TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
         Call<HistoricalStatisticsResponse> historicalStatisticsResponseCall = service
-                .getCountryHistoricalData("Kenya");
+                .getCountryHistoricalData(slug);
         historicalStatisticsResponseCall.enqueue(new Callback<HistoricalStatisticsResponse>() {
             @Override
             public void onResponse(Call<HistoricalStatisticsResponse> call, Response<HistoricalStatisticsResponse> response) {
-                if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
+                assert response.body() != null;
+                if (response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
                     historicalStatisticsModels = response.body().getHistoricalStatisticsWrap()
-                        .getHistoricalStatisticsModelList();
+                            .getHistoricalStatisticsModelList();
                     lineChart();
                 }
             }
@@ -82,12 +91,11 @@ public class LineChartFragment extends Fragment
         return view;
     }
 
-    private void lineChart()
-    {
+    private void lineChart() {
 //      Creating the dataset fo each line in the graph together with its Label/Legend Value
-        LineDataSet lineDataSetConfirmed = new LineDataSet(confirmed(),"Confirmed");
-        LineDataSet lineDataSetDeaths = new LineDataSet(deaths(),"Deaths");
-        LineDataSet lineDataSetRecoveries = new LineDataSet(recoveries(),"Recoveries");
+        LineDataSet lineDataSetConfirmed = new LineDataSet(confirmed(), "Confirmed");
+        LineDataSet lineDataSetDeaths = new LineDataSet(deaths(), "Deaths");
+        LineDataSet lineDataSetRecoveries = new LineDataSet(recoveries(), "Recoveries");
 
 //      Combines the datasets created above into one that will be used to feed the line chart with data
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
@@ -179,38 +187,33 @@ public class LineChartFragment extends Fragment
         data.setValueFormatter(new MyValueFormatter());
         lineChart.setData(data);
         lineChart.invalidate();
+        title.setText("Trends of COVID-19 in " + slug);
     }
 
     //  Method for setting the x and y values to be used for a line in the line chart
-    private ArrayList<Entry> confirmed()
-    {
+    private ArrayList<Entry> confirmed() {
         ArrayList<Entry> values = new ArrayList<Entry>();
-        for (int i=0; i < historicalStatisticsModels.size(); i++)
-        {
+        for (int i = 0; i < historicalStatisticsModels.size(); i++) {
             HistoricalStatisticsModel historicalStatisticsModel = historicalStatisticsModels.get(i);
-            values.add(new Entry(i+1, historicalStatisticsModel.getConfirmedCases()));
+            values.add(new Entry(i + 1, historicalStatisticsModel.getConfirmed()));
         }
         return values;
     }
 
-    private ArrayList<Entry> deaths()
-    {
+    private ArrayList<Entry> deaths() {
         ArrayList<Entry> values = new ArrayList<>();
-        for (int i=0; i < historicalStatisticsModels.size(); i++)
-        {
+        for (int i = 0; i < historicalStatisticsModels.size(); i++) {
             HistoricalStatisticsModel historicalStatisticsModel = historicalStatisticsModels.get(i);
-            values.add(new Entry(i+1, historicalStatisticsModel.getConfirmedDeaths()));
+            values.add(new Entry(i + 1, historicalStatisticsModel.getDeaths()));
         }
         return values;
     }
 
-    private ArrayList<Entry> recoveries()
-    {
+    private ArrayList<Entry> recoveries() {
         ArrayList<Entry> values = new ArrayList<>();
-        for (int i=0; i < historicalStatisticsModels.size(); i++)
-        {
+        for (int i = 0; i < historicalStatisticsModels.size(); i++) {
             HistoricalStatisticsModel historicalStatisticsModel = historicalStatisticsModels.get(i);
-            values.add(new Entry(i+1, historicalStatisticsModel.getConfirmedRecoveries()));
+            values.add(new Entry(i + 1, historicalStatisticsModel.getRecovered()));
         }
         return values;
     }

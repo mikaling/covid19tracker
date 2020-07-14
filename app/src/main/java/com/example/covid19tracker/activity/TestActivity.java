@@ -111,7 +111,8 @@ public class TestActivity extends AppCompatActivity {
 
     private void populateRecycler(List<CountryDataModel> dataList) {
         if(dataList != null) {
-            countryDataAdapter = new CountryDataAdapter(this, dataList);
+            //TODO: create group for normal country data
+            countryDataAdapter = new CountryDataAdapter(this, dataList, Utils.CONFIRMED_GROUP_ID);
             RecyclerView.LayoutManager layoutManager =
                     new LinearLayoutManager(this);
             testBinding.recyclerHistoricalData.setLayoutManager(layoutManager);

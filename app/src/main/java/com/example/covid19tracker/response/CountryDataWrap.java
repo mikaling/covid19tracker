@@ -4,14 +4,15 @@ import com.example.covid19tracker.model.CountryDataModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CountryDataWrap {
     @SerializedName("countries")
     @Expose
-    private List<CountryDataModel> countryDataModelList;
+    private ArrayList<CountryDataModel> countryDataModelList;
 
-    public List<CountryDataModel> getCountryDataModelList() {
+    public ArrayList<CountryDataModel> getCountryDataModelList() {
         return countryDataModelList;
     }
 }

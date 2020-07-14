@@ -19,6 +19,7 @@ import com.example.covid19tracker.R;
 import com.example.covid19tracker.model.CountryDataModel;
 import com.example.covid19tracker.model.CountryInfoModel;
 import com.example.covid19tracker.model.GlobalStatisticsModel;
+import com.example.covid19tracker.network.Covid19ApiAlt;
 import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.network.TestApi;
 import com.example.covid19tracker.response.CountryDataResponse;
@@ -32,19 +33,24 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class WorldFragment extends Fragment {
 
 
     private static final String TAG = "WorldFragment";
     private WebView webView;
-    private List<CountryDataModel> countriesResponse;
-    private List<CountryInfoModel> countriesList = new ArrayList<>();
-    private List<String> listOfCountries = new ArrayList();
+    private List<CountryDataModel> countryDataList = new ArrayList<>();
+    private List<CountryInfoModel> countryInfoList = new ArrayList<>();
+    private GlobalStatisticsModel globalStatistics;
     private String countries;
     private TextView textTotalConfirmed, textTotalRecovered,textTotalDeaths,textNewConfirmed,
             textNewRecoveries,textNewDeaths;
@@ -73,7 +79,7 @@ public class WorldFragment extends Fragment {
 
         @JavascriptInterface
         public String getArrayGeoChartData() {
-            Log.i(TAG, "Countries list: " + Arrays.deepToString(countriesList.toArray()));
+            Log.i(TAG, "Countries list: " + Arrays.deepToString(countryInfoList.toArray()));
             return countries;
         }
 
@@ -89,7 +95,6 @@ public class WorldFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         textTotalConfirmed=view.findViewById(R.id.text_confirmed_cases);
         textTotalRecovered=view.findViewById(R.id.text_recovered_cases);
@@ -108,14 +113,111 @@ public class WorldFragment extends Fragment {
 
 
         webView = view.findViewById(R.id.map_webview);
-        getWorldData();
-        getGlobalData();
+        //getWorldData();
+        //getGlobalData();
+        fetchData();
+    }
 
+    private void fetchData() {
+        Retrofit retrofit = RetrofitClientInstance.getAlternativeRetrofitInstance();
+        Covid19ApiAlt serviceAlt = retrofit.create(Covid19ApiAlt.class);
+
+        List<Observable<?>> requests = new ArrayList<>();
+        requests.add(serviceAlt.getCountryData(100, 1));
+        requests.add(serviceAlt.getCountryData(100, 2));
+        requests.add(serviceAlt.getGlobalStatistics());
+
+        Observable.zip(
+                requests,
+                objects -> {
+
+                    for(int i = 0; i < objects.length - 1; i++) {
+                        //Accessing the CountryDataResponse Objects
+                        CountryDataResponse dataResponse = (CountryDataResponse) objects[i];
+                        if (dataResponse.getStatus().equals(Utils.RESPONSE_SUCCESS)) {
+                            countryDataList.addAll(dataResponse
+                                    .getCountryDataWrap().getCountryDataModelList());
+                        } else {
+                            //Status of response from API is fail
+                            //TODO: information logged and possibly sent to base
+                        }
+                    }
+
+                    //Accessing last object (GlobalStatisticsResponse)
+                    GlobalStatisticsResponse statisticsResponse =
+                            (GlobalStatisticsResponse) objects[objects.length - 1];
+                    if(statisticsResponse.getStatus().equals(Utils.RESPONSE_SUCCESS)) {
+                        globalStatistics = statisticsResponse.getGlobalStatisticsWrap()
+                                .getGlobalStatisticsModel();
+                    } else {
+                        //Status of response from API is fail
+                        //TODO: information logged and possibly sent to base
+                    }
+
+                    return new Object();
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        o -> {
+                            Log.i(TAG, "All requests successful");
+                            populateViews();
+                        },
+                        throwable -> {
+                            Log.i(TAG, throwable.getMessage(), throwable);
+                            showErrorSnackBar();
+                            //TODO: implement error handling on user side
+                        }
+                );
+    }
+
+    private void populateViews() {
+        //Populating geocharts
+        for (int i = 0; i < countryDataList.size(); i++) {
+            CountryInfoModel countryInfoModel = new CountryInfoModel(
+                    countryDataList.get(i).getCountry(),
+                    countryDataList.get(i).getTotalConfirmed(),
+                    countryDataList.get(i).getTotalDeaths(),
+                    countryDataList.get(i).getTotalRecovered()
+            );
+            countryInfoList.add(countryInfoModel);
+        }
+
+        Gson countriesObject = new Gson();
+        countries = countriesObject.toJson(countryInfoList);
+        Log.i(TAG, "CountryData: " + countries);
+        loadWebView();
+
+        //Populating statistics views
+        textTotalConfirmed.setText(
+                String.format(Locale.ENGLISH, Utils.SEPARATOR_FORMAT,
+                        globalStatistics.getTotalConfirmed())
+        );
+        textTotalRecovered.setText(
+                String.format(Locale.ENGLISH, Utils.SEPARATOR_FORMAT,
+                        globalStatistics.getTotalRecovered())
+        );
+        textTotalDeaths.setText(
+                String.format(Locale.ENGLISH, Utils.SEPARATOR_FORMAT,
+                        globalStatistics.getTotalDeaths())
+        );
+        textNewConfirmed.setText(
+                String.format(Locale.ENGLISH, Utils.SEPARATOR_FORMAT,
+                        globalStatistics.getNewConfirmed())
+        );
+        textNewRecoveries.setText(
+                String.format(Locale.ENGLISH, Utils.SEPARATOR_FORMAT,
+                globalStatistics.getNewRecovered())
+        );
+        textNewDeaths.setText(
+                String.format(Locale.ENGLISH, Utils.SEPARATOR_FORMAT,
+                globalStatistics.getNewDeaths())
+        );
     }
 
     private void getWorldData(){
 
-        Call<CountryDataResponse> countryDataCall = service.getCountryData(200);
+        Call<CountryDataResponse> countryDataCall = service.getCountryData(200, 1);
 
         countryDataCall.enqueue(new Callback<CountryDataResponse>() {
             @Override
@@ -123,19 +225,19 @@ public class WorldFragment extends Fragment {
                                    Response<CountryDataResponse> response) {
                 Log.i(TAG, "Response received from API call");
                 if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
-                    countriesResponse = response.body().getCountryDataWrap().getCountryDataModelList();
-                    for (int i = 0; i < countriesResponse.size(); i++) {
+                    countryDataList = response.body().getCountryDataWrap().getCountryDataModelList();
+                    for (int i = 0; i < countryDataList.size(); i++) {
                         CountryInfoModel countryInfoModel = new CountryInfoModel(
-                                countriesResponse.get(i).getCountryDataName(),
-                                countriesResponse.get(i).getCountryDataTotalConfirmedCases(),
-                                countriesResponse.get(i).getCountryDataTotalDeaths(),
-                                countriesResponse.get(i).getCountryDataTotalRecoveries()
+                                countryDataList.get(i).getCountry(),
+                                countryDataList.get(i).getTotalConfirmed(),
+                                countryDataList.get(i).getTotalDeaths(),
+                                countryDataList.get(i).getTotalRecovered()
                         );
-                        countriesList.add(countryInfoModel);
+                        countryInfoList.add(countryInfoModel);
                     }
 
                     Gson countriesObject = new Gson();
-                    countries = countriesObject.toJson(countriesList);
+                    countries = countriesObject.toJson(countryInfoList);
                     Log.i(TAG, "CountryData: " + countries);
                     loadWebView();
                 }
@@ -178,11 +280,11 @@ public class WorldFragment extends Fragment {
                             .body().getGlobalStatisticsWrap().getGlobalStatisticsModel();
                     assert globalStatisticsModel!=null;
 
-                    int confirmed_cases = globalStatisticsModel.getTotalConfirmedCases();
-                    int total_recoveries = globalStatisticsModel.getTotalRecoveries();
+                    int confirmed_cases = globalStatisticsModel.getTotalConfirmed();
+                    int total_recoveries = globalStatisticsModel.getTotalRecovered();
                     int total_deaths = globalStatisticsModel.getTotalDeaths();
-                    int new_confirmed = globalStatisticsModel.getNewConfirmedCases();
-                    int new_recoveries = globalStatisticsModel.getNewRecoveries();
+                    int new_confirmed = globalStatisticsModel.getNewConfirmed();
+                    int new_recoveries = globalStatisticsModel.getNewRecovered();
                     int new_deaths = globalStatisticsModel.getNewDeaths();
 
                     DecimalFormat decimalFormat = new DecimalFormat("#,###");
@@ -210,14 +312,12 @@ public class WorldFragment extends Fragment {
 
         final Snackbar snackbar = Snackbar
                 .make(rootView, "Error Loading Data", Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction("Retry", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shimmerFrameLayout.startShimmer();
-                getGlobalData();
-                getWorldData();
-                snackbar.dismiss();
-            }
+        snackbar.setAction("Retry", v -> {
+            shimmerFrameLayout.startShimmer();
+//            getGlobalData();
+//            getWorldData();
+            fetchData();
+            snackbar.dismiss();
         });
         snackbar.show();
     }
