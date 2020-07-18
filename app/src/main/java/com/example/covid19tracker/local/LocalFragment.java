@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,7 @@ public class LocalFragment extends Fragment implements View.OnClickListener
     private static final String TAG = "LocalFragment";
     private List<CountrySlugModel> modelList;
     private Context context;
+    private String slug, country;
 
     public LocalFragment()
     {
@@ -89,10 +91,17 @@ public class LocalFragment extends Fragment implements View.OnClickListener
     private void populateSpinner() {
         List<String> spinnerArray = new ArrayList<>();
         int default_position = 0;
+        int china_position = 0;
+//        modelList.removeIf(model -> model.getCountry().equals("China"));
         for(int i = 0; i < modelList.size(); i++) {
-            spinnerArray.add(modelList.get(i).getCountry());
-            if (modelList.get(i).getCountry().equals("Kenya"))
-                default_position = i;
+            if(modelList.get(i).getCountry().equals("China"))
+                china_position = i;
+        }
+        modelList.remove(china_position);
+        for(int j = 0; j< modelList.size(); j++ ) {
+            spinnerArray.add(modelList.get(j).getCountry());
+            if (modelList.get(j).getCountry().equals("Kenya"))
+                default_position = j;
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
                 android.R.layout.simple_spinner_item, spinnerArray);
@@ -100,6 +109,18 @@ public class LocalFragment extends Fragment implements View.OnClickListener
         binding.countrySelector.setTitle("Select a country");
         binding.countrySelector.setAdapter(adapter);
         binding.countrySelector.setSelection(default_position);
+        binding.countrySelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                slug = modelList.get(position).getSlug();
+                country = modelList.get(position).getCountry();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
@@ -109,7 +130,7 @@ public class LocalFragment extends Fragment implements View.OnClickListener
             case R.id.trends_button:
                 NavDirections trendsAction =
                         LocalFragmentDirections.actionLocalFragmentToLineChartFragment2(
-                                (String) binding.countrySelector.getSelectedItem()
+                                slug, country
                         );
                 NavHostFragment.findNavController(this).navigate(trendsAction);
                 break;
