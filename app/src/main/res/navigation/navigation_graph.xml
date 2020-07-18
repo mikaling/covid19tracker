@@ -48,6 +48,7 @@
         android:label="Trends of COVID-19"
         tools:layout="@layout/fragment_line_chart" >
         <argument android:name="slug" />
+        <argument android:name="country" />
     </fragment>
 
     <fragment
