@@ -102,7 +102,7 @@ public class WorldFragment extends Fragment {
         textNewConfirmed=view.findViewById(R.id.text_new_confirmed_cases);
         textNewDeaths=view.findViewById(R.id.text_new_deaths);
         textNewRecoveries=view.findViewById(R.id.text_new_recovered);
-        rootView=view.findViewById(R.id.content);
+//        rootView=view.findViewById(R.id.content);
         viewGlobal = view.findViewById(R.id.view_global);
         shimmerFrameLayout = view.findViewById(R.id.shimmer_global_container);
         shimmerFrameLayout.startShimmer();
@@ -311,7 +311,7 @@ public class WorldFragment extends Fragment {
     private void showErrorSnackBar() {
 
         final Snackbar snackbar = Snackbar
-                .make(rootView, "Error Loading Data", Snackbar.LENGTH_INDEFINITE);
+                .make(viewGlobal, "Error Loading Data", Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction("Retry", v -> {
             shimmerFrameLayout.startShimmer();
 //            getGlobalData();
