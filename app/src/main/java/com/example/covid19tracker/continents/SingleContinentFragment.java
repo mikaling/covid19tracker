@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
@@ -37,7 +38,6 @@ import retrofit2.Response;
  */
 public class SingleContinentFragment extends Fragment {
     private static final String ARG_PARAM1 = "continentCode";
-    private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "SingleContinentFragment";
 
     private List<CountryDataModel> countriesResponse;
@@ -48,9 +48,7 @@ public class SingleContinentFragment extends Fragment {
 
 
 
-    // TODO: Rename and change types of parameters
     private String mCountryCode;
-    private String mParam2;
 
     private WebView webView;
     public SingleContinentFragment() {
@@ -64,7 +62,6 @@ public class SingleContinentFragment extends Fragment {
      * @param continentCode Parameter 1.
      * @return A new instance of fragment SingleContinentFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SingleContinentFragment newInstance(String continentCode) {
         SingleContinentFragment fragment = new SingleContinentFragment();
         Bundle args = new Bundle();
@@ -143,7 +140,26 @@ public class SingleContinentFragment extends Fragment {
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
         webView.addJavascriptInterface(new WebAppInterface(getContext()), "Android");
-//        webView.setInitialScale(1);
+        webView.setInitialScale(0);
+//        webView.getSettings().setLoadWithOverviewMode(true);
+//        webView.getSettings().setUseWideViewPort(true);
+
+
+        if (mCountryCode.equals("002")){
+            webView.scrollTo(500, 0);
+        } else if (mCountryCode.equals("150")) {
+            webView.scrollTo(500, 0);
+        } else if (mCountryCode.equals("142")) {
+            webView.scrollTo(500, 0);
+        } else if (mCountryCode.equals("021")) {
+            webView.scrollTo(650, 0);
+        } else if (mCountryCode.equals("005")) {
+            webView.scrollTo(600, 0);
+        } else if (mCountryCode.equals("009")) {
+            webView.scrollTo(280, 0);
+        }
+
+
 
         webView.loadUrl("file:///android_asset/continents.html");
     }
@@ -152,8 +168,6 @@ public class SingleContinentFragment extends Fragment {
 
         Call<ContinentDataResponse> continentDataResponseCall = service
                 .getContinentData(continentName);
-//        Call<List<CountryDataModel>> continentDataCall = service
-//                .getContinentData(continentName);
         continentDataResponseCall.enqueue(new Callback<ContinentDataResponse>() {
             @Override
             public void onResponse(Call<ContinentDataResponse> call, Response<ContinentDataResponse> response) {
