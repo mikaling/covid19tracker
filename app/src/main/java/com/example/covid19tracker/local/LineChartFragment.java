@@ -29,6 +29,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,16 +41,17 @@ public class LineChartFragment extends Fragment {
     private LineChart lineChart;
     private TextView title;
     private List<HistoricalStatisticsModel> historicalStatisticsModels = new ArrayList<>();
-    private String slug;
+    private String slug, country;
 
     public LineChartFragment() {
         // Required empty public constructor
     }
 
-    public static LineChartFragment newInstance(String slug) {
+    public static LineChartFragment newInstance(String slug, String country) {
         LineChartFragment fragment = new LineChartFragment();
         Bundle args = new Bundle();
         args.putString("slug", slug);
+        args.putString("country", country);
         fragment.setArguments(args);
 
         return fragment;
@@ -60,6 +62,7 @@ public class LineChartFragment extends Fragment {
         super.onCreate(savedInstanceState);
         assert getArguments() != null;
         slug = getArguments().getString("slug");
+        country = getArguments().getString("country");
     }
 
     @Override
@@ -187,7 +190,10 @@ public class LineChartFragment extends Fragment {
         data.setValueFormatter(new MyValueFormatter());
         lineChart.setData(data);
         lineChart.invalidate();
-        title.setText("Trends of COVID-19 in " + slug);
+//        title.setText("Trends of COVID-19 in " + country);
+        title.setText(
+                String.format(Locale.ENGLISH, "Trends of COVID-19 in %s", country)
+        );
     }
 
     //  Method for setting the x and y values to be used for a line in the line chart
