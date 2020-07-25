@@ -199,15 +199,13 @@ public class MetricsFragment extends Fragment implements AdapterView.OnItemSelec
         CountryDataAdapter dataAdapter;
         switch (choice) {
             case "Confirmed":
-                dataAdapter = new CountryDataAdapter(context, confirmedList,
-                        Utils.CONFIRMED_GROUP_ID);
+                dataAdapter = new CountryDataAdapter(context, confirmedList, Utils.CONFIRMED_GROUP_ID);
                 dataAdapter.notifyDataSetChanged();
                 metricsBinding.statTitle.setText(R.string.title_confirmed);
                 metricsBinding.recyclerview.setAdapter(dataAdapter);
                 break;
             case "Recovered":
-                dataAdapter = new CountryDataAdapter(context, recoveredList,
-                        Utils.RECOVERED_GROUP_ID);
+                dataAdapter = new CountryDataAdapter(context, recoveredList, Utils.RECOVERED_GROUP_ID);
                 dataAdapter.notifyDataSetChanged();
                 metricsBinding.statTitle.setText(R.string.title_recovered);
                 metricsBinding.recyclerview.setAdapter(dataAdapter);
