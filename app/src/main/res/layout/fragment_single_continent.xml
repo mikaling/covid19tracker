@@ -4,17 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".continents.SingleContinentFragment">
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="horizontal">
+        android:layout_height="match_parent">
 
         <WebView
             android:id="@+id/continent_webview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
+            android:layout_alignParentTop="true"
             />
-    </ScrollView>
+    </RelativeLayout>
 
 </FrameLayout>
