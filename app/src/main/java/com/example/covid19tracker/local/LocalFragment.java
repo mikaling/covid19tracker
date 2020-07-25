@@ -63,6 +63,7 @@ public class LocalFragment extends Fragment implements View.OnClickListener
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.trendsButton.setOnClickListener(this);
+        binding.trendsButton.setVisibility(View.INVISIBLE);
         binding.comparisonButton.setOnClickListener(this);
 
         TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
@@ -103,7 +104,8 @@ public class LocalFragment extends Fragment implements View.OnClickListener
             if (modelList.get(j).getCountry().equals("Kenya"))
                 default_position = j;
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
+        assert context != null;
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.countrySelector.setTitle("Select a country");
@@ -121,6 +123,7 @@ public class LocalFragment extends Fragment implements View.OnClickListener
 
             }
         });
+        binding.trendsButton.setVisibility(View.VISIBLE);
     }
 
 

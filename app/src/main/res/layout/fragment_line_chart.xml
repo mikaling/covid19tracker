@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="4dp"
-    android:background="#d2d3d6"
+    android:background="#4cada2"
     tools:context=".local.LineChartFragment">
 
     <TextView
@@ -24,7 +24,8 @@
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
         android:rotation="180"
-        android:text="@string/bar_chart_y_axis_label" />
+        android:text="@string/bar_chart_y_axis_label"
+        android:textColor="@android:color/black"/>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/line_chart_fragment"
@@ -44,5 +45,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="4dp"
-        android:text="@string/days_arbitrary_number" />
+        android:text="@string/days_arbitrary_number"
+        android:textColor="@android:color/black"/>
 </RelativeLayout>

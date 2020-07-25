@@ -147,12 +147,12 @@ public class LineChartActivity extends AppCompatActivity
         lineChart.setDescription(description);
 
 //      Wraps the chart in a rectangle
-        lineChart.setDrawGridBackground(true);
-        lineChart.setGridBackgroundColor(Color.parseColor("#4cada2"));
-        lineChart.setBorderWidth(2);
+//        lineChart.setDrawGridBackground(false);
+//        lineChart.setGridBackgroundColor(Color.parseColor("#4cada2"));
+//        lineChart.setBorderWidth(2);
 
 //      Setting background colour for the chart
-        lineChart.setBackgroundColor(Color.parseColor("#90b50b"));
+        lineChart.setBackgroundColor(Color.parseColor("#4cada2"));
 
 //      Setting the message to be shown if no data is available in the chart
         lineChart.setNoDataText("No Data Available at the moment");

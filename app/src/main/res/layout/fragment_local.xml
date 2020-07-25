@@ -18,7 +18,7 @@
             <!-- Media -->
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="30dp"
                 android:src="@drawable/line_graph_drawing"
                 android:scaleType="centerCrop" />
 
@@ -82,7 +82,7 @@
             <!-- Media -->
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="30dp"
                 android:src="@drawable/alt_one"
                 android:scaleType="centerCrop"/>
 

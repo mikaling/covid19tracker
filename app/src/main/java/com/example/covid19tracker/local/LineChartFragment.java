@@ -164,6 +164,7 @@ public class LineChartFragment extends Fragment {
         yAxisLeft.setAxisMinimum(0);
         xAxis.setDrawGridLines(false);
         yAxisLeft.setDrawGridLines(false);
+        yAxisLeft.setAxisLineColor(Color.BLACK);
         yAxisRight.setEnabled(false);
 
 //      Manually setting the description found at the bottom of the chart
@@ -174,12 +175,12 @@ public class LineChartFragment extends Fragment {
         lineChart.setDescription(description);
 
 //      Wraps the chart in a rectangle
-        lineChart.setDrawGridBackground(true);
-        lineChart.setGridBackgroundColor(Color.parseColor("#4cada2"));
-        lineChart.setBorderWidth(2);
+//        lineChart.setDrawGridBackground(true);
+//        lineChart.setGridBackgroundColor(Color.parseColor("#4cada2"));
+//        lineChart.setBorderWidth(2);
 
 //      Setting background colour for the chart
-        lineChart.setBackgroundColor(Color.parseColor("#90b50b"));
+        lineChart.setBackgroundColor(Color.parseColor("#4cada2"));
 
 //      Setting the message to be shown if no data is available in the chart
         lineChart.setNoDataText("No Data Available at the moment");

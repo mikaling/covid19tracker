@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import com.example.covid19tracker.R;
 import com.example.covid19tracker.adapter.CountryDataAdapter;
 import com.example.covid19tracker.databinding.FragmentMetricsBinding;
+import com.example.covid19tracker.databinding.ViewMetricsBinding;
 import com.example.covid19tracker.model.CountryDataModel;
 import com.example.covid19tracker.network.Covid19ApiAlt;
 import com.example.covid19tracker.network.RetrofitClientInstance;
@@ -36,6 +37,7 @@ public class MetricsFragment extends Fragment implements AdapterView.OnItemSelec
 
     private final String TAG = "MetricsFragment";
     private FragmentMetricsBinding binding;
+    private ViewMetricsBinding metricsBinding;
     private ArrayList<CountryDataModel> confirmedList = new ArrayList<>();
     private ArrayList<CountryDataModel> recoveredList = new ArrayList<>();
     private ArrayList<CountryDataModel> deathsList = new ArrayList<>();
@@ -54,6 +56,7 @@ public class MetricsFragment extends Fragment implements AdapterView.OnItemSelec
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMetricsBinding.inflate(inflater, container, false);
+        metricsBinding = binding.viewContainerMetrics;
         return binding.getRoot();
     }
 
@@ -67,18 +70,7 @@ public class MetricsFragment extends Fragment implements AdapterView.OnItemSelec
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //Setting up spinner
-        assert context != null;
-        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(
-                context, R.array.statistics_array, android.R.layout.simple_spinner_item
-        );
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.statSelector.setAdapter(arrayAdapter);
-        binding.statSelector.setOnItemSelectedListener(this);
-
-        //Setting up recycler view
-        binding.recyclerview.setLayoutManager(new LinearLayoutManager(context));
-
+        binding.shimmerMetricsContainer.startShimmer();
         fetchData();
     }
 
@@ -166,7 +158,7 @@ public class MetricsFragment extends Fragment implements AdapterView.OnItemSelec
                         o -> {
                             Log.i(TAG, "All requests successful");
                             //Call method that populates view with data
-                            //populateView();
+                            populateView();
                         },
                         throwable -> {
                             Log.i(TAG, throwable.getMessage(), throwable);
@@ -175,30 +167,54 @@ public class MetricsFragment extends Fragment implements AdapterView.OnItemSelec
                 );
     }
 
+    private void populateView() {
+        //Setting up spinner
+        assert context != null;
+        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(
+                context, R.array.statistics_array, android.R.layout.simple_spinner_item
+        );
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        metricsBinding.statSelector.setAdapter(arrayAdapter);
+        metricsBinding.statSelector.setOnItemSelectedListener(this);
+
+        //Setting up recycler view
+        metricsBinding.recyclerview.setLayoutManager(new LinearLayoutManager(context));
+
+        metricsBinding.statSelector.setSelection(1);
+
+        showView();
+    }
+
+    private void showView() {
+        binding.shimmerMetricsContainer.stopShimmer();
+        binding.shimmerMetricsContainer.setVisibility(View.INVISIBLE);
+        metricsBinding.statSelector.setVisibility(View.VISIBLE);
+        metricsBinding.statTitle.setVisibility(View.VISIBLE);
+        metricsBinding.recyclerview.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String choice = (String) parent.getItemAtPosition(position);
         CountryDataAdapter dataAdapter;
         switch (choice) {
             case "Confirmed":
-                dataAdapter = new CountryDataAdapter(context, confirmedList,
-                        Utils.CONFIRMED_GROUP_ID);
+                dataAdapter = new CountryDataAdapter(context, confirmedList, Utils.CONFIRMED_GROUP_ID);
                 dataAdapter.notifyDataSetChanged();
-                binding.statTitle.setText(R.string.title_confirmed);
-                binding.recyclerview.setAdapter(dataAdapter);
+                metricsBinding.statTitle.setText(R.string.title_confirmed);
+                metricsBinding.recyclerview.setAdapter(dataAdapter);
                 break;
             case "Recovered":
-                dataAdapter = new CountryDataAdapter(context, recoveredList,
-                        Utils.RECOVERED_GROUP_ID);
+                dataAdapter = new CountryDataAdapter(context, recoveredList, Utils.RECOVERED_GROUP_ID);
                 dataAdapter.notifyDataSetChanged();
-                binding.statTitle.setText(R.string.title_recovered);
-                binding.recyclerview.setAdapter(dataAdapter);
+                metricsBinding.statTitle.setText(R.string.title_recovered);
+                metricsBinding.recyclerview.setAdapter(dataAdapter);
                 break;
             case "Deaths":
                 dataAdapter = new CountryDataAdapter(context, deathsList, Utils.DEATHS_GROUP_ID);
                 dataAdapter.notifyDataSetChanged();
-                binding.statTitle.setText(R.string.title_deaths);
-                binding.recyclerview.setAdapter(dataAdapter);
+                metricsBinding.statTitle.setText(R.string.title_deaths);
+                metricsBinding.recyclerview.setAdapter(dataAdapter);
                 break;
             default:
                 break;
