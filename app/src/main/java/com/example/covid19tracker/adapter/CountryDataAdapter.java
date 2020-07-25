@@ -1,6 +1,7 @@
 package com.example.covid19tracker.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.covid19tracker.databinding.StatisticItemBinding;
 import com.example.covid19tracker.model.CountryDataModel;
 import com.example.covid19tracker.utils.Utils;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 import java.util.Locale;
@@ -20,8 +22,8 @@ public class CountryDataAdapter extends RecyclerView.Adapter<CountryDataAdapter.
     private List<CountryDataModel> countryDataModelList;
     private int groupId;
 
-    public CountryDataAdapter(Context context, List<CountryDataModel> countryDataModelList,
-                              int groupId) {
+    public CountryDataAdapter(Context context, List<CountryDataModel> countryDataModelList, int groupId)
+    {
         this.context = context;
         this.countryDataModelList = countryDataModelList;
         this.groupId = groupId;
@@ -29,7 +31,8 @@ public class CountryDataAdapter extends RecyclerView.Adapter<CountryDataAdapter.
 
     @NonNull
     @Override
-    public CountryDataAdapter.CountryDataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CountryDataAdapter.CountryDataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         /* Android 3.6.* provides view binding which removes the need to use
          * the findViewById()
          * method to instantiate view objects */
@@ -42,7 +45,8 @@ public class CountryDataAdapter extends RecyclerView.Adapter<CountryDataAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CountryDataAdapter.CountryDataViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CountryDataAdapter.CountryDataViewHolder holder, int position)
+    {
 //        CountryDataModel countryDataModel = countryDataModelList.get(position);
 
 //        holder.itemBinding.countryName.setText(countryDataModel.getCountryDataName());
@@ -53,50 +57,73 @@ public class CountryDataAdapter extends RecyclerView.Adapter<CountryDataAdapter.
 
         CountryDataModel model = countryDataModelList.get(position);
         holder.binding.cardTitle.setText(model.getCountry());
+        MaterialCardView materialCardView  = holder.binding.statisticItem;
 
-        switch (groupId) {
+        switch (groupId)
+        {
             case Utils.CONFIRMED_GROUP_ID:
+                materialCardView.setCardBackgroundColor(Color.parseColor("#ff0505"));
+//                holder.binding.cardTitle.setBackgroundColor(Color.parseColor("#FF5252"));
                 holder.binding.cardDescriptionOne.setText(
                         String.format(Locale.ENGLISH, Utils.CONFIRMED_FORMAT,
                                 model.getTotalConfirmed()));
+//                holder.binding.cardDescriptionOne.setBackgroundColor(Color.parseColor("#FF5252"));
+
                 holder.binding.cardDescriptionTwo.setText(
                         String.format(Locale.ENGLISH, Utils.RECOVERED_FORMAT,
                                 model.getTotalRecovered(), model.getRecoveryRate())
                 );
+//                holder.binding.cardDescriptionTwo.setBackgroundColor(Color.parseColor("#FF3838"));
+
                 holder.binding.cardDescriptionThree.setText(
                         String.format(Locale.ENGLISH, Utils.DEATHS_FORMAT, model.getTotalDeaths(),
                                 model.getDeathRate())
                 );
+//                holder.binding.cardDescriptionThree.setBackgroundColor(Color.parseColor("#ff0505"));
                 break;
 
             case Utils.RECOVERED_GROUP_ID:
+                materialCardView.setCardBackgroundColor(Color.parseColor("#03045E"));
+//                holder.binding.cardTitle.setBackgroundColor(Color.parseColor("#90E0EF"));
                 holder.binding.cardDescriptionOne.setText(
                         String.format(Locale.ENGLISH, Utils.RECOVERED_FORMAT,
                                 model.getTotalRecovered(), model.getRecoveryRate())
                 );
+//                holder.binding.cardDescriptionOne.setBackgroundColor(Color.parseColor("#90E0EF"));
+
                 holder.binding.cardDescriptionTwo.setText(
                         String.format(Locale.ENGLISH, Utils.DEATHS_FORMAT,
                                 model.getTotalDeaths(), model.getDeathRate())
                 );
+//                holder.binding.cardDescriptionTwo.setBackgroundColor(Color.parseColor("#00B4D8"));
+
                 holder.binding.cardDescriptionThree.setText(
                         String.format(Locale.ENGLISH, Utils.CONFIRMED_FORMAT,
                                 model.getTotalConfirmed())
                 );
+//                holder.binding.cardDescriptionThree.setBackgroundColor(Color.parseColor("#03045E"));
                 break;
 
             case Utils.DEATHS_GROUP_ID:
+                materialCardView.setCardBackgroundColor(Color.parseColor("#540804"));
+//                holder.binding.cardTitle.setBackgroundColor(Color.parseColor("#EA8C55"));
                 holder.binding.cardDescriptionOne.setText(
                         String.format(Locale.ENGLISH, Utils.DEATHS_FORMAT,
                                 model.getTotalDeaths(), model.getDeathRate())
                 );
+//                holder.binding.cardDescriptionOne.setBackgroundColor(Color.parseColor("#EA8C55"));
+
                 holder.binding.cardDescriptionTwo.setText(
                         String.format(Locale.ENGLISH, Utils.RECOVERED_FORMAT,
                                 model.getTotalRecovered(), model.getRecoveryRate())
                 );
+//                holder.binding.cardDescriptionTwo.setBackgroundColor(Color.parseColor("#AD2E24"));
+
                 holder.binding.cardDescriptionThree.setText(
                         String.format(Locale.ENGLISH, Utils.CONFIRMED_FORMAT,
                                 model.getTotalConfirmed())
                 );
+//                holder.binding.cardDescriptionThree.setBackgroundColor(Color.parseColor("#540804"));
                 break;
 
             default:

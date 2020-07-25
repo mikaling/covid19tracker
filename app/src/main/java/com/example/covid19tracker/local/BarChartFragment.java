@@ -117,7 +117,7 @@ public class BarChartFragment extends Fragment {
 
 //        barChart.setDrawGridBackground(true);
 //        barChart.setGridBackgroundColor(Color.parseColor("#4cada2"));
-        barChart.setBackgroundColor(Color.parseColor("#FAFAFA"));
+        barChart.setBackgroundColor(Color.parseColor("#CAF0F8"));
 
         BarData barData = new BarData(barDataSetConfirmed, barDataSetRecoveries, barDataSetDeaths);
         barData.setBarWidth(0.3f);
