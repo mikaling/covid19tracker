@@ -24,6 +24,7 @@ import com.example.covid19tracker.network.Covid19ApiAlt;
 import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.response.CountryDataResponse;
 import com.example.covid19tracker.utils.Utils;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,6 +163,8 @@ public class MetricsFragment extends Fragment implements AdapterView.OnItemSelec
                         },
                         throwable -> {
                             Log.i(TAG, throwable.getMessage(), throwable);
+                            binding.shimmerMetricsContainer.stopShimmer();
+                            showErrorSnackbar();
                             //TODO: implement error handling on user side
                         }
                 );
@@ -219,6 +222,17 @@ public class MetricsFragment extends Fragment implements AdapterView.OnItemSelec
             default:
                 break;
         }
+    }
+
+    private void showErrorSnackbar() {
+        final Snackbar snackbar = Snackbar.make(metricsBinding.getRoot(), "Error loading data",
+                Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("Retry", v -> {
+            binding.shimmerMetricsContainer.startShimmer();
+            fetchData();
+            snackbar.dismiss();
+        });
+        snackbar.show();
     }
 
     @Override
