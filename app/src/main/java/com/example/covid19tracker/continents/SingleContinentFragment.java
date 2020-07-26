@@ -47,10 +47,10 @@ public class SingleContinentFragment extends Fragment {
     private String continentName;
 
 
-
     private String mCountryCode;
 
     private WebView webView;
+
     public SingleContinentFragment() {
         // Required empty public constructor
     }
@@ -91,7 +91,7 @@ public class SingleContinentFragment extends Fragment {
     public class WebAppInterface {
         Context mContext;
 
-        public WebAppInterface (Context context) {
+        public WebAppInterface(Context context) {
             mContext = context;
         }
 
@@ -140,31 +140,14 @@ public class SingleContinentFragment extends Fragment {
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
         webView.addJavascriptInterface(new WebAppInterface(getContext()), "Android");
-        webView.setInitialScale(0);
-//        webView.getSettings().setLoadWithOverviewMode(true);
-//        webView.getSettings().setUseWideViewPort(true);
-
-
-        if (mCountryCode.equals("002")){
-            webView.scrollTo(500, 0);
-        } else if (mCountryCode.equals("150")) {
-            webView.scrollTo(500, 0);
-        } else if (mCountryCode.equals("142")) {
-            webView.scrollTo(500, 0);
-        } else if (mCountryCode.equals("021")) {
-            webView.scrollTo(650, 0);
-        } else if (mCountryCode.equals("005")) {
-            webView.scrollTo(600, 0);
-        } else if (mCountryCode.equals("009")) {
-            webView.scrollTo(280, 0);
-        }
-
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
 
 
         webView.loadUrl("file:///android_asset/continents.html");
     }
 
-    private void getWorldData(){
+    private void getWorldData() {
 
         Call<ContinentDataResponse> continentDataResponseCall = service
                 .getContinentData(continentName);
