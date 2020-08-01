@@ -123,8 +123,15 @@ public class WorldFragment extends Fragment {
         Covid19ApiAlt serviceAlt = retrofit.create(Covid19ApiAlt.class);
 
         List<Observable<?>> requests = new ArrayList<>();
-        requests.add(serviceAlt.getCountryData(100, 1));
-        requests.add(serviceAlt.getCountryData(100, 2));
+
+        //Setting up to get 25 results per page
+        for(int a = 0; a < 8; a++) {
+            requests.add(serviceAlt.getCountryData(25, a + 1));
+        }
+        //Setting up to get 100 results per page
+//        requests.add(serviceAlt.getCountryData(100, 1));
+//        requests.add(serviceAlt.getCountryData(100, 2));
+
         requests.add(serviceAlt.getGlobalStatistics());
 
         Observable.zip(
