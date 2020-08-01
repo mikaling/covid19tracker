@@ -32,5 +32,5 @@ public class Utils {
     /* API URLs */
     public static final String API_BASE_URL = "https://api.covid19api.com/";
     public static final String API_BASE_URL_V2 =
-            "https://fathomless-meadow-48168.herokuapp.com/api/";
+            "https://api.covid-updates.live/";
 }

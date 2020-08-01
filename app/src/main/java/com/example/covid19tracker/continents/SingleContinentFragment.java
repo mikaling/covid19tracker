@@ -157,7 +157,13 @@ public class SingleContinentFragment extends Fragment {
                 if (response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
                     Log.i(TAG, "Response received from API call");
 
-                    countriesResponse = response.body().getCountryDataWrap().getCountryDataModelList();
+                    //Edit: Changed wrap to Continent data wrap
+                    countriesResponse = response.body().getContinentDataWrap().getCountryDataModelList();
+
+                    //Also added the ContinentTotalsModel object that you can access with the method
+                    //response.body().getContinentDataWrap().getContinentTotalsModel()
+                    //The object contains totalConfirmed, totalRecoveries, totalDeaths for a
+                    //continent
 
                     for (int i = 0; i < countriesResponse.size(); i++) {
                         CountryModel countryModel = new CountryModel(

@@ -82,7 +82,7 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ContinentDataResponse> call, Response<ContinentDataResponse> response) {
                 if(response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
-                    populateRecycler(response.body().getCountryDataWrap().getCountryDataModelList());
+                    populateRecycler(response.body().getContinentDataWrap().getCountryDataModelList());
 
                 }
             }

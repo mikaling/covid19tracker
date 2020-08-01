@@ -15,7 +15,7 @@ public class ContinentDataResponse {
 
     @SerializedName("data")
     @Expose
-    private CountryDataWrap countryDataWrap;
+    private ContinentDataWrap continentDataWrap;
 
     public String getStatus() {
         return status;
@@ -25,8 +25,7 @@ public class ContinentDataResponse {
         return results;
     }
 
-    public CountryDataWrap getCountryDataWrap() {
-        return countryDataWrap;
+    public ContinentDataWrap getContinentDataWrap() {
+        return continentDataWrap;
     }
-
 }
