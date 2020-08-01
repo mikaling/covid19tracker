@@ -2,6 +2,9 @@ package com.example.covid19tracker.network;
 
 import com.example.covid19tracker.utils.Utils;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,11 +20,17 @@ public class RetrofitClientInstance {
     private static Retrofit retrofitAlternative;
     private static final RxJava3CallAdapterFactory adapter = RxJava3CallAdapterFactory.create();
 
+    private static final OkHttpClient httpClient = new OkHttpClient.Builder()
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .build();
+
     public static Retrofit getRetrofitInstance() {
         if(retrofit == null) {
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(Utils.API_BASE_URL_V2)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient)
                     .build();
         }
         return retrofit;
@@ -33,6 +42,7 @@ public class RetrofitClientInstance {
                     .baseUrl(Utils.API_BASE_URL_V2)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(adapter)
+                    .client(httpClient)
                     .build();
         }
         return retrofitAlternative;

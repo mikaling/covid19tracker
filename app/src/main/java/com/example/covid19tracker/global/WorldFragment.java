@@ -165,6 +165,7 @@ public class WorldFragment extends Fragment {
                         },
                         throwable -> {
                             Log.i(TAG, throwable.getMessage(), throwable);
+                            shimmerFrameLayout.stopShimmer();
                             showErrorSnackBar();
                             //TODO: implement error handling on user side
                         }
