@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.covid19tracker.R;
@@ -26,6 +27,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,7 @@ public class LineChartFragment extends Fragment {
     private TextView title;
     private List<HistoricalStatisticsModel> historicalStatisticsModels = new ArrayList<>();
     private String slug, country;
+    RelativeLayout layoutLineChart;
 
     public LineChartFragment() {
         // Required empty public constructor
@@ -70,26 +73,8 @@ public class LineChartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_line_chart, container, false);
         lineChart = view.findViewById(R.id.line_chart_fragment);
         title = view.findViewById(R.id.label_line_chart_title);
-        TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
-        Call<HistoricalStatisticsResponse> historicalStatisticsResponseCall = service
-                .getCountryHistoricalData(slug);
-        historicalStatisticsResponseCall.enqueue(new Callback<HistoricalStatisticsResponse>() {
-            @Override
-            public void onResponse(Call<HistoricalStatisticsResponse> call, Response<HistoricalStatisticsResponse> response) {
-                assert response.body() != null;
-                if (response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
-                    historicalStatisticsModels = response.body().getHistoricalStatisticsWrap()
-                            .getHistoricalStatisticsModelList();
-                    lineChart();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<HistoricalStatisticsResponse> call, Throwable t) {
-                showToast(getActivity(), getString(R.string.retrofit_on_failure_message));
-                Log.e("Bar Data Error", t.getMessage(), t);
-            }
-        });
+        layoutLineChart = view.findViewById(R.id.fragment_line_chart);
+        fetchLineData();
 
         return view;
     }
@@ -223,5 +208,40 @@ public class LineChartFragment extends Fragment {
             values.add(new Entry(i + 1, historicalStatisticsModel.getRecovered()));
         }
         return values;
+    }
+
+    private void fetchLineData()
+    {
+        TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
+        Call<HistoricalStatisticsResponse> historicalStatisticsResponseCall = service
+                .getCountryHistoricalData(slug);
+        historicalStatisticsResponseCall.enqueue(new Callback<HistoricalStatisticsResponse>() {
+            @Override
+            public void onResponse(Call<HistoricalStatisticsResponse> call, Response<HistoricalStatisticsResponse> response) {
+                assert response.body() != null;
+                if (response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
+                    historicalStatisticsModels = response.body().getHistoricalStatisticsWrap()
+                            .getHistoricalStatisticsModelList();
+                    lineChart();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HistoricalStatisticsResponse> call, Throwable t) {
+//                showToast(getActivity(), getString(R.string.retrofit_on_failure_message));
+                Log.e("Bar Data Error", t.getMessage(), t);
+                showErrorSnackBar();
+            }
+        });
+    }
+
+    private void showErrorSnackBar()
+    {
+        final Snackbar snackbar = Snackbar.make(layoutLineChart, "Error Loading Data", Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("Retry", v -> {
+            fetchLineData();
+            snackbar.dismiss();
+        });
+        snackbar.show();
     }
 }
