@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
+import android.widget.RelativeLayout;
 
 import com.example.covid19tracker.R;
 import com.example.covid19tracker.model.CountryDataModel;
@@ -22,6 +23,8 @@ import com.example.covid19tracker.network.RetrofitClientInstance;
 import com.example.covid19tracker.network.TestApi;
 import com.example.covid19tracker.response.ContinentDataResponse;
 import com.example.covid19tracker.utils.Utils;
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -50,6 +53,8 @@ public class SingleContinentFragment extends Fragment {
     private String mCountryCode;
 
     private WebView webView;
+    private RelativeLayout continentRelativeLayout;
+    private ShimmerFrameLayout shimmerFrameLayout;
 
     public SingleContinentFragment() {
         // Required empty public constructor
@@ -85,6 +90,7 @@ public class SingleContinentFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_single_continent, container, false);
         webView = view.findViewById(R.id.continent_webview);
+        continentRelativeLayout = view.findViewById(R.id.continent_relative_layout);
         return view;
     }
 
@@ -111,7 +117,8 @@ public class SingleContinentFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        loadWebView();
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_continent_container);
+        shimmerFrameLayout.startShimmer();
         Log.i(TAG, "Code: " + mCountryCode);
 
         service = RetrofitClientInstance
@@ -176,18 +183,33 @@ public class SingleContinentFragment extends Fragment {
 
                     Gson countriesObject = new Gson();
                     countries = countriesObject.toJson(countriesList);
-
+                    shimmerFrameLayout.stopShimmer();
+                    shimmerFrameLayout.setVisibility(View.INVISIBLE);
                     loadWebView();
                 }
             }
 
             @Override
             public void onFailure(Call<ContinentDataResponse> call, Throwable t) {
-
+                showErrorSnackBar();
             }
         });
 
 
+    }
+
+    private void showErrorSnackBar() {
+
+        final Snackbar snackbar = Snackbar
+                .make(continentRelativeLayout, "Error Loading Data", Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("Retry", v -> {
+//            shimmerFrameLayout.startShimmer();
+//            getGlobalData();
+            getWorldData();
+//            fetchData();
+            snackbar.dismiss();
+        });
+        snackbar.show();
     }
 
 }

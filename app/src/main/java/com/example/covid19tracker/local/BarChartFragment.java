@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.covid19tracker.R;
@@ -35,52 +36,42 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.example.covid19tracker.utils.Utils;
+import com.google.android.material.snackbar.Snackbar;
 
 import static com.example.covid19tracker.utils.Utils.showToast;
 
-public class BarChartFragment extends Fragment {
+public class BarChartFragment extends Fragment
+{
     BarChart barChart;
     List<BarDataModel> barDataModels = new ArrayList<>();
+    RelativeLayout layoutBarChart;
     TextView xAxisLabel;
     int count;
 
-    public BarChartFragment() {
+    public BarChartFragment()
+    {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_bar_chart, container, false);
+        layoutBarChart = view.findViewById(R.id.fragment_bar_chart);
         barChart = view.findViewById(R.id.bar_chart_fragment);
-        TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
-        Call<BarDataResponse> barDataResponseCall = service.getBarData();
-        barDataResponseCall.enqueue(new Callback<BarDataResponse>() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-            @Override
-            public void onResponse(Call<BarDataResponse> call, Response<BarDataResponse> response) {
-                if (response.body().getStatus().equals(Utils.RESPONSE_SUCCESS)) {
-                    barDataModels = response.body().getData().getBarDataModelList();
-                    Log.i("BarChartFragment", barDataModels.toString());
-                    barChart();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BarDataResponse> call, Throwable t) {
-                showToast(getActivity(), getString(R.string.retrofit_on_failure_message));
-                Log.e("Bar Data Error", t.getMessage(), t);
-            }
-        });
+        fetchBarData();
         return view;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void barChart() {
+    private void barChart()
+    {
         float barSpace = 0f;
         float groupSpace = 0.1f;
 
@@ -134,16 +125,19 @@ public class BarChartFragment extends Fragment {
     }
 
     //  Method for setting the x and y values to be used bar chart
-    private ArrayList<BarEntry> confirmedBarChart() {
+    private ArrayList<BarEntry> confirmedBarChart()
+    {
         ArrayList<BarEntry> values = new ArrayList<>();
-        for (int i = 0; i < barDataModels.size(); i++) {
+        for (int i = 0; i < barDataModels.size(); i++)
+        {
             BarDataModel barDataModel = barDataModels.get(i);
             values.add(new BarEntry(i, barDataModel.getTotalConfirmed()));
         }
         return values;
     }
 
-    private ArrayList<BarEntry> deathsBarChart() {
+    private ArrayList<BarEntry> deathsBarChart()
+    {
         ArrayList<BarEntry> values = new ArrayList<>();
         for (int i = 0; i < barDataModels.size(); i++) {
             BarDataModel barDataModel = barDataModels.get(i);
@@ -153,12 +147,53 @@ public class BarChartFragment extends Fragment {
         return values;
     }
 
-    private ArrayList<BarEntry> recoveriesBarChart() {
+    private ArrayList<BarEntry> recoveriesBarChart()
+    {
         ArrayList<BarEntry> values = new ArrayList<>();
-        for (int i = 0; i < barDataModels.size(); i++) {
+        for (int i = 0; i < barDataModels.size(); i++)
+        {
             BarDataModel barDataModel = barDataModels.get(i);
             values.add(new BarEntry(i, barDataModel.getTotalRecovered()));
         }
         return values;
+    }
+
+
+    private void fetchBarData()
+    {
+        TestApi service = RetrofitClientInstance.getRetrofitInstance().create(TestApi.class);
+        Call<BarDataResponse> barDataResponseCall = service.getBarData();
+        barDataResponseCall.enqueue(new Callback<BarDataResponse>()
+        {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @Override
+            public void onResponse(Call<BarDataResponse> call, Response<BarDataResponse> response)
+            {
+                if (response.body().getStatus().equals(Utils.RESPONSE_SUCCESS))
+                {
+                    barDataModels = response.body().getData().getBarDataModelList();
+                    Log.i("BarChartFragment", barDataModels.toString());
+                    barChart();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BarDataResponse> call, Throwable t)
+            {
+//                showToast(getActivity(), getString(R.string.retrofit_on_failure_message));
+                Log.e("Bar Data Error", t.getMessage(), t);
+                showErrorSnackBar();
+            }
+        });
+    }
+
+    private void showErrorSnackBar()
+    {
+        final Snackbar snackbar = Snackbar.make(layoutBarChart, "Error Loading Data", Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("Retry", v -> {
+            fetchBarData();
+            snackbar.dismiss();
+        });
+        snackbar.show();
     }
 }
