@@ -42,15 +42,15 @@ public interface TestApi{
     Call<HistoricalStatisticsResponse> getCountryHistoricalData(@Path("country") String country);
 
     /* This endpoint returns a response detailing the global statistics of COVID-19 cases */
-    @GET("globalStatistics")
+    @GET("summary")
     Call<GlobalStatisticsResponse> getGlobalStatistics();
 
     /* This endpoint returns an array of each country's most current statistics */
-    @GET("countryData")
+    @GET("country-data")
     Call<CountryDataResponse> getCountryData(@Query("limit") int limit, @Query("page") int page);
 
     /* This endpoint returns an array of countries in East Africa and their total statistics */
-    @GET("barData")
+    @GET("east-africa-data")
     Call<BarDataResponse> getBarData();
 
     /* This endpoint returns an array of statistics from countries in a
