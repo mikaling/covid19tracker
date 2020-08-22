@@ -56,5 +56,16 @@
     </string-array>
 
     <!-- About -->
-    <string name="about_app">COVID19TRACKER is an application</string>
+    <string name="about_app">COVID19TRACKER is an application that displays COVID-19 statistics
+        namely the case, recovery and death counts. This data has been aggregated into global,
+        continental and regional (East Africa only) classes.</string>
+    <string name="about_app_2"><b>DISCLAIMER</b>: The developers of this application do not own this
+        data. The free tier of the API api.covid19api.com has been used. The developers are also not
+        liable for the accuracy of the data. The API in use works with sources such as John Hopkins
+        University Hospital, a reputable institution.</string>
+
+    <string name="links_header">LINKS</string>
+    <string name="api_url"><u>https://covid19api.com</u></string>
+    <string name="github_repo"><u>https://github.com/mikaling/covid19tracker</u></string>
+    <string name="github_repo_2"><u>https://github.com/John-Wambua/covidtracker</u></string>
 </resources>
