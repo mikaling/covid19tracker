@@ -11,13 +11,13 @@ import retrofit2.http.Query;
 
 public interface Covid19ApiAlt {
 
-    @GET("countryData/{alias}")
+    @GET("country-data/{alias}")
     Observable<CountryDataResponse> getTopCountryData(@Path("alias") String alias);
 
-    @GET("globalStatistics")
+    @GET("summary")
     Observable<GlobalStatisticsResponse> getGlobalStatistics();
 
-    @GET("countryData")
+    @GET("country-data")
     Observable<CountryDataResponse> getCountryData(@Query("limit") int limit,
                                                    @Query("page") int page);
 
