@@ -203,7 +203,7 @@ public class SingleContinentFragment extends Fragment {
         final Snackbar snackbar = Snackbar
                 .make(continentRelativeLayout, "Error Loading Data", Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction("Retry", v -> {
-//            shimmerFrameLayout.startShimmer();
+            shimmerFrameLayout.startShimmer();
 //            getGlobalData();
             getWorldData();
 //            fetchData();
