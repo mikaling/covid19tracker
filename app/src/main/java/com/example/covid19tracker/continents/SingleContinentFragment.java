@@ -15,8 +15,10 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.covid19tracker.R;
+import com.example.covid19tracker.model.ContinentTotalsModel;
 import com.example.covid19tracker.model.CountryDataModel;
 import com.example.covid19tracker.model.CountryModel;
 import com.example.covid19tracker.network.RetrofitClientInstance;
@@ -29,6 +31,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +47,7 @@ public class SingleContinentFragment extends Fragment {
     private static final String TAG = "SingleContinentFragment";
 
     private List<CountryDataModel> countriesResponse;
+    private ContinentTotalsModel continentTotalsModel;
     private List<CountryModel> countriesList = new ArrayList<>();
     private TestApi service;
     private String countries;
@@ -55,6 +59,8 @@ public class SingleContinentFragment extends Fragment {
     private WebView webView;
     private RelativeLayout continentRelativeLayout;
     private ShimmerFrameLayout shimmerFrameLayout;
+
+    private TextView continentCases, continentRecoveries, continentDeaths;
 
     public SingleContinentFragment() {
         // Required empty public constructor
@@ -91,6 +97,10 @@ public class SingleContinentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_single_continent, container, false);
         webView = view.findViewById(R.id.continent_webview);
         continentRelativeLayout = view.findViewById(R.id.continent_relative_layout);
+
+        continentCases = view.findViewById(R.id.text_cont_confirmed_cases);
+        continentRecoveries = view.findViewById(R.id.text_cont_recovered_cases);
+        continentDeaths = view.findViewById(R.id.text_cont_deaths);
         return view;
     }
 
@@ -152,6 +162,7 @@ public class SingleContinentFragment extends Fragment {
 
 
         webView.loadUrl("file:///android_asset/continents.html");
+        continentRelativeLayout.setVisibility(View.VISIBLE);
     }
 
     private void getWorldData() {
@@ -166,7 +177,7 @@ public class SingleContinentFragment extends Fragment {
 
                     //Edit: Changed wrap to Continent data wrap
                     countriesResponse = response.body().getContinentDataWrap().getCountryDataModelList();
-
+                    continentTotalsModel = response.body().getContinentDataWrap().getContinentTotalsModel();
                     //Also added the ContinentTotalsModel object that you can access with the method
                     //response.body().getContinentDataWrap().getContinentTotalsModel()
                     //The object contains totalConfirmed, totalRecoveries, totalDeaths for a
@@ -185,7 +196,23 @@ public class SingleContinentFragment extends Fragment {
                     countries = countriesObject.toJson(countriesList);
                     shimmerFrameLayout.stopShimmer();
                     shimmerFrameLayout.setVisibility(View.INVISIBLE);
+                    continentRelativeLayout.setVisibility(View.VISIBLE);
                     loadWebView();
+
+                    continentCases.setText(
+                            String.format(Locale.ENGLISH, Utils.SEPARATOR_FORMAT,
+                                    continentTotalsModel.getTotalConfirmed())
+                    );
+
+                    continentRecoveries.setText(
+                            String.format(Locale.ENGLISH, Utils.SEPARATOR_FORMAT,
+                                    continentTotalsModel.getTotalRecoveries())
+                    );
+
+                    continentDeaths.setText(
+                            String.format(Locale.ENGLISH, Utils.SEPARATOR_FORMAT,
+                                    continentTotalsModel.getTotalDeaths())
+                    );
                 }
             }
 
