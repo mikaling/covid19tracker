@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.about.AboutFragment">
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/about_text_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:padding="4dp"
+            android:text="@string/about_app"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+        <TextView
+            android:id="@+id/about_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/about_text_1"
+            android:layout_marginTop="2dp"
+            android:padding="4dp"
+            android:text="@string/about_app_2"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/links_head"
+            android:layout_below="@+id/about_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="@string/links_header"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/android_repo_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/links_head"
+            android:padding="4dp"
+            android:text="@string/github_repo"
+            android:textColor="@color/colour3"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/backend_repo_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/android_repo_link"
+            android:layout_marginTop="4dp"
+            android:padding="4dp"
+            android:text="@string/github_repo_2"
+            android:textColor="@color/colour3"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/api_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/backend_repo_link"
+            android:layout_marginTop="4dp"
+            android:padding="4dp"
+            android:text="@string/api_url"
+            android:textColor="@color/colour3"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+    </RelativeLayout>
+
+</ScrollView>

@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">C19TN</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Menu Icon Labels -->
+    <string name="label_global">Global</string>
+    <string name="label_continental">Continental</string>
+    <string name="label_local">Local</string>
+    <string name="label_metrics">Metrics</string>
+    <string name="label_about">About</string>
+
+    <!-- Global statistics labels -->
+    <string name="label_total_confirmed_cases">Total Confirmed</string>
+    <string name="label_new_confirmed_cases">New Confirmed</string>
+    <string name="label_total_recoveries">Total Recoveries</string>
+    <string name="label_new_recoveries">New Recoveries</string>
+    <string name="label_total_deaths">Total Deaths</string>
+    <string name="label_new_deaths">New Deaths</string>
+
+    <!-- API Base Url -->
+    <string name="API_BASE_URL">https://api.covid-updates.live/</string>
+
+    <!-- AboutFragment resources -->
+    <string name="about_app">COVID19TRACKER is an application that displays COVID-19 statistics
+        namely the case, recovery and death counts. This data has been aggregated into global,
+        continental and regional (East Africa only) classes.</string>
+    <string name="about_app_2"><b>DISCLAIMER</b>: The developers of this application do not own this
+        data. The free tier of the API api.covid19api.com has been used. The developers are also not
+        liable for the accuracy of the data. The API in use works with sources such as John Hopkins
+        University Hospital, a reputable institution.</string>
+
+    <string name="links_header">LINKS</string>
+    <string name="api_url"><u>https://covid19api.com</u></string>
+    <string name="github_repo"><u>https://github.com/mikaling/covid19tracker</u></string>
+    <string name="github_repo_2"><u>https://github.com/John-Wambua/covidtracker</u></string>
+</resources>

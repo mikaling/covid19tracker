@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/placeholder_web_view_cont"
+        android:background="#dddddd"
+        android:padding="3dp"
+        android:layout_margin="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        />
+
+    <!--    <Space-->
+    <!--        android:id="@+id/placeholder_middle_space_cont"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="5dp"-->
+    <!--        android:layout_above="@+id/placeholder_horizontal_cards_cont"/>-->
+
+    <TableLayout
+        android:layout_below="@id/placeholder_web_view_cont"
+        android:id="@+id/placeholder_horizontal_cards_cont"
+        android:layout_above="@id/placeholder_bottom_space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0,1">
+
+        <TableRow>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:textAlignment="center">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="20dp"
+                        android:background="#dddddd"
+                        style="@style/TextAppearance.MaterialComponents.Body1"/>
+
+                    <TextView
+                        android:layout_marginTop="2dp"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:background="#dddddd"
+                        style="@style/TextAppearance.MaterialComponents.Headline5" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:textAlignment="center">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="20dp"
+                        android:background="#dddddd"
+                        style="@style/TextAppearance.MaterialComponents.Body1"/>
+
+                    <TextView
+                        android:layout_marginTop="2dp"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:background="#dddddd"
+                        style="@style/TextAppearance.MaterialComponents.Headline5" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:textAlignment="center">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="20dp"
+                        android:background="#dddddd"
+                        style="@style/TextAppearance.MaterialComponents.Body1"/>
+
+                    <TextView
+                        android:layout_marginTop="2dp"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:background="#dddddd"
+                        style="@style/TextAppearance.MaterialComponents.Headline5" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </TableRow>
+
+    </TableLayout>
+
+    <Space
+        android:id="@+id/placeholder_bottom_space"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
