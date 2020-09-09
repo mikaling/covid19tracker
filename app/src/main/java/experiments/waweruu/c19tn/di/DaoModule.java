@@ -9,6 +9,7 @@ import experiments.waweruu.c19tn.db.dao.ContinentTotalsDao;
 import experiments.waweruu.c19tn.db.dao.CountryDataDao;
 import experiments.waweruu.c19tn.db.dao.CountrySlugDao;
 import experiments.waweruu.c19tn.db.dao.GlobalStatisticsDao;
+import experiments.waweruu.c19tn.db.dao.HistoricalStatisticsDao;
 import experiments.waweruu.c19tn.db.database.ContinentalDatabase;
 import experiments.waweruu.c19tn.db.database.GlobalDatabase;
 import experiments.waweruu.c19tn.db.database.LocalDatabase;
@@ -44,5 +45,11 @@ public class DaoModule {
     @Singleton
     CountrySlugDao provideCountrySlugDao(LocalDatabase localDatabase) {
         return localDatabase.countrySlugDao();
+    }
+
+    @Provides
+    @Singleton
+    HistoricalStatisticsDao provideHistoricalStatisticsDao(LocalDatabase localDatabase) {
+        return localDatabase.historicalStatisticsDao();
     }
 }

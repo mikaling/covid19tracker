@@ -112,12 +112,17 @@ public class MetricsFragment extends Fragment implements AdapterView.OnItemSelec
                 .setAction("Retry", view -> {
                     viewModel.refreshCountryData();
                 })
-                .setAnchorView(R.id.bottom_navigation)
                 .show();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

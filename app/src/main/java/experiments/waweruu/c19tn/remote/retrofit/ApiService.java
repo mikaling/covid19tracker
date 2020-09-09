@@ -4,6 +4,7 @@ import experiments.waweruu.c19tn.remote.response.ContinentDataResponse;
 import experiments.waweruu.c19tn.remote.response.CountryDataResponse;
 import experiments.waweruu.c19tn.remote.response.CountrySlugResponse;
 import experiments.waweruu.c19tn.remote.response.GlobalStatisticsResponse;
+import experiments.waweruu.c19tn.remote.response.HistoricalStatisticsResponse;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -50,5 +51,12 @@ public interface ApiService {
     /* This endpoint returns the list of countries that we have data on */
     @GET("countries")
     Call<CountrySlugResponse> getCountrySlugs();
+
+    /* This endpoint when given the name of a country as a slug / path returns a response
+     * of a country's statistical data from the date of its first case
+     * to the current date (the day the call has been made) */
+    @GET("historical/{country}")
+    Call<HistoricalStatisticsResponse> getCountryHistoricalData(@Path("country") String country);
+
 
 }

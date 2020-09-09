@@ -12,6 +12,7 @@ import experiments.waweruu.c19tn.ui.global.GlobalMapFragment;
 import experiments.waweruu.c19tn.ui.global.GlobalStatisticsFragment;
 import experiments.waweruu.c19tn.ui.local.ComparisonFragment;
 import experiments.waweruu.c19tn.ui.local.LocalFragment;
+import experiments.waweruu.c19tn.ui.local.TrendsFragment;
 import experiments.waweruu.c19tn.ui.metrics.MetricsFragment;
 
 @Singleton
@@ -37,4 +38,6 @@ public interface AppComponent {
     void inject(ComparisonFragment fragment);
 
     void inject(MetricsFragment fragment);
+
+    void inject(TrendsFragment fragment);
 }

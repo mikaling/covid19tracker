@@ -28,6 +28,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import experiments.waweruu.c19tn.App;
+import experiments.waweruu.c19tn.R;
 import experiments.waweruu.c19tn.databinding.FragmentComparisonBinding;
 import experiments.waweruu.c19tn.db.model.CountryInfoModel;
 import experiments.waweruu.c19tn.di.AppComponent;
@@ -161,5 +162,13 @@ public class ComparisonFragment extends Fragment implements View.OnClickListener
         binding.barChart.groupBars(0, groupSpace, barSpace);
 
         binding.barChart.invalidate();
+
+        binding.barChartTitle.setText(R.string.title_comparison_chart);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

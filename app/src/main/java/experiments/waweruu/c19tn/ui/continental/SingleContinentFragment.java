@@ -22,6 +22,7 @@ import javax.inject.Inject;
 
 import experiments.waweruu.c19tn.App;
 import experiments.waweruu.c19tn.AppExecutors;
+import experiments.waweruu.c19tn.R;
 import experiments.waweruu.c19tn.databinding.FragmentSingleContinentBinding;
 import experiments.waweruu.c19tn.di.AppComponent;
 import experiments.waweruu.c19tn.util.StatusReport;

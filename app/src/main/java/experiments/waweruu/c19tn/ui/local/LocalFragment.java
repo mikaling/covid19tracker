@@ -55,6 +55,7 @@ public class LocalFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentLocalBinding.inflate(inflater, container, false);
+        binding.trendsButton.setVisibility(View.INVISIBLE);
         return binding.getRoot();
     }
 
@@ -63,7 +64,6 @@ public class LocalFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         binding.trendsButton.setOnClickListener(this);
-        binding.trendsButton.setVisibility(View.INVISIBLE);
         binding.comparisonButton.setOnClickListener(this);
 
         viewModel.getCountryNames().observe(getViewLifecycleOwner(), strings -> {
@@ -106,7 +106,7 @@ public class LocalFragment extends Fragment implements View.OnClickListener {
     }
 
     private void showErrorSnackbar() {
-        Snackbar.make(binding.getRoot(), "Error loading data.",
+        Snackbar.make(binding.getRoot(), "Error loading data. Check your internet connection.",
                 BaseTransientBottomBar.LENGTH_INDEFINITE)
                 .setAction("RETRY", this)
                 .show();
@@ -116,7 +116,15 @@ public class LocalFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.trends_button:
-                //TODO:
+                if(countryName != null) {
+                    NavDirections trendsAction = LocalFragmentDirections
+                            .actionLocalFragmentToTrendsFragment(countryName);
+                    NavHostFragment.findNavController(this).navigate(trendsAction);
+                } else {
+                    Snackbar.make(binding.getRoot(), "Select a country first",
+                            BaseTransientBottomBar.LENGTH_SHORT)
+                            .show();
+                }
                 break;
             case R.id.comparison_button:
                 NavDirections comparisonAction = LocalFragmentDirections
@@ -128,5 +136,11 @@ public class LocalFragment extends Fragment implements View.OnClickListener {
         if(view.equals(binding.getRoot())) {
             viewModel.refreshCountrySlugs();
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

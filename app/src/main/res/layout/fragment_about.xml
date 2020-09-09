@@ -60,10 +60,21 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/api_link"
+            android:id="@+id/android_alt_repo_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/backend_repo_link"
+            android:layout_marginTop="4dp"
+            android:padding="4dp"
+            android:text="@string/github_repo_3"
+            android:textColor="@color/colour3"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/api_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/android_alt_repo_link"
             android:layout_marginTop="4dp"
             android:padding="4dp"
             android:text="@string/api_url"

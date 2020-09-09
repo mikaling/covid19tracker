@@ -65,7 +65,6 @@ public class GlobalViewModel extends ViewModel {
                     getCountryInfo();
                     getGlobalStatistics();
                 })
-                .setAnchorView(R.id.bottom_navigation)
                 .show();
     }
 }

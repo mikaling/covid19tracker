@@ -23,4 +23,7 @@ public interface CountrySlugDao {
 
     @Query("SELECT country FROM country_slug_table")
     LiveData<List<String>> getCountryNames();
+
+    @Query("SELECT slug FROM country_slug_table WHERE country = :country")
+    String getCountrySlug(String country);
 }

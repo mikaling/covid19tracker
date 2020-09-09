@@ -11,6 +11,7 @@ import experiments.waweruu.c19tn.viewmodel.ContinentalViewModel;
 import experiments.waweruu.c19tn.viewmodel.GlobalViewModel;
 import experiments.waweruu.c19tn.viewmodel.LocalViewModel;
 import experiments.waweruu.c19tn.viewmodel.MetricsViewModel;
+import experiments.waweruu.c19tn.viewmodel.TrendsViewModel;
 import experiments.waweruu.c19tn.viewmodel.ViewModelFactory;
 
 @Module
@@ -40,6 +41,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MetricsViewModel.class)
     abstract ViewModel bindMetricsViewModel(MetricsViewModel metricsViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TrendsViewModel.class)
+    abstract ViewModel bindTrendsViewModel(TrendsViewModel trendsViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factoryViewModel);
