@@ -12,11 +12,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import experiments.waweruu.c19tn.R;
+
 
 public class Util {
 
     public static final String[] EA_COUNTRIES = {"Burundi", "Kenya", "Rwanda",
             "Tanzania, United Republic of", "Uganda"};
+
+    /* Group IDs to classify the responses from the endpoint aliases */
+    public static final int CONFIRMED_GROUP_ID = 100;
+    public static final int RECOVERED_GROUP_ID = 101;
+    public static final int DEATHS_GROUP_ID = 102;
+
 
     public static final String SUCCESS_MESSAGE = "success";
 
@@ -51,6 +59,33 @@ public class Util {
 
     public static String getFormattedString(int number) {
         return String.format(Locale.ENGLISH, SEPARATOR_FORMAT, number);
+    }
+
+    public static String getColumnFromChoice(String choice) {
+        switch (choice) {
+            case "Confirmed": return "totalConfirmed";
+            case "Deaths": return "totalDeaths";
+            case "Recovered": return "totalRecovered";
+            default: return null;
+        }
+    }
+
+    public static int getTitleIdFromChoice(String choice) {
+        switch (choice) {
+            case "Confirmed": return R.string.title_confirmed;
+            case "Deaths": return R.string.title_deaths;
+            case "Recovered": return R.string.title_recovered;
+            default: return 0;
+        }
+    }
+
+    public static int getGroupFromChoice(String choice) {
+        switch (choice) {
+            case "Confirmed": return CONFIRMED_GROUP_ID;
+            case "Deaths": return DEATHS_GROUP_ID;
+            case "Recovered": return RECOVERED_GROUP_ID;
+            default: return 0;
+        }
     }
 
     public static String getContinentFromCode(String continentCode) {

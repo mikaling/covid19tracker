@@ -32,4 +32,13 @@ public interface CountryDataDao {
     @Query("SELECT country, totalConfirmed, totalDeaths, totalRecovered FROM country_data_table" +
         " WHERE country IN (:filterValues) AND dateRetrieved = :dateRetrieved")
     LiveData<List<CountryInfoModel>> getComparisonInfo(String[] filterValues, int dateRetrieved);
+
+    @Query("SELECT * FROM country_data_table ORDER BY totalConfirmed DESC LIMIT 10")
+    LiveData<List<CountryDataEntity>> getMetricsConfirmed();
+
+    @Query("SELECT * FROM country_data_table ORDER BY totalDeaths DESC LIMIT 10")
+    LiveData<List<CountryDataEntity>> getMetricsDeaths();
+
+    @Query("SELECT * FROM country_data_table ORDER BY totalRecovered DESC LIMIT 10")
+    LiveData<List<CountryDataEntity>> getMetricsRecovered();
 }

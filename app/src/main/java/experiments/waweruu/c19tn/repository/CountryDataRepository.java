@@ -67,6 +67,16 @@ public class CountryDataRepository {
         return countryDataDao.getComparisonInfo(Util.EA_COUNTRIES, Util.getFormattedTime());
     }
 
+    public LiveData<List<CountryDataEntity>> getMetrics(String column) {
+        refreshCountryData();
+        switch (column) {
+            case "totalConfirmed": return countryDataDao.getMetricsConfirmed();
+            case "totalRecovered": return countryDataDao.getMetricsRecovered();
+            case "totalDeaths": return countryDataDao.getMetricsDeaths();
+            default: return null;
+        }
+    }
+
     public MutableLiveData<StatusReport> getStatusReport() {
         return this.countryDataStatus;
     }
