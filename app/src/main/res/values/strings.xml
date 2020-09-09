@@ -33,4 +33,44 @@
     <string name="api_url"><u>https://covid19api.com</u></string>
     <string name="github_repo"><u>https://github.com/mikaling/covid19tracker</u></string>
     <string name="github_repo_2"><u>https://github.com/John-Wambua/covidtracker</u></string>
+
+    <string name="retrofit_on_failure_message">Something went wrong…please try again later!</string>
+    <string name="label_country">Country</string>
+    <string name="label_confirmed_cases">Confirmed Cases</string>
+    <string name="label_confirmed_deaths">Confirmed Deaths</string>
+    <string name="label_confirmed_recoveries">Confirmed Recoveries</string>
+    <string name="label_active_cases">Active Cases</string>
+    <string name="label_report_date">Date of Report</string>
+    <string name="label_regional">Regional</string>
+    <string name="trends_in_covid_19_in_kenya">Trends in COVID-19 in Kenya</string>
+    <string name="compare_covid_19_cases_in_east_african_countries">Compare COVID-19 Cases in East African Countries</string>
+    <string name="bar_chart_x_axis_label">Country</string>
+    <string name="bar_chart_y_axis_label">Total Number</string>
+    <string name="days_arbitrary_number">Days (Arbitrary Number)</string>
+    <string name="card_title_trends">Trends</string>
+    <string name="card_body_trends">This is a visualization of the number of confirmed cases,
+        recoveries and deaths of a particular country in the form of a line graph.</string>
+    <string name="card_title_comparison">Comparison</string>
+    <string name="card_body_comparison">This is a visualization comparing the statistics of
+    East African countries in the form of a bar graph.</string>
+
+    <!-- Endpoints -->
+    <string name="top_ten_confirmed">top-10-confirmed</string>
+    <string name="top_ten_recovered">top-10-recovered</string>
+    <string name="top_ten_deaths">top-10-deaths</string>
+
+    <!-- List titles -->
+    <string name="title_confirmed">Countries with the most confirmed cases</string>
+    <string name="title_recovered">Countries with the most recoveries</string>
+    <string name="title_deaths">Countries with the most deaths</string>
+    <string name="action_visualization">Go To Visualization</string>
+    <string name="label_spinner_statistics">Select a statistic</string>
+    <string name="label_menu_about">About</string>
+
+    <!-- Spinner Array -->
+    <string-array name="statistics_array">
+        <item>Confirmed</item>
+        <item>Recovered</item>
+        <item>Deaths</item>
+    </string-array>
 </resources>

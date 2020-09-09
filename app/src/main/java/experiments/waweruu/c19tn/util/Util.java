@@ -15,6 +15,9 @@ import java.util.Locale;
 
 public class Util {
 
+    public static final String[] EA_COUNTRIES = {"Burundi", "Kenya", "Rwanda",
+            "Tanzania, United Republic of", "Uganda"};
+
     public static final String SUCCESS_MESSAGE = "success";
 
     public static final String BASE_URL = "https://api.covid-updates.live/";

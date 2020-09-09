@@ -12,9 +12,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import experiments.waweruu.c19tn.AppExecutors;
-import experiments.waweruu.c19tn.local.dao.CountryDataDao;
-import experiments.waweruu.c19tn.local.entity.CountryDataEntity;
-import experiments.waweruu.c19tn.local.model.CountryInfoModel;
+import experiments.waweruu.c19tn.db.dao.CountryDataDao;
+import experiments.waweruu.c19tn.db.entity.CountryDataEntity;
+import experiments.waweruu.c19tn.db.model.CountryInfoModel;
 import experiments.waweruu.c19tn.remote.model.CountryDataModel;
 import experiments.waweruu.c19tn.remote.response.CountryDataResponse;
 import experiments.waweruu.c19tn.remote.retrofit.ApiService;
@@ -62,11 +62,16 @@ public class CountryDataRepository {
         return countryDataDao.getCountryInfo(Util.getFormattedTime());
     }
 
+    public LiveData<List<CountryInfoModel>> getComparisonCountryInfo() {
+        refreshCountryData();
+        return countryDataDao.getComparisonInfo(Util.EA_COUNTRIES, Util.getFormattedTime());
+    }
+
     public MutableLiveData<StatusReport> getStatusReport() {
         return this.countryDataStatus;
     }
 
-    private void refreshCountryData() {
+    public void refreshCountryData() {
 
         appExecutors.getDiskIO().execute(() -> {
             // Check if latest data is present in database

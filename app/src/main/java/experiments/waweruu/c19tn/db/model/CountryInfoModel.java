@@ -1,4 +1,4 @@
-package experiments.waweruu.c19tn.local.model;
+package experiments.waweruu.c19tn.db.model;
 
 
 public class CountryInfoModel {
@@ -13,5 +13,21 @@ public class CountryInfoModel {
         this.totalConfirmed = totalConfirmed;
         this.totalDeaths = totalDeaths;
         this.totalRecovered = totalRecovered;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public int getTotalConfirmed() {
+        return totalConfirmed;
+    }
+
+    public int getTotalDeaths() {
+        return totalDeaths;
+    }
+
+    public int getTotalRecovered() {
+        return totalRecovered;
     }
 }

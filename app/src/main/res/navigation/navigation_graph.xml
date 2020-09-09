@@ -20,4 +20,19 @@
         android:name="experiments.waweruu.c19tn.ui.continental.ContinentalFragment"
         android:label="Continental"
         tools:layout="@layout/fragment_continental" />
+    <fragment
+        android:id="@id/local_fragment"
+        android:name="experiments.waweruu.c19tn.ui.local.LocalFragment"
+        android:label="Local"
+        tools:layout="@layout/fragment_local">
+        <action
+            android:id="@+id/action_local_fragment_to_comparison_fragment"
+            app:destination="@id/comparison_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/comparison_fragment"
+        android:name="experiments.waweruu.c19tn.ui.local.ComparisonFragment"
+        android:label="Comparison"
+        tools:layout="@layout/fragment_comparison" />
 </navigation>

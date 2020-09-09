@@ -14,9 +14,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import experiments.waweruu.c19tn.R;
-import experiments.waweruu.c19tn.local.entity.CountryDataEntity;
-import experiments.waweruu.c19tn.local.entity.GlobalStatisticsEntity;
-import experiments.waweruu.c19tn.local.model.CountryInfoModel;
+import experiments.waweruu.c19tn.db.entity.CountryDataEntity;
+import experiments.waweruu.c19tn.db.entity.GlobalStatisticsEntity;
+import experiments.waweruu.c19tn.db.model.CountryInfoModel;
 import experiments.waweruu.c19tn.repository.CountryDataRepository;
 import experiments.waweruu.c19tn.repository.GlobalStatisticsRepository;
 import experiments.waweruu.c19tn.util.StatusReport;

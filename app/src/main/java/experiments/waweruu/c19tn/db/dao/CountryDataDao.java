@@ -1,4 +1,4 @@
-package experiments.waweruu.c19tn.local.dao;
+package experiments.waweruu.c19tn.db.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,8 +7,8 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import experiments.waweruu.c19tn.local.entity.CountryDataEntity;
-import experiments.waweruu.c19tn.local.model.CountryInfoModel;
+import experiments.waweruu.c19tn.db.entity.CountryDataEntity;
+import experiments.waweruu.c19tn.db.model.CountryInfoModel;
 
 @Dao
 public interface CountryDataDao {
@@ -29,5 +29,7 @@ public interface CountryDataDao {
     @Query("SELECT EXISTS(SELECT * FROM country_data_table WHERE dateRetrieved = :dateRetrieved LIMIT 'ONE')")
     Boolean doesRowExist(int dateRetrieved);
 
-
+    @Query("SELECT country, totalConfirmed, totalDeaths, totalRecovered FROM country_data_table" +
+        " WHERE country IN (:filterValues) AND dateRetrieved = :dateRetrieved")
+    LiveData<List<CountryInfoModel>> getComparisonInfo(String[] filterValues, int dateRetrieved);
 }

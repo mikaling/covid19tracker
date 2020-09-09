@@ -1,11 +1,11 @@
-package experiments.waweruu.c19tn.local.dao;
+package experiments.waweruu.c19tn.db.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import experiments.waweruu.c19tn.local.entity.ContinentTotalsEntity;
+import experiments.waweruu.c19tn.db.entity.ContinentTotalsEntity;
 
 @Dao
 public interface ContinentTotalsDao {

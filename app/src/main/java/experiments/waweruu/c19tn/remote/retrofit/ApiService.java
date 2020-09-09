@@ -2,6 +2,7 @@ package experiments.waweruu.c19tn.remote.retrofit;
 
 import experiments.waweruu.c19tn.remote.response.ContinentDataResponse;
 import experiments.waweruu.c19tn.remote.response.CountryDataResponse;
+import experiments.waweruu.c19tn.remote.response.CountrySlugResponse;
 import experiments.waweruu.c19tn.remote.response.GlobalStatisticsResponse;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
@@ -45,5 +46,9 @@ public interface ApiService {
     Observable<ContinentDataResponse> getContinentData(@Path("continent") String continent,
                                                  @Query("limit") int limit,
                                                  @Query("page") int page);
+
+    /* This endpoint returns the list of countries that we have data on */
+    @GET("countries")
+    Call<CountrySlugResponse> getCountrySlugs();
 
 }

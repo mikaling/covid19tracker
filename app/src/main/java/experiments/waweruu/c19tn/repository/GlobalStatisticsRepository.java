@@ -9,8 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import experiments.waweruu.c19tn.AppExecutors;
-import experiments.waweruu.c19tn.local.dao.GlobalStatisticsDao;
-import experiments.waweruu.c19tn.local.entity.GlobalStatisticsEntity;
+import experiments.waweruu.c19tn.db.dao.GlobalStatisticsDao;
+import experiments.waweruu.c19tn.db.entity.GlobalStatisticsEntity;
 import experiments.waweruu.c19tn.remote.model.GlobalStatisticsModel;
 import experiments.waweruu.c19tn.remote.response.GlobalStatisticsResponse;
 import experiments.waweruu.c19tn.remote.retrofit.ApiService;

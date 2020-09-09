@@ -1,4 +1,4 @@
-package experiments.waweruu.c19tn.local.entity;
+package experiments.waweruu.c19tn.db.entity;
 
 
 import androidx.annotation.NonNull;

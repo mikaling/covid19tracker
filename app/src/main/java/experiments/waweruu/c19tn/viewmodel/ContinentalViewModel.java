@@ -1,24 +1,17 @@
 package experiments.waweruu.c19tn.viewmodel;
 
-import android.view.View;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import experiments.waweruu.c19tn.local.entity.ContinentCountryDataEntity;
-import experiments.waweruu.c19tn.local.entity.ContinentTotalsEntity;
-import experiments.waweruu.c19tn.local.model.CountryInfoModel;
-import experiments.waweruu.c19tn.local.model.CountryModel;
+import experiments.waweruu.c19tn.db.entity.ContinentCountryDataEntity;
+import experiments.waweruu.c19tn.db.entity.ContinentTotalsEntity;
+import experiments.waweruu.c19tn.db.model.CountryModel;
 import experiments.waweruu.c19tn.repository.ContinentalRepository;
-import experiments.waweruu.c19tn.ui.continental.SingleContinentFragment;
 import experiments.waweruu.c19tn.util.StatusReport;
 
 public class ContinentalViewModel extends ViewModel {

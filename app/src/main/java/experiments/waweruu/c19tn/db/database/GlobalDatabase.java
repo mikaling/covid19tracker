@@ -1,18 +1,12 @@
-package experiments.waweruu.c19tn.local.database;
-
-import android.content.Context;
+package experiments.waweruu.c19tn.db.database;
 
 import androidx.room.Database;
-import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import experiments.waweruu.c19tn.local.dao.CountryDataDao;
-import experiments.waweruu.c19tn.local.dao.GlobalStatisticsDao;
-import experiments.waweruu.c19tn.local.entity.CountryDataEntity;
-import experiments.waweruu.c19tn.local.entity.GlobalStatisticsEntity;
+import experiments.waweruu.c19tn.db.dao.CountryDataDao;
+import experiments.waweruu.c19tn.db.dao.GlobalStatisticsDao;
+import experiments.waweruu.c19tn.db.entity.CountryDataEntity;
+import experiments.waweruu.c19tn.db.entity.GlobalStatisticsEntity;
 
 @Database(entities = {GlobalStatisticsEntity.class, CountryDataEntity.class}, version = 2, exportSchema = false)
 public abstract class GlobalDatabase extends RoomDatabase {

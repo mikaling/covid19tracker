@@ -11,12 +11,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import experiments.waweruu.c19tn.AppExecutors;
-import experiments.waweruu.c19tn.local.dao.ContinentCountryDataDao;
-import experiments.waweruu.c19tn.local.dao.ContinentTotalsDao;
-import experiments.waweruu.c19tn.local.entity.ContinentCountryDataEntity;
-import experiments.waweruu.c19tn.local.entity.ContinentTotalsEntity;
-import experiments.waweruu.c19tn.local.model.CountryInfoModel;
-import experiments.waweruu.c19tn.local.model.CountryModel;
+import experiments.waweruu.c19tn.db.dao.ContinentCountryDataDao;
+import experiments.waweruu.c19tn.db.dao.ContinentTotalsDao;
+import experiments.waweruu.c19tn.db.entity.ContinentCountryDataEntity;
+import experiments.waweruu.c19tn.db.entity.ContinentTotalsEntity;
+import experiments.waweruu.c19tn.db.model.CountryModel;
 import experiments.waweruu.c19tn.remote.model.ContinentTotalsModel;
 import experiments.waweruu.c19tn.remote.model.CountryDataModel;
 import experiments.waweruu.c19tn.remote.response.ContinentDataResponse;

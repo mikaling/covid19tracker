@@ -1,16 +1,14 @@
-package experiments.waweruu.c19tn.local.dao;
+package experiments.waweruu.c19tn.db.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
 
-import experiments.waweruu.c19tn.local.entity.ContinentCountryDataEntity;
-import experiments.waweruu.c19tn.local.model.CountryInfoModel;
-import experiments.waweruu.c19tn.local.model.CountryModel;
+import experiments.waweruu.c19tn.db.entity.ContinentCountryDataEntity;
+import experiments.waweruu.c19tn.db.model.CountryModel;
 
 
 @Dao

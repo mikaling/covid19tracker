@@ -1,4 +1,4 @@
-package experiments.waweruu.c19tn.local.model;
+package experiments.waweruu.c19tn.db.model;
 
 import androidx.room.ColumnInfo;
 

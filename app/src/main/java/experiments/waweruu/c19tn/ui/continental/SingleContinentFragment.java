@@ -18,20 +18,15 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import experiments.waweruu.c19tn.App;
 import experiments.waweruu.c19tn.AppExecutors;
 import experiments.waweruu.c19tn.databinding.FragmentSingleContinentBinding;
 import experiments.waweruu.c19tn.di.AppComponent;
-import experiments.waweruu.c19tn.local.entity.ContinentCountryDataEntity;
-import experiments.waweruu.c19tn.local.entity.ContinentTotalsEntity;
 import experiments.waweruu.c19tn.util.StatusReport;
 import experiments.waweruu.c19tn.util.Util;
 import experiments.waweruu.c19tn.viewmodel.ContinentalViewModel;
-import experiments.waweruu.c19tn.viewmodel.ViewModelFactory;
 
 import static experiments.waweruu.c19tn.util.Util.getFormattedString;
 

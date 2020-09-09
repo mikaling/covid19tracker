@@ -9,12 +9,13 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import experiments.waweruu.c19tn.AppExecutors;
-import experiments.waweruu.c19tn.local.dao.ContinentCountryDataDao;
-import experiments.waweruu.c19tn.local.dao.ContinentTotalsDao;
-import experiments.waweruu.c19tn.local.dao.CountryDataDao;
-import experiments.waweruu.c19tn.local.dao.GlobalStatisticsDao;
-import experiments.waweruu.c19tn.local.database.ContinentalDatabase;
-import experiments.waweruu.c19tn.local.database.GlobalDatabase;
+import experiments.waweruu.c19tn.db.dao.ContinentCountryDataDao;
+import experiments.waweruu.c19tn.db.dao.ContinentTotalsDao;
+import experiments.waweruu.c19tn.db.dao.CountryDataDao;
+import experiments.waweruu.c19tn.db.dao.GlobalStatisticsDao;
+import experiments.waweruu.c19tn.db.database.ContinentalDatabase;
+import experiments.waweruu.c19tn.db.database.GlobalDatabase;
+import experiments.waweruu.c19tn.db.database.LocalDatabase;
 import experiments.waweruu.c19tn.remote.retrofit.ApiService;
 import experiments.waweruu.c19tn.repository.ContinentalRepository;
 import experiments.waweruu.c19tn.repository.CountryDataRepository;
@@ -37,6 +38,14 @@ public class LocalModule {
     ContinentalDatabase provideContinentalDatabase(Application application) {
         return Room.databaseBuilder(application, ContinentalDatabase.class,
                 "continental_database")
+                .fallbackToDestructiveMigration()
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    LocalDatabase provideLocalDatabase(Application application) {
+        return Room.databaseBuilder(application, LocalDatabase.class, "local_database")
                 .fallbackToDestructiveMigration()
                 .build();
     }

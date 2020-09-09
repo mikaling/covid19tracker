@@ -1,6 +1,5 @@
-package experiments.waweruu.c19tn.local.entity;
+package experiments.waweruu.c19tn.db.entity;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 

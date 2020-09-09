@@ -1,4 +1,4 @@
-package experiments.waweruu.c19tn.local.dao;
+package experiments.waweruu.c19tn.db.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import experiments.waweruu.c19tn.local.entity.GlobalStatisticsEntity;
+import experiments.waweruu.c19tn.db.entity.GlobalStatisticsEntity;
 
 @Dao
 public interface GlobalStatisticsDao {

@@ -6,17 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import java.util.Locale;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -25,9 +20,8 @@ import experiments.waweruu.c19tn.AppExecutors;
 import experiments.waweruu.c19tn.databinding.FragmentGlobalStatisticsBinding;
 import experiments.waweruu.c19tn.databinding.ViewGlobalStatisticsBinding;
 import experiments.waweruu.c19tn.di.AppComponent;
-import experiments.waweruu.c19tn.local.entity.GlobalStatisticsEntity;
+import experiments.waweruu.c19tn.db.entity.GlobalStatisticsEntity;
 import experiments.waweruu.c19tn.util.StatusReport;
-import experiments.waweruu.c19tn.util.Util;
 import experiments.waweruu.c19tn.viewmodel.GlobalViewModel;
 
 import static experiments.waweruu.c19tn.util.Util.getFormattedString;

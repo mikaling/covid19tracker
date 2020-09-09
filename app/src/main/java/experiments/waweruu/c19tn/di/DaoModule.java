@@ -4,12 +4,14 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import experiments.waweruu.c19tn.local.dao.ContinentCountryDataDao;
-import experiments.waweruu.c19tn.local.dao.ContinentTotalsDao;
-import experiments.waweruu.c19tn.local.dao.CountryDataDao;
-import experiments.waweruu.c19tn.local.dao.GlobalStatisticsDao;
-import experiments.waweruu.c19tn.local.database.ContinentalDatabase;
-import experiments.waweruu.c19tn.local.database.GlobalDatabase;
+import experiments.waweruu.c19tn.db.dao.ContinentCountryDataDao;
+import experiments.waweruu.c19tn.db.dao.ContinentTotalsDao;
+import experiments.waweruu.c19tn.db.dao.CountryDataDao;
+import experiments.waweruu.c19tn.db.dao.CountrySlugDao;
+import experiments.waweruu.c19tn.db.dao.GlobalStatisticsDao;
+import experiments.waweruu.c19tn.db.database.ContinentalDatabase;
+import experiments.waweruu.c19tn.db.database.GlobalDatabase;
+import experiments.waweruu.c19tn.db.database.LocalDatabase;
 
 @Module
 public class DaoModule {
@@ -36,5 +38,11 @@ public class DaoModule {
     @Singleton
     ContinentCountryDataDao provideContinentCountryDataDao(ContinentalDatabase continentalDatabase) {
         return continentalDatabase.continentCountryDataDao();
+    }
+
+    @Provides
+    @Singleton
+    CountrySlugDao provideCountrySlugDao(LocalDatabase localDatabase) {
+        return localDatabase.countrySlugDao();
     }
 }
