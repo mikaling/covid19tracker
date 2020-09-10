@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="4dp"
+    android:background="#CAF0F8"
+    android:id="@+id/fragment_bar_chart"
+    tools:context=".ui.local.ComparisonFragment">
+
+    <TextView
+        android:id="@+id/bar_chart_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+    <experiments.waweruu.c19tn.util.VerticalTextView
+        android:id="@+id/label_y_axis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bar_chart_y_axis_label"
+        android:textColor="#000000"
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:rotation="180"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/bar_chart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar_chart_title"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/label_y_axis"
+        android:layout_above="@id/label_x_axis"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/label_y_axis" />
+
+    <TextView
+        android:id="@+id/label_x_axis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:text="@string/bar_chart_x_axis_label"
+        android:textColor="#000000"
+        style="@style/TextAppearance.MaterialComponents.Body2"/>
+
+</RelativeLayout>

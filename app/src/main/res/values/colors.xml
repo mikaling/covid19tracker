@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#344955</color>
+    <color name="colorPrimaryDark">#F9AA33</color>
+    <color name="colorAccent">#232F34</color>
+    <color name="lineChartBackground">#524948</color>
+    <color name="colour1">#ee1250</color>
+    <color name="colour2">#9A12EE</color>
+    <color name="colour3">#3712EE</color>
+    <color name="colour4">#12EE75</color>
+    <color name="confirmed_background">#ff0505</color>
+    <color name="recovered_background">#03045E</color>
+    <color name="deaths_background">#540804</color>
+</resources>
