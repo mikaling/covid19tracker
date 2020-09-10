@@ -30,7 +30,8 @@
         University Hospital, a reputable institution.</string>
 
     <string name="links_header">LINKS</string>
-    <string name="api_url"><u>https://covid19api.com</u></string>
+    <string name="api_url"><u>https://api.covid-updates.live</u></string>
+    <string name="api_url_2"><u>https://covid19api.com</u></string>
     <string name="github_repo"><u>https://github.com/mikaling/covid19tracker</u></string>
     <string name="github_repo_2"><u>https://github.com/waweruu/covid19tracker-jetpack</u></string>
     <string name="github_repo_3"><u>https://github.com/John-Wambua/covidtracker</u></string>

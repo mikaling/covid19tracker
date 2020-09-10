@@ -81,6 +81,17 @@
             android:textColor="@color/colour3"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/api_link_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/api_link"
+            android:layout_marginTop="4dp"
+            android:padding="4dp"
+            android:text="@string/api_url_2"
+            android:textColor="@color/colour3"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
     </RelativeLayout>
 
 </ScrollView>

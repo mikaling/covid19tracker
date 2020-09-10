@@ -111,7 +111,7 @@ public class GlobalMapFragment extends Fragment {
     private void loadWebview() {
         binding.mapWebview.getSettings().setJavaScriptEnabled(true);
         binding.mapWebview.getSettings().setBuiltInZoomControls(true);
-        binding.mapWebview.getSettings().setDisplayZoomControls(true);
+        binding.mapWebview.getSettings().setDisplayZoomControls(false);
         binding.mapWebview.addJavascriptInterface(new WebAppInterface(), "Android");
 
         binding.mapWebview.getSettings().setLoadWithOverviewMode(true);
