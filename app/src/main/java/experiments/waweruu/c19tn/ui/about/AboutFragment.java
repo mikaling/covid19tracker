@@ -11,10 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.mukesh.MarkdownView;
+
 import experiments.waweruu.c19tn.R;
 import experiments.waweruu.c19tn.databinding.FragmentAboutBinding;
 
-public class AboutFragment extends Fragment implements View.OnClickListener {
+public class AboutFragment extends Fragment{
 
     private FragmentAboutBinding binding;
     //private ViewModel viewModel;
@@ -39,30 +41,8 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.androidRepoLink.setOnClickListener(this);
-        binding.backendRepoLink.setOnClickListener(this);
-        binding.apiLink.setOnClickListener(this);
-    }
+        MarkdownView markdownView = (MarkdownView) view.findViewById(R.id.markdown_view);
 
-
-    @Override
-    public void onClick(View view) {
-        Uri page = null;
-        switch(view.getId()) {
-            case R.id.android_repo_link:
-                page = Uri.parse(getString(R.string.github_repo));
-                break;
-
-            case R.id.backend_repo_link:
-                page = Uri.parse(getString(R.string.github_repo_2));
-                break;
-
-            case R.id.api_link:
-                page = Uri.parse(getString(R.string.api_url));
-                break;
-        }
-        assert page != null;
-        Intent intent = new Intent(Intent.ACTION_VIEW, page);
-        startActivity(intent);
+        markdownView.loadMarkdownFromAssets("about.md"); //Loads the markdown file from the assets folder
     }
 }
