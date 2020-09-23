@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -7,6 +6,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/colorPrimaryDark</item>
+    </style>
+    
+    <style name="AppTheme.BrandedLaunch" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/branded_logo</item>
     </style>
 
     <style name="ConfirmedCardView" parent="Widget.MaterialComponents.CardView">
@@ -20,6 +23,5 @@
     <style name="DeathsCardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/deaths_background</item>
     </style>
-
 
 </resources>

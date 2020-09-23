@@ -4,36 +4,37 @@
     android:id="@+id/single_continent_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".continents.SingleContinentFragment">
+    tools:context=".ui.continental.SingleContinentFragment">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_continent_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/placeholder_continent" />
+        <include layout="@layout/placeholder_single_continent" />
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/continent_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1"
         android:visibility="invisible">
 
         <WebView
             android:id="@+id/continent_webview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true" />
-
+            android:layout_height="0dp"
+            android:layout_weight="0.5"/>
 
 
         <TableLayout
             android:id="@+id/card_table_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/continent_webview"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
             android:stretchColumns="0">
 
             <TableRow>
@@ -43,7 +44,6 @@
                     style="@style/ConfirmedCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/continent_webview"
                     android:layout_margin="3dp">
 
                     <LinearLayout
@@ -82,7 +82,6 @@
                     style="@style/RecoveredCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/total_confirmed_continent"
                     android:layout_margin="3dp">
 
                     <LinearLayout
@@ -120,7 +119,6 @@
                     style="@style/DeathsCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/total_recovered_continent"
                     android:layout_margin="3dp">
 
                     <LinearLayout
@@ -154,6 +152,6 @@
             </TableRow>
 
         </TableLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </FrameLayout>

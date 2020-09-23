@@ -62,6 +62,7 @@
 
         var chart = new google.visualization.GeoChart(document.getElementById('geochart-colors'));
         chart.draw(africa, options);
+        Android.notifyChartDrawn();
       };
     </script>
 </head>
@@ -69,4 +70,3 @@
 <div id="geochart-colors"></div>
 </body>
 </html>
-

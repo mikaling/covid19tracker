@@ -2,58 +2,55 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_graph"
+    android:id="@+id/navigation_graph.xml"
     app:startDestination="@id/global_fragment">
 
     <fragment
         android:id="@id/global_fragment"
-        android:name="com.example.covid19tracker.global.WorldFragment"
-        android:label="@string/label_global"
-        tools:layout="@layout/fragment_world" />
-
-    <fragment
-        android:id="@id/local_fragment"
-        android:name="com.example.covid19tracker.local.LocalFragment"
-        android:label="@string/label_local"
-        tools:layout="@layout/fragment_local" >
-        <action
-            android:id="@+id/action_local_fragment_to_barChartFragment"
-            app:destination="@id/bar_chart_fragment" />
-        <action
-            android:id="@+id/action_local_fragment_to_lineChartFragment2"
-            app:destination="@id/line_chart_fragment" />
-    </fragment>
-
-    <fragment
-        android:id="@id/continental_fragment"
-        android:name="com.example.covid19tracker.continents.ContinentsFragment"
-        android:label="@string/label_continental"
-        tools:layout="@layout/fragment_continent" />
-
-    <fragment
-        android:id="@id/metrics_fragment"
-        android:name="com.example.covid19tracker.metrics.MetricsFragment"
-        android:label="Metrics"
-        tools:layout="@layout/fragment_metrics" />
-
-    <fragment
-        android:id="@+id/bar_chart_fragment"
-        android:name="com.example.covid19tracker.local.BarChartFragment"
-        android:label="Bar Chart: WIP"
-        tools:layout="@layout/fragment_bar_chart" />
-
-    <fragment
-        android:id="@+id/line_chart_fragment"
-        android:name="com.example.covid19tracker.local.LineChartFragment"
-        android:label="Trends of COVID-19"
-        tools:layout="@layout/fragment_line_chart" >
-        <argument android:name="slug" />
-        <argument android:name="country" />
-    </fragment>
-
+        android:name="experiments.waweruu.c19tn.ui.global.GlobalFragment"
+        android:label="Global"
+        tools:layout="@layout/fragment_global" />
     <fragment
         android:id="@id/about_fragment"
-        android:name="com.example.covid19tracker.about.AboutFragment"
-        android:label="About" />
+        android:name="experiments.waweruu.c19tn.ui.about.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@id/continental_fragment"
+        android:name="experiments.waweruu.c19tn.ui.continental.ContinentalFragment"
+        android:label="Continental"
+        tools:layout="@layout/fragment_continental" />
+    <fragment
+        android:id="@id/local_fragment"
+        android:name="experiments.waweruu.c19tn.ui.local.LocalFragment"
+        android:label="Local"
+        tools:layout="@layout/fragment_local">
+        <action
+            android:id="@+id/action_local_fragment_to_comparison_fragment"
+            app:destination="@id/comparison_fragment" />
+        <action
+            android:id="@+id/action_local_fragment_to_trendsFragment"
+            app:destination="@id/trends_fragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/comparison_fragment"
+        android:name="experiments.waweruu.c19tn.ui.local.ComparisonFragment"
+        android:label="Comparison"
+        tools:layout="@layout/fragment_comparison" />
+
+    <fragment
+        android:id="@+id/metrics_fragment"
+        android:name="experiments.waweruu.c19tn.ui.metrics.MetricsFragment"
+        android:label="Metrics"
+        tools:layout="@layout/fragment_metrics"/>
+
+    <fragment
+        android:id="@+id/trends_fragment"
+        android:name="experiments.waweruu.c19tn.ui.local.TrendsFragment"
+        android:label="Trends"
+        tools:layout="@layout/fragment_trends">
+        <argument android:name="country"/>
+
+    </fragment>
 </navigation>

@@ -2,10 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.LandingActivity">
+    tools:context=".ui.LandingActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -21,13 +20,6 @@
             style="@style/Widget.MaterialComponents.ActionBar.Primary" />
 
     </com.google.android.material.appbar.AppBarLayout>
-
-<!--    <FrameLayout-->
-<!--        android:id="@+id/frame_content"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/appbar"-->
-<!--        android:layout_above="@id/bottom_navigation" />-->
 
     <fragment
         android:id="@+id/navigation_host_fragment"
